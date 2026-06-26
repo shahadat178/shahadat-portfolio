@@ -1,10 +1,24 @@
+
+
+
+
+import Image from "next/image";
+
 export default function Home() {
   return (
     <main className="portfolio-shell">
       <aside className="left-rail">
         <div className="brand-card">
-          <p className="brand-mark">SS°</p>
-          <h2>Shahdat Sardar</h2>
+          <div className="brand-logo">
+            <Image
+              src="/brand/shahadat-logo-dark.png"
+              alt="Shahadat Sardar Logo"
+              width={180}
+              height={70}
+              priority
+            />
+          </div>
+          <h2>Shahadat Sardar</h2>
           <p>Full-Stack & Cloud Software Engineer</p>
         </div>
 
@@ -48,7 +62,7 @@ export default function Home() {
           <p className="eyebrow">FULL-STACK & CLOUD-FOCUSED SOFTWARE ENGINEER</p>
           <h1>
             Hi, I’m <br />
-            <span>Shahdat Sardar</span>
+            <span>Shahadat Sardar</span>
           </h1>
           <p className="hero-text">
             I build reliable web products that turn complex workflows into
