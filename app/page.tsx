@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { FiArrowUpRight, FiMail } from "react-icons/fi";
+
 type SectionId =
   | "home"
   | "work"
@@ -10,6 +13,8 @@ type SectionId =
   | "experience"
   | "toolkit"
   | "contact";
+
+  type SocialId = "linkedin" | "github" | "email";
 
 type NavigationItem = {
   id: SectionId;
@@ -45,6 +50,9 @@ export default function Home() {
 
   // Top navigation has no Home link, so Work is the initial visual position.
   const [topIndicator, setTopIndicator] = useState<SectionId>("work");
+
+  const [socialIndicator, setSocialIndicator] =
+  useState<SocialId>("linkedin");
 
   /**
    * A click means the user selected a real page section.
@@ -101,50 +109,85 @@ export default function Home() {
         </nav>
 
         <div className="sidebar-bottom">
-          <div className="quick-connect-card">
-            <p className="quick-label">QUICK CONNECT</p>
+  {/* Bright liquid-glass social connection panel */}
+  <div className="quick-connect-card">
+    <div className="sidebar-card-heading">
+      <p className="quick-label">QUICK CONNECT</p>
 
-            <div className="quick-links">
-              <a
-                href="#"
-                aria-label="Open Shahadat's LinkedIn profile"
-                title="LinkedIn"
-              >
-                in
-              </a>
+      <span className="sidebar-card-sparkle" aria-hidden="true">
+        ✦
+      </span>
+    </div>
 
-              <a
-                href="#"
-                aria-label="Open Shahadat's GitHub profile"
-                title="GitHub"
-              >
-                GH
-              </a>
+    <p className="quick-connect-text">
+      Let&apos;s connect and build something meaningful.
+    </p>
 
-              <a
-                href="mailto:your-email@example.com"
-                aria-label="Send Shahadat an email"
-                title="Email"
-              >
-                @
-              </a>
-            </div>
-          </div>
+    <div className="quick-links" data-active={socialIndicator}>
+  <a
+    className="social-link linkedin-link"
+    href="https://www.linkedin.com/in/shahadat-sardar"
+    aria-label="Open Shahadat's LinkedIn profile"
+    onMouseEnter={() => setSocialIndicator("linkedin")}
+    onFocus={() => setSocialIndicator("linkedin")}
+  >
+    <FaLinkedinIn aria-hidden="true" />
+    <span>LinkedIn</span>
+    <FiArrowUpRight className="social-arrow" aria-hidden="true" />
+  </a>
 
-          <div className="availability-card">
-            <span className="status-dot" aria-hidden="true" />
+  <a
+    className="social-link github-link"
+    href="https://github.com/shahadat178"
+    aria-label="Open Shahadat's GitHub profile"
+    onMouseEnter={() => setSocialIndicator("github")}
+    onFocus={() => setSocialIndicator("github")}
+  >
+    <FaGithub aria-hidden="true" />
+    <span>GitHub</span>
+    <FiArrowUpRight className="social-arrow" aria-hidden="true" />
+  </a>
 
-            <div>
-              <p className="availability-title">
-                Available for new opportunities
-              </p>
+  <a
+    className="social-link email-link"
+    href="mailto:your-email@example.com"
+    aria-label="Send Shahadat an email"
+    onMouseEnter={() => setSocialIndicator("email")}
+    onFocus={() => setSocialIndicator("email")}
+  >
+    <FiMail aria-hidden="true" />
+    <span>Email</span>
+    <FiArrowUpRight className="social-arrow" aria-hidden="true" />
+  </a>
+</div>
 
-              <p className="availability-text">
-                Open to full-time roles and exciting projects.
-              </p>
-            </div>
-          </div>
-        </div>
+
+  </div>
+
+  {/* Bright liquid-glass availability panel */}
+  <div className="availability-card">
+    <div className="availability-status">
+      <span className="status-dot" aria-hidden="true" />
+      <span className="status-pulse" aria-hidden="true" />
+    </div>
+
+    <div className="availability-content">
+      <div className="availability-heading">
+        <p className="availability-title">
+          Available for new opportunities
+        </p>
+
+        <span className="availability-badge">OPEN</span>
+      </div>
+
+      <p className="availability-text">
+        Open to full-time roles and exciting projects.
+      </p>
+    </div>
+  </div>
+</div>
+
+
       </aside>
 
       {/* =====================================================
