@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
-import { FiArrowUpRight, FiMail } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight, FiMail } from "react-icons/fi";
 
 type SectionId =
   | "home"
@@ -14,7 +14,7 @@ type SectionId =
   | "toolkit"
   | "contact";
 
-  type SocialId = "linkedin" | "github" | "email";
+type SocialId = "linkedin" | "github" | "email";
 
 type NavigationItem = {
   id: SectionId;
@@ -33,36 +33,26 @@ const sidebarNavigation: NavigationItem[] = [
 const topNavigation = sidebarNavigation.filter((item) => item.id !== "home");
 
 /**
- * Portfolio homepage navigation behavior:
+ * Main portfolio homepage.
  *
- * - Hover changes only the navigation area being hovered.
- * - The latest hovered item remains visually selected.
- * - Click updates the real active section and syncs both navigation areas.
- * - Anchor links provide smooth scrolling through global CSS.
+ * Navigation behavior:
+ * - Hover moves each navigation indicator independently.
+ * - Click synchronizes sidebar and top navigation indicators.
+ * - CSS handles smooth anchor scrolling between page sections.
  */
 export default function Home() {
-  // Actual selected page section after a click.
   const [activeSection, setActiveSection] = useState<SectionId>("home");
-
-  // Sidebar liquid-glass indicator position.
   const [sidebarIndicator, setSidebarIndicator] =
     useState<SectionId>("home");
-
-  // Top navigation has no Home link, so Work is the initial visual position.
   const [topIndicator, setTopIndicator] = useState<SectionId>("work");
-
   const [socialIndicator, setSocialIndicator] =
-  useState<SocialId>("linkedin");
+    useState<SocialId>("linkedin");
 
-  /**
-   * A click means the user selected a real page section.
-   * Both navigation indicators should then stay synchronized.
-   */
   function handleNavigation(section: SectionId) {
     setActiveSection(section);
     setSidebarIndicator(section);
 
-    // Top navigation does not include Home, so keep its pill on Work.
+    // The top navigation has no Home item, so Work is the visual fallback.
     setTopIndicator(section === "home" ? "work" : section);
   }
 
@@ -87,7 +77,6 @@ export default function Home() {
           <p>Full-Stack &amp; Cloud Software Engineer</p>
         </div>
 
-        {/* Sidebar hover affects only the sidebar indicator. */}
         <nav
           className="side-nav"
           aria-label="Sidebar navigation"
@@ -108,86 +97,96 @@ export default function Home() {
           ))}
         </nav>
 
+        {/* =====================================================
+            QUICK CONNECT + AVAILABILITY
+            ===================================================== */}
         <div className="sidebar-bottom">
-  {/* Bright liquid-glass social connection panel */}
-  <div className="quick-connect-card">
-    <div className="sidebar-card-heading">
-      <p className="quick-label">QUICK CONNECT</p>
+          <div className="quick-connect-card">
+            <div className="sidebar-card-heading">
+              <p className="quick-label">QUICK CONNECT</p>
 
-      <span className="sidebar-card-sparkle" aria-hidden="true">
-        ✦
-      </span>
-    </div>
+              <span className="sidebar-card-sparkle" aria-hidden="true">
+                ✦
+              </span>
+            </div>
 
-    <p className="quick-connect-text">
-      Let&apos;s connect and build something meaningful.
-    </p>
+            <p className="quick-connect-text">
+              Let&apos;s connect and build something meaningful.
+            </p>
 
-    <div className="quick-links" data-active={socialIndicator}>
-  <a
-    className="social-link linkedin-link"
-    href="https://www.linkedin.com/in/shahadat-sardar"
-    aria-label="Open Shahadat's LinkedIn profile"
-    onMouseEnter={() => setSocialIndicator("linkedin")}
-    onFocus={() => setSocialIndicator("linkedin")}
-  >
-    <FaLinkedinIn aria-hidden="true" />
-    <span>LinkedIn</span>
-    <FiArrowUpRight className="social-arrow" aria-hidden="true" />
-  </a>
+            <div className="quick-links" data-active={socialIndicator}>
+              <a
+                className="social-link linkedin-link"
+                href="https://www.linkedin.com/in/shahadat-sardar"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open Shahadat's LinkedIn profile"
+                onMouseEnter={() => setSocialIndicator("linkedin")}
+                onFocus={() => setSocialIndicator("linkedin")}
+              >
+                <FaLinkedinIn aria-hidden="true" />
+                <span>LinkedIn</span>
+                <FiArrowUpRight
+                  className="social-arrow"
+                  aria-hidden="true"
+                />
+              </a>
 
-  <a
-    className="social-link github-link"
-    href="https://github.com/shahadat178"
-    aria-label="Open Shahadat's GitHub profile"
-    onMouseEnter={() => setSocialIndicator("github")}
-    onFocus={() => setSocialIndicator("github")}
-  >
-    <FaGithub aria-hidden="true" />
-    <span>GitHub</span>
-    <FiArrowUpRight className="social-arrow" aria-hidden="true" />
-  </a>
+              <a
+                className="social-link github-link"
+                href="https://github.com/shahadat178"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open Shahadat's GitHub profile"
+                onMouseEnter={() => setSocialIndicator("github")}
+                onFocus={() => setSocialIndicator("github")}
+              >
+                <FaGithub aria-hidden="true" />
+                <span>GitHub</span>
+                <FiArrowUpRight
+                  className="social-arrow"
+                  aria-hidden="true"
+                />
+              </a>
 
-  <a
-    className="social-link email-link"
-    href="mailto:your-email@example.com"
-    aria-label="Send Shahadat an email"
-    onMouseEnter={() => setSocialIndicator("email")}
-    onFocus={() => setSocialIndicator("email")}
-  >
-    <FiMail aria-hidden="true" />
-    <span>Email</span>
-    <FiArrowUpRight className="social-arrow" aria-hidden="true" />
-  </a>
-</div>
+              <a
+                className="social-link email-link"
+                href="mailto:your-email@example.com"
+                aria-label="Send Shahadat an email"
+                onMouseEnter={() => setSocialIndicator("email")}
+                onFocus={() => setSocialIndicator("email")}
+              >
+                <FiMail aria-hidden="true" />
+                <span>Email</span>
+                <FiArrowUpRight
+                  className="social-arrow"
+                  aria-hidden="true"
+                />
+              </a>
+            </div>
+          </div>
 
+          <div className="availability-card">
+            <div className="availability-status">
+              <span className="status-dot" aria-hidden="true" />
+              <span className="status-pulse" aria-hidden="true" />
+            </div>
 
-  </div>
+            <div className="availability-content">
+              <div className="availability-heading">
+                <p className="availability-title">
+                  Available for new opportunities
+                </p>
 
-  {/* Bright liquid-glass availability panel */}
-  <div className="availability-card">
-    <div className="availability-status">
-      <span className="status-dot" aria-hidden="true" />
-      <span className="status-pulse" aria-hidden="true" />
-    </div>
+                <span className="availability-badge">OPEN</span>
+              </div>
 
-    <div className="availability-content">
-      <div className="availability-heading">
-        <p className="availability-title">
-          Available for new opportunities
-        </p>
-
-        <span className="availability-badge">OPEN</span>
-      </div>
-
-      <p className="availability-text">
-        Open to full-time roles and exciting projects.
-      </p>
-    </div>
-  </div>
-</div>
-
-
+              <p className="availability-text">
+                Open to full-time roles and exciting projects.
+              </p>
+            </div>
+          </div>
+        </div>
       </aside>
 
       {/* =====================================================
@@ -195,7 +194,6 @@ export default function Home() {
           ===================================================== */}
       <section className="main-content">
         <header className="top-bar">
-          {/* Top hover affects only the top navigation indicator. */}
           <nav
             className="top-dock"
             aria-label="Primary navigation"
@@ -240,22 +238,67 @@ export default function Home() {
             HERO
             ===================================================== */}
         <section className="hero-placeholder" id="home">
-          <p className="eyebrow">
-            FULL-STACK &amp; CLOUD-FOCUSED SOFTWARE ENGINEER
-          </p>
+          <div className="hero-copy">
+            <p className="eyebrow">
+              FULL-STACK &amp; CLOUD SOFTWARE ENGINEER
+            </p>
 
-          <h1>
-            Hi, I’m <br />
-            <span>Shahadat Sardar</span>
-          </h1>
+            <h1>
+              I build digital
+              <span> experiences that feel effortless.</span>
+            </h1>
 
-          <p className="hero-text">
-            I build reliable web products that turn complex workflows into
-            simple, delightful experiences.
-          </p>
+            <p className="hero-text">
+              I design and build reliable web products that turn complex
+              workflows into clear, fast, and delightful experiences.
+            </p>
+
+            <div className="hero-actions">
+              <a className="hero-primary-action" href="#work">
+                Explore my work
+                <FiArrowRight aria-hidden="true" />
+              </a>
+
+              <a className="hero-secondary-action" href="#contact">
+                Let&apos;s connect
+                <FiArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+
+            <div className="hero-stack" aria-label="Core technology stack">
+              <span>Next.js</span>
+              <span>React</span>
+              <span>Node.js</span>
+              <span>AWS</span>
+            </div>
+          </div>
+
+          {/* Decorative CSS-only liquid-glass artwork */}
+          <div className="hero-visual" aria-hidden="true">
+            <div className="orb-glow" />
+
+            <div className="liquid-orb">
+              <div className="orb-highlight" />
+              <div className="orb-ring orb-ring-one" />
+              <div className="orb-ring orb-ring-two" />
+              <div className="orb-core" />
+            </div>
+
+            <div className="floating-chip floating-chip-top">
+              <span className="chip-dot chip-dot-blue" />
+              Building with intention
+            </div>
+
+            <div className="floating-chip floating-chip-bottom">
+              <span className="chip-dot chip-dot-violet" />
+              Cloud-ready systems
+            </div>
+          </div>
         </section>
 
-        {/* Future portfolio sections */}
+        {/* =====================================================
+            FUTURE PORTFOLIO SECTIONS
+            ===================================================== */}
         <section id="work" aria-label="Selected work" />
         <section id="story" aria-label="Engineering story" />
         <section id="experience" aria-label="Experience timeline" />
