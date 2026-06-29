@@ -545,81 +545,87 @@ section[id] {
 } */
 
 
+
 /* =========================================================
    SOCIAL LIQUID-GLASS SLIDER
-   One glass pill slides smoothly between social actions.
+   One refined blue glass pill moves between social links.
    ========================================================= */
 .quick-links {
   position: relative;
   z-index: 1;
+  isolation: isolate;
+  overflow: visible;
 
   display: grid;
-  grid-template-rows: repeat(3, 40px);
+  grid-template-rows: repeat(3, 44px);
   gap: 8px;
+
+  padding: 4px;
 }
 
-/* Shared sliding glass pill behind the social rows. */
+/*
+  One moving pill only.
+  The card's decorative glow remains behind this layer.
+*/
 .quick-links::before {
   position: absolute;
   z-index: 0;
-  top: 0;
-  right: 0;
-  left: 0;
+  top: 4px;
+  right: 4px;
+  left: 4px;
 
-  height: 40px;
+  height: 44px;
 
   content: "";
   pointer-events: none;
 
-  border: 1px solid rgba(255, 255, 255, 0.92);
-  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 16px;
 
+  /*
+    All liquid depth is inside one rounded surface.
+    No background-clip border trick, so every corner stays equal.
+  */
   background:
+    radial-gradient(
+      ellipse 95% 100% at 16% -26%,
+      rgba(255, 255, 255, 0.44) 0%,
+      rgba(255, 255, 255, 0.12) 34%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 90% 120% at 102% 122%,
+      rgba(202, 186, 255, 0.3) 0%,
+      transparent 58%
+    ),
     linear-gradient(
       135deg,
-      rgba(65, 125, 255, 0.95),
-      rgba(111, 87, 246, 0.94)
+      rgba(55, 135, 255, 0.94) 0%,
+      rgba(75, 110, 246, 0.93) 52%,
+      rgba(108, 81, 231, 0.95) 100%
     );
 
   box-shadow:
-    0 10px 20px rgba(63, 96, 222, 0.24),
+    0 10px 20px rgba(56, 89, 211, 0.2),
+    0 3px 7px rgba(56, 89, 211, 0.09),
     inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    inset 0 -1px 0 rgba(49, 61, 183, 0.16);
+    inset 0 -1px 0 rgba(35, 50, 164, 0.18);
 
+  will-change: transform;
   transform: translateY(0);
 
   transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 320ms ease;
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 280ms ease;
 }
 
-/* Liquid highlight traveling within the selected pill. */
+/* There must be no second reflection layer. */
 .quick-links::after {
-  position: absolute;
-  z-index: 0;
-  top: 3px;
-  left: 10px;
-
-  width: calc(100% - 20px);
-  height: 15px;
-
-  content: "";
-  pointer-events: none;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    );
-
-  opacity: 0.85;
+  content: none;
+  display: none;
 }
 
-/* Each social row stays above the shared glass pill. */
+/* Clickable links stay above the one moving pill. */
 .social-link {
   position: relative;
   z-index: 1;
@@ -628,21 +634,27 @@ section[id] {
   align-items: center;
   gap: 9px;
 
-  min-height: 40px;
-  padding: 0 12px;
+  min-height: 44px;
+  padding: 0 10px;
 
-  border: 1px solid transparent;
-  border-radius: 13px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
 
   color: var(--text-muted);
-  background: transparent;
-
   font-size: 11px;
   font-weight: 750;
 
   transition:
-    color 260ms ease,
-    transform 260ms ease;
+    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover should not make a second fake active item. */
+.social-link:hover {
+  color: var(--text-muted);
+  transform: none;
 }
 
 .social-link svg {
@@ -656,20 +668,21 @@ section[id] {
   height: 13px !important;
   margin-left: auto;
 
-  opacity: 0.45;
+  opacity: 0.46;
 
   transition:
-    opacity 280ms ease,
-    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 220ms ease,
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Current selected row gets white content. */
+/* Only the row above the pill becomes white. */
 .quick-links[data-active="linkedin"] .linkedin-link,
 .quick-links[data-active="github"] .github-link,
 .quick-links[data-active="email"] .email-link {
   color: #ffffff;
 }
 
+/* Small selected-arrow finishing movement. */
 .quick-links[data-active="linkedin"] .linkedin-link .social-arrow,
 .quick-links[data-active="github"] .github-link .social-arrow,
 .quick-links[data-active="email"] .email-link .social-arrow {
@@ -677,23 +690,19 @@ section[id] {
   transform: translate(2px, -1px);
 }
 
-/* Smooth pill positions */
-.quick-links[data-active="linkedin"]::before,
-.quick-links[data-active="linkedin"]::after {
+/* 44px row + 8px gap = 52px step. */
+.quick-links[data-active="linkedin"]::before {
   transform: translateY(0);
 }
 
-.quick-links[data-active="github"]::before,
-.quick-links[data-active="github"]::after {
-  transform: translateY(48px);
+.quick-links[data-active="github"]::before {
+  transform: translateY(52px);
 }
 
-.quick-links[data-active="email"]::before,
-.quick-links[data-active="email"]::after {
-  transform: translateY(96px);
+.quick-links[data-active="email"]::before {
+  transform: translateY(104px);
 }
 
-/* Keyboard accessibility */
 .social-link:focus-visible {
   outline: 3px solid rgba(47, 120, 255, 0.34);
   outline-offset: 3px;
