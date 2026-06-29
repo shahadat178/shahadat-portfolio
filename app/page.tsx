@@ -42,9 +42,12 @@ const topNavigation = sidebarNavigation.filter((item) => item.id !== "home");
  */
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>("home");
+
   const [sidebarIndicator, setSidebarIndicator] =
     useState<SectionId>("home");
+
   const [topIndicator, setTopIndicator] = useState<SectionId>("work");
+
   const [socialIndicator, setSocialIndicator] =
     useState<SocialId>("linkedin");
 
@@ -52,7 +55,7 @@ export default function Home() {
     setActiveSection(section);
     setSidebarIndicator(section);
 
-    // The top navigation has no Home item, so Work is the visual fallback.
+    // Top navigation has no Home item, so Work is the visual fallback.
     setTopIndicator(section === "home" ? "work" : section);
   }
 

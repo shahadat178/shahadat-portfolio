@@ -885,10 +885,13 @@ section[id] {
   opacity: 1;
   transform: translateX(0);
 
-  transition:
-    transform 500ms var(--ease-liquid),
-    width 500ms var(--ease-liquid),
-    opacity 180ms ease;
+ /* Smooth, weighty liquid-glass glide between navigation items. */
+will-change: transform, width;
+
+transition:
+  transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
+  width 620ms cubic-bezier(0.16, 1, 0.3, 1),
+  opacity 180ms ease;
 }
 
 .top-nav-link {
@@ -905,10 +908,15 @@ section[id] {
   font-size: 13px;
   font-weight: 750;
 
-  transition:
-    color 220ms ease,
-    transform 220ms ease;
+ transition:
+  color 280ms cubic-bezier(0.16, 1, 0.3, 1),
+  transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+
 }
+  /* The active glass pill gets a subtle watery light bloom. */
+  .top-dock::before {
+    filter: saturate(1.08) brightness(1.025);
+  }
 
 .top-nav-link:hover,
 .top-nav-link[aria-current="page"] {
