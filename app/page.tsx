@@ -3,8 +3,21 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
-import { FiArrowRight, FiArrowUpRight, FiMail } from "react-icons/fi";
+import InteractiveBangladeshGlobe from "../components/InteractiveBangladeshGlobe";
+
+import {
+  FaBrain,
+  FaGithub,
+  FaLinkedinIn,
+  FaNodeJs,
+  FaReact,
+} from "react-icons/fa6";
+
+import {
+  FiArrowRight,
+  FiArrowUpRight,
+  FiMail,
+} from "react-icons/fi";
 
 type SectionId =
   | "home"
@@ -276,25 +289,97 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Decorative CSS-only liquid-glass artwork */}
-          <div className="hero-visual" aria-hidden="true">
+          {/* =====================================================
+              CONNECTED SS ENGINEERING VISUAL
+              ===================================================== */}
+          <div className="hero-visual" >
             <div className="orb-glow" />
 
-            <div className="liquid-orb">
-              <div className="orb-highlight" />
-              <div className="orb-ring orb-ring-one" />
-              <div className="orb-ring orb-ring-two" />
-              <div className="orb-core" />
-            </div>
+            <div className="workflow-scene">
+              <span className="workflow-line workflow-line-1" />
+              <span className="workflow-line workflow-line-2" />
+              <span className="workflow-line workflow-line-3" />
+              <span className="workflow-line workflow-line-4" />
+              <span className="workflow-line workflow-line-5" />
 
-            <div className="floating-chip floating-chip-top">
-              <span className="chip-dot chip-dot-blue" />
-              Building with intention
-            </div>
 
-            <div className="floating-chip floating-chip-bottom">
-              <span className="chip-dot chip-dot-violet" />
-              Cloud-ready systems
+
+
+              {/* Main Shahadat Sardar identity orb */}
+              
+              <InteractiveBangladeshGlobe />
+
+
+
+              {/* Product thinking workflow */}
+              <div className="workflow-node workflow-node-top-left">
+                <div className="workflow-node-icon workflow-node-icon-product">
+                  ✦
+                </div>
+
+                <div className="workflow-node-content">
+                  <p className="workflow-node-title">Product Thinking</p>
+                  <p className="workflow-node-text">
+                    Problem → UX → solution
+                  </p>
+                </div>
+              </div>
+
+              {/* Frontend engineering workflow */}
+              <div className="workflow-node workflow-node-top-right">
+                <div className="workflow-node-icon workflow-node-icon-react">
+                  <FaReact aria-hidden="true" />
+                </div>
+
+                <div className="workflow-node-content">
+                  <p className="workflow-node-title">Frontend Craft</p>
+                  <p className="workflow-node-text">
+                    React • Next.js • UI systems
+                  </p>
+                </div>
+              </div>
+
+              {/* Backend and cloud workflow */}
+              <div className="workflow-node workflow-node-right">
+                <div className="workflow-node-icon workflow-node-icon-node">
+                  <FaNodeJs aria-hidden="true" />
+                </div>
+
+                <div className="workflow-node-content">
+                  <p className="workflow-node-title">Backend &amp; Cloud</p>
+                  <p className="workflow-node-text">
+                    APIs • deployment • scalability
+                  </p>
+                </div>
+              </div>
+
+              {/* QA and improvement workflow */}
+              <div className="workflow-node workflow-node-bottom-right">
+                <div className="workflow-node-icon workflow-node-icon-quality">
+                  ✓
+                </div>
+
+                <div className="workflow-node-content">
+                  <p className="workflow-node-title">Quality &amp; Iteration</p>
+                  <p className="workflow-node-text">
+                    Test • refine • improve
+                  </p>
+                </div>
+              </div>
+
+              {/* Systems thinking workflow */}
+              <div className="workflow-node workflow-node-bottom-left">
+                <div className="workflow-node-icon workflow-node-icon-systems">
+                  <FaBrain aria-hidden="true" />
+                </div>
+
+                <div className="workflow-node-content">
+                  <p className="workflow-node-title">Systems Mindset</p>
+                  <p className="workflow-node-text">
+                    Reliable • clear • connected
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
