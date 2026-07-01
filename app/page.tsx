@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 
 import InteractiveBangladeshGlobe from "../components/InteractiveBangladeshGlobe";
 
@@ -64,13 +64,34 @@ export default function Home() {
   const [socialIndicator, setSocialIndicator] =
     useState<SocialId>("linkedin");
 
-  function handleNavigation(section: SectionId) {
-    setActiveSection(section);
-    setSidebarIndicator(section);
 
-    // Top navigation has no Home item, so Work is the visual fallback.
-    setTopIndicator(section === "home" ? "work" : section);
+function handleNavigation(
+  event: MouseEvent<HTMLAnchorElement>,
+  section: SectionId
+) {
+  setActiveSection(section);
+  setSidebarIndicator(section);
+
+  // Top navigation has no Home item, so Work is the visual fallback.
+  setTopIndicator(section === "home" ? "work" : section);
+
+  /*
+    Home should always return to the true top of the portfolio,
+    not just the hero section's current anchor offset.
+  */
+  if (section === "home") {
+    event.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    window.history.replaceState(null, "", "#home");
   }
+}
+
+
 
   return (
     <main className="portfolio-shell">
@@ -104,7 +125,7 @@ export default function Home() {
               href={`#${item.id}`}
               className="nav-item"
               aria-current={activeSection === item.id ? "page" : undefined}
-              onClick={() => handleNavigation(item.id)}
+              onClick={(event) => handleNavigation(event, item.id)}
               onMouseEnter={() => setSidebarIndicator(item.id)}
               onFocus={() => setSidebarIndicator(item.id)}
             >
@@ -221,7 +242,7 @@ export default function Home() {
                 href={`#${item.id}`}
                 className="top-nav-link"
                 aria-current={activeSection === item.id ? "page" : undefined}
-                onClick={() => handleNavigation(item.id)}
+                onClick={(event) => handleNavigation(event, item.id)}
                 onMouseEnter={() => setTopIndicator(item.id)}
                 onFocus={() => setTopIndicator(item.id)}
               >
