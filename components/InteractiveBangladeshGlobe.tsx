@@ -6,13 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./InteractiveBangladeshGlobe.module.css";
 
 /*
-  react-globe.gl uses WebGL, so it must load in the browser only.
+  Globe uses WebGL, so it loads only in the browser.
+  Returning null prevents any old loading orb/circle from appearing.
 */
 const Globe = dynamic(
   () => import("react-globe.gl").then((module) => module.default),
   {
     ssr: false,
-    loading: () => <div className={styles.loadingGlobe} />,
+    loading: () => null,
   }
 ) as any;
 
@@ -29,31 +30,37 @@ type GeoFeature = {
   };
 };
 
-type MarkerDatum = {
+type DhakaMarker = {
   id: string;
   lat: number;
   lng: number;
 };
 
-const DHAKA_MARKER: MarkerDatum = {
+/*
+  City-center point only.
+  This is not your house address, GPS, IP, or live location.
+*/
+const DHAKA_MARKER: DhakaMarker = {
   id: "dhaka-bangladesh",
   lat: 23.8103,
   lng: 90.4125,
 };
 
 /*
-  This is only a generic city-level map search.
-  It does not use your home address, IP address, GPS, or browser permission.
+  Opens generic Dhaka map search only.
 */
 const DHAKA_MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=Dhaka%2C%20Bangladesh";
 
 export default function InteractiveBangladeshGlobe() {
   const globeRef = useRef<any>(null);
+
   const [bangladeshPolygon, setBangladeshPolygon] =
     useState<GeoFeature | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function loadBangladeshBoundary() {
       try {
         const response = await fetch(
@@ -72,18 +79,22 @@ export default function InteractiveBangladeshGlobe() {
             country.properties?.ADMIN === "Bangladesh"
         );
 
-        if (bangladesh) {
+        if (isMounted && bangladesh) {
           setBangladeshPolygon(bangladesh);
         }
       } catch {
         /*
-          The globe still works if boundary data cannot load.
-          The city-level pin remains visible.
+          If the country boundary cannot load, the globe still works.
+          The red Dhaka pin remains visible.
         */
       }
     }
 
     loadBangladeshBoundary();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   function handleGlobeReady() {
@@ -93,15 +104,20 @@ export default function InteractiveBangladeshGlobe() {
       return;
     }
 
+    const controls = globe.controls();
+
+    if (!controls) {
+      return;
+    }
+
     /*
-      Refresh animation:
-      Start slightly farther away, then smoothly arrive at Bangladesh.
+      Start farther away, then smoothly settle into Bangladesh.
     */
     globe.pointOfView(
       {
         lat: 23.8,
         lng: 90.4,
-        altitude: 1.62,
+        altitude: 1.72,
       },
       0
     );
@@ -111,59 +127,85 @@ export default function InteractiveBangladeshGlobe() {
         {
           lat: 23.8,
           lng: 90.4,
-          altitude: 1.22,
+          altitude: 1.2,
         },
-        1300
+        1350
       );
-    }, 220);
+    }, 180);
 
-    const controls = globe.controls();
-
+    /*
+      Smooth iOS-like movement.
+    */
     controls.enablePan = false;
     controls.enableZoom = true;
     controls.enableDamping = true;
 
-    controls.dampingFactor = 0.08;
-    controls.rotateSpeed = 0.58;
-    controls.zoomSpeed = 0.42;
+    controls.dampingFactor = 0.065;
+    controls.rotateSpeed = 0.46;
+    controls.zoomSpeed = 0.34;
 
     /*
-      Zoom behavior:
-      - Zoom in is allowed.
-      - Zoom out is intentionally limited, so the globe
-        never turns into a tiny flat-looking circle.
+      Zoom in is allowed.
+      Zoom out is clamped so the globe never becomes tiny.
     */
     controls.minDistance = 150;
-    controls.maxDistance = 248;
+    controls.maxDistance = 230;
 
     /*
-      Very slow living-globe movement.
-      Dragging still works normally.
+      Ambient auto-rotation starts after the intro animation.
+      It pauses during drag and resumes gently afterwards.
     */
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.085;
+    controls.autoRotate = false;
+    controls.autoRotateSpeed = 0.05;
+
+    let resumeRotationTimer: number | undefined;
+
+    const stopAutoRotate = () => {
+      if (resumeRotationTimer !== undefined) {
+        window.clearTimeout(resumeRotationTimer);
+      }
+
+      controls.autoRotate = false;
+    };
+
+    const restartAutoRotate = () => {
+      if (resumeRotationTimer !== undefined) {
+        window.clearTimeout(resumeRotationTimer);
+      }
+
+      resumeRotationTimer = window.setTimeout(() => {
+        controls.autoRotate = true;
+      }, 1600);
+    };
+
+    controls.addEventListener("start", stopAutoRotate);
+    controls.addEventListener("end", restartAutoRotate);
+
+    window.setTimeout(() => {
+      controls.autoRotate = true;
+    }, 1750);
 
     /*
       Material polish without importing THREE directly.
-      This avoids the TypeScript error you saw before.
+      This avoids the missing declaration-file error.
     */
     const material = globe.globeMaterial?.();
 
     if (material) {
-      material.color.set("#c9d5ff");
-      material.emissive.set("#101a50");
-      material.emissiveIntensity = 0.11;
-      material.specular.set("#f3f7ff");
+      material.color.set("#cbd7ff");
+      material.emissive.set("#111b51");
+      material.emissiveIntensity = 0.12;
+      material.specular.set("#f5f8ff");
       material.shininess = 34;
       material.bumpScale = 3.1;
     }
   }
 
-  function createBangladeshMarker() {
+  function createBangladeshPin() {
     const button = document.createElement("button");
 
     button.type = "button";
-    button.className = styles.mapMarker;
+    button.className = styles.mapPin;
     button.setAttribute(
       "aria-label",
       "Open Dhaka, Bangladesh in Google Maps"
@@ -174,35 +216,38 @@ export default function InteractiveBangladeshGlobe() {
     };
 
     const pulse = document.createElement("span");
-    pulse.className = styles.mapMarkerPulse;
+    pulse.className = styles.mapPinPulse;
 
-    const pin = document.createElement("span");
-    pin.className = styles.mapMarkerPin;
-
-    const name = document.createElement("span");
-    name.className = styles.mapMarkerName;
-    name.textContent = "Shahadat Sardar";
+    const pinHead = document.createElement("span");
+    pinHead.className = styles.mapPinHead;
 
     button.appendChild(pulse);
-    button.appendChild(pin);
-    button.appendChild(name);
+    button.appendChild(pinHead);
 
     return button;
   }
 
   return (
     <div className={styles.globeShell}>
-      {/* Sky / space atmosphere */}
-      <div className={styles.sceneStarfield} />
-      <div className={styles.sceneAura} />
-      <div className={styles.sceneHalo} />
+      {/* Sky / subtle galaxy environment */}
+      <div className={styles.skyParticles} />
+      <div className={styles.skyAura} />
+      <div className={styles.skyHalo} />
 
-      {/* 3D floating base */}
-      <div className={styles.sceneBeam} />
-      <div className={styles.sceneShadow} />
-      <div className={styles.scenePlatformOuter} />
-      <div className={styles.scenePlatformInner} />
-      <div className={styles.scenePlatformGlow} />
+      {/* Floating 3D platform */}
+      <div className={styles.lightBeam} />
+      <div className={styles.floorShadow} />
+      <div className={styles.platformOuter} />
+      <div className={styles.platformInner} />
+      <div className={styles.platformHighlight} />
+
+      {/* Fixed label outside the globe canvas, so it never gets cut */}
+      <div className={styles.identityTag}>
+        <span className={styles.identityTagDot} />
+        <span>Shahadat Sardar</span>
+      </div>
+
+      <span className={styles.identityConnector} aria-hidden="true" />
 
       <div className={styles.globeCanvas}>
         <Globe
@@ -214,19 +259,19 @@ export default function InteractiveBangladeshGlobe() {
           globeImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg"
           bumpImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png"
           showAtmosphere
-          atmosphereColor="#a8a0ff"
+          atmosphereColor="#a9a2ff"
           atmosphereAltitude={0.13}
           polygonsData={bangladeshPolygon ? [bangladeshPolygon] : []}
           polygonGeoJsonGeometry="geometry"
-          polygonCapColor={() => "rgba(110, 151, 255, 0.23)"}
-          polygonSideColor={() => "rgba(103, 86, 226, 0.08)"}
-          polygonStrokeColor={() => "rgba(223, 239, 255, 0.94)"}
+          polygonCapColor={() => "rgba(108, 150, 255, 0.22)"}
+          polygonSideColor={() => "rgba(102, 84, 228, 0.08)"}
+          polygonStrokeColor={() => "rgba(227, 241, 255, 0.94)"}
           polygonAltitude={0.018}
           htmlElementsData={[DHAKA_MARKER]}
           htmlLat="lat"
           htmlLng="lng"
-          htmlAltitude={0.045}
-          htmlElement={createBangladeshMarker}
+          htmlAltitude={0.04}
+          htmlElement={createBangladeshPin}
           onGlobeReady={handleGlobeReady}
         />
       </div>
@@ -238,13 +283,13 @@ export default function InteractiveBangladeshGlobe() {
         rel="noreferrer"
         aria-label="Open Dhaka, Bangladesh in Google Maps"
       >
-        <span className={styles.locationPillIcon} aria-hidden="true">
+        <span className={styles.locationIcon} aria-hidden="true">
           ⌖
         </span>
 
         <span>Dhaka, Bangladesh</span>
 
-        <span className={styles.locationPillArrow} aria-hidden="true">
+        <span className={styles.locationArrow} aria-hidden="true">
           ↗
         </span>
       </a>
