@@ -1,0 +1,106 @@
+/* =========================================================
+   LIQUID GLASS CORE — MOTION
+   Stable hover, press, focus, and reduced-motion behavior.
+   ========================================================= */
+
+.lg-motion {
+  transition:
+    transform var(--lg-duration-normal) var(--lg-ease-out),
+    box-shadow var(--lg-duration-normal) var(--lg-ease-out),
+    background-color var(--lg-duration-normal) var(--lg-ease-out),
+    border-color var(--lg-duration-normal) var(--lg-ease-out),
+    filter var(--lg-duration-normal) var(--lg-ease-out),
+    opacity var(--lg-duration-normal) var(--lg-ease-out);
+}
+
+.lg-hover-lift {
+  transition:
+    transform var(--lg-duration-normal) var(--lg-ease-out),
+    box-shadow var(--lg-duration-normal) var(--lg-ease-out),
+    border-color var(--lg-duration-normal) var(--lg-ease-out),
+    filter var(--lg-duration-normal) var(--lg-ease-out);
+}
+
+.lg-hover-lift:hover {
+  transform: translateY(var(--lg-hover-lift));
+}
+
+.lg-hover-lift:active {
+  transform: translateY(0) scale(var(--lg-press-scale));
+}
+
+.lg-pressable {
+  transition:
+    transform var(--lg-duration-fast) var(--lg-ease-press),
+    box-shadow var(--lg-duration-fast) var(--lg-ease-press),
+    filter var(--lg-duration-fast) var(--lg-ease-press);
+}
+
+.lg-pressable:active {
+  transform: scale(var(--lg-press-scale));
+}
+
+.lg-focusable:focus-visible {
+  outline: none;
+  box-shadow: var(--lg-focus-ring);
+}
+
+@keyframes lg-liquid-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.lg-liquid-enter {
+  animation: lg-liquid-enter var(--lg-duration-slow) var(--lg-ease-smooth)
+    both;
+}
+
+@keyframes lg-soft-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.lg-soft-float {
+  animation: lg-soft-float 5.8s ease-in-out infinite;
+}
+
+@keyframes lg-glass-breathe {
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+
+  50% {
+    filter: brightness(1.035) saturate(1.06);
+  }
+}
+
+.lg-glass-breathe {
+  animation: lg-glass-breathe 5.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

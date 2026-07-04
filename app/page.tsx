@@ -296,10 +296,11 @@ function handleNavigation(
                 <FiArrowRight aria-hidden="true" />
               </a>
 
-              <a className="hero-secondary-action" href="#contact">
+              <a    className="hero-secondary-action" href="#contact">
                 Let&apos;s connect
                 <FiArrowUpRight aria-hidden="true" />
               </a>
+
             </div>
 
             <div className="hero-stack" aria-label="Core technology stack">

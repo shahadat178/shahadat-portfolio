@@ -1,9 +1,64 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type RefAttributes,
+} from "react";
+
 
 import styles from "./InteractiveBangladeshGlobe.module.css";
+
+
+
+type GlobeControls = {
+  enablePan: boolean;
+  enableZoom: boolean;
+  enableDamping: boolean;
+  dampingFactor: number;
+  rotateSpeed: number;
+  zoomSpeed: number;
+  minDistance: number;
+  maxDistance: number;
+  autoRotate: boolean;
+  autoRotateSpeed: number;
+  addEventListener: (
+    event: "start" | "end",
+    listener: () => void
+  ) => void;
+};
+
+type GlobeMaterial = {
+  color: { set: (value: string) => void };
+  emissive: { set: (value: string) => void };
+  emissiveIntensity: number;
+  specular: { set: (value: string) => void };
+  shininess: number;
+  bumpScale: number;
+};
+
+type GlobeHandle = {
+  controls: () => GlobeControls | undefined;
+  pointOfView: (
+    position: {
+      lat: number;
+      lng: number;
+      altitude: number;
+    },
+    duration?: number
+  ) => void;
+  globeMaterial?: () => GlobeMaterial | undefined;
+};
+
+type GlobeComponent = ComponentType<
+  Record<string, unknown> & RefAttributes<GlobeHandle>
+>;
+
+
 
 /*
   Globe uses WebGL, so it loads only in the browser.
@@ -15,7 +70,9 @@ const Globe = dynamic(
     ssr: false,
     loading: () => null,
   }
-) as any;
+) as unknown as GlobeComponent;
+
+
 
 type GeoFeature = {
   type: "Feature";
@@ -53,7 +110,7 @@ const DHAKA_MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=Dhaka%2C%20Bangladesh";
 
 export default function InteractiveBangladeshGlobe() {
-  const globeRef = useRef<any>(null);
+  const globeRef = useRef<GlobeHandle | null>(null);
 
   const [bangladeshPolygon, setBangladeshPolygon] =
     useState<GeoFeature | null>(null);

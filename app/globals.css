@@ -1,3 +1,6 @@
+
+@import "../styles/liquid-glass/index.css";
+
 @import "tailwindcss";
 
 /* =========================================================
@@ -1282,6 +1285,11 @@ transition:
   margin-top: 32px;
 }
 
+/* =========================================================
+   HERO CTA BUTTONS — iOS-STYLE CALM LIQUID GLASS
+   Single-layer surfaces. No flashy shine animation.
+   ========================================================= */
+
 .hero-primary-action,
 .hero-secondary-action {
   display: inline-flex;
@@ -1290,77 +1298,156 @@ transition:
   gap: 9px;
 
   min-height: 50px;
-  padding: 0 20px;
+  padding: 0 21px;
 
+  border: 0;
   border-radius: 999px;
 
   font-size: 13px;
   font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
 
   transition:
-    transform 260ms var(--ease-liquid),
-    box-shadow 260ms var(--ease-liquid),
-    background 260ms ease,
-    color 260ms ease;
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.hero-primary-action:focus-visible,
+.hero-secondary-action:focus-visible {
+  outline: 3px solid rgba(65, 124, 255, 0.28);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------
+   PRIMARY — Explore my work
+   One calm molded-blue surface.
+   No outer rim. No moving white stripe.
+   --------------------------------------------------------- */
+
 .hero-primary-action {
-  border: 1px solid rgba(255, 255, 255, 0.34);
   color: #ffffff;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.2),
-      transparent 42%
+    radial-gradient(
+      ellipse 90% 100% at 18% -36%,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.08) 42%,
+      transparent 70%
     ),
-    linear-gradient(135deg, #397fff, #7358f5);
-
-  box-shadow:
-    0 14px 28px rgba(65, 85, 220, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.hero-primary-action:hover {
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 20px 34px rgba(65, 85, 220, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34);
-}
-
-.hero-secondary-action {
-  border: 1px solid rgba(108, 153, 255, 0.2);
-  color: var(--blue);
-
-  background:
+    radial-gradient(
+      ellipse 90% 120% at 100% 120%,
+      rgba(165, 143, 255, 0.22) 0%,
+      transparent 64%
+    ),
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.86),
-      rgba(224, 237, 255, 0.52)
+      #4d8cff 0%,
+      #6078ff 52%,
+      #7859ef 100%
     );
 
   box-shadow:
-    0 10px 20px rgba(77, 112, 180, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+    0 13px 25px rgba(67, 83, 210, 0.24),
+    0 4px 9px rgba(54, 64, 166, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(41, 47, 143, 0.16);
+}
+
+.hero-primary-action::before,
+.hero-primary-action::after {
+  content: none;
+  display: none;
+}
+
+.hero-primary-action:hover {
+  color: #ffffff;
+
+  box-shadow:
+    0 18px 32px rgba(67, 83, 210, 0.3),
+    0 6px 13px rgba(54, 64, 166, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(41, 47, 143, 0.14);
+
+  filter: brightness(1.025) saturate(1.025);
+  transform: translateY(-2px);
+}
+
+.hero-primary-action:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ---------------------------------------------------------
+   SECONDARY — Let's connect
+   Clear frosted glass, same calm language.
+   --------------------------------------------------------- */
+
+.hero-secondary-action {
+  color: #3178ed;
+
+  background:
+    radial-gradient(
+      ellipse 92% 100% at 18% -34%,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.18) 43%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 76% 110% at 100% 122%,
+      rgba(159, 198, 255, 0.22) 0%,
+      transparent 64%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(218, 235, 255, 0.64)
+    );
+
+  box-shadow:
+    0 12px 23px rgba(69, 103, 182, 0.11),
+    0 4px 9px rgba(69, 103, 182, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -1px 0 rgba(93, 151, 255, 0.12);
+
+  backdrop-filter: blur(18px) saturate(155%);
+  -webkit-backdrop-filter: blur(18px) saturate(155%);
+}
+
+.hero-secondary-action::before,
+.hero-secondary-action::after {
+  content: none;
+  display: none;
 }
 
 .hero-secondary-action:hover {
-  transform: translateY(-3px);
-  color: #ffffff;
-
-  background: linear-gradient(135deg, #4d8bff, #7b61f6);
+  color: #2868dd;
 
   box-shadow:
-    0 18px 30px rgba(72, 99, 224, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 17px 30px rgba(69, 103, 182, 0.16),
+    0 6px 12px rgba(69, 103, 182, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(93, 151, 255, 0.16);
+
+  filter: brightness(1.02);
+  transform: translateY(-2px);
+}
+
+.hero-secondary-action:active {
+  transform: translateY(0) scale(0.985);
 }
 
 .hero-primary-action svg,
 .hero-secondary-action svg {
   width: 16px;
   height: 16px;
+  flex: 0 0 auto;
 }
+
+
 
 /* Technology chips */
 .hero-stack {
@@ -1705,11 +1792,11 @@ transition:
 
 .workflow-node-right {
   top: 218px;
-  right: -72px;
+  right: -50.5px;
 }
 
 .workflow-node-bottom-left {
-  bottom: 16px;
+  bottom: 18px;
   left: 8px;
 }
 
@@ -1717,6 +1804,8 @@ transition:
   right: 8px;
   bottom: 18px;
 }
+
+
 
 /* =========================================================
    CONNECTOR LINES
@@ -1763,12 +1852,13 @@ transition:
 
 .workflow-line-3 {
   top: 264px;
-  left: 434px;
+  left: 382px;
 
   width: 82px;
 
   transform: rotate(2deg);
 }
+
 
 .workflow-line-4 {
   top: 368px;
