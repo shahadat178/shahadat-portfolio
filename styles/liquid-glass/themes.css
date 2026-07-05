@@ -1,8 +1,20 @@
 /* =========================================================
-   LIQUID GLASS CORE — THEMES
+   LIQUID GLASS — THEME ENGINE
+   Four intentional themes using the same design system.
+
+   Default: Aurora
+   Alternatives: Frost, Midnight Ash, Emerald
+
+   This file changes color behavior only.
+   Layout, components, and motion stay identical across themes.
    ========================================================= */
 
-/* Default: Aurora */
+/* =========================================================
+   AURORA — DEFAULT
+   Electric blue identity with controlled violet depth.
+   Best for the main portfolio experience.
+   ========================================================= */
+
 :root,
 html[data-glass-theme="aurora"] {
   --lg-page-base: #edf3ff;
@@ -27,6 +39,10 @@ html[data-glass-theme="aurora"] {
 
   --lg-shadow-color: 66, 88, 175;
 
+  --lg-shadow-inset:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 -1px 0 rgba(100, 142, 255, 0.1);
+
   --lg-text: #17305a;
   --lg-text-strong: #081c40;
   --lg-text-muted: #61769b;
@@ -43,130 +59,166 @@ html[data-glass-theme="aurora"] {
   --lg-warning: #eaa142;
   --lg-danger: #ef5f68;
   --lg-info: #3f8cff;
+
+  --lg-focus-ring: 0 0 0 4px rgba(63, 124, 255, 0.22);
 }
 
-/* Frost: White / Silver Glass */
+/* =========================================================
+   FROST
+   Neutral silver-blue daylight glass.
+   Professional, calm, low-saturation alternative.
+   ========================================================= */
+
 html[data-glass-theme="frost"] {
-  --lg-page-base: #eceff4;
-  --lg-page-deep: #d9dee8;
+  --lg-page-base: #eef2f8;
+  --lg-page-deep: #d9e1ee;
 
-  --lg-ambient-one: rgba(255, 255, 255, 0.82);
-  --lg-ambient-two: rgba(174, 186, 204, 0.25);
-  --lg-ambient-three: rgba(206, 218, 235, 0.34);
+  --lg-ambient-one: rgba(255, 255, 255, 0.84);
+  --lg-ambient-two: rgba(153, 177, 214, 0.2);
+  --lg-ambient-three: rgba(207, 222, 242, 0.38);
 
-  --lg-surface: rgba(255, 255, 255, 0.38);
+  --lg-surface: rgba(255, 255, 255, 0.4);
   --lg-surface-soft: rgba(255, 255, 255, 0.22);
-  --lg-surface-strong: rgba(255, 255, 255, 0.7);
-  --lg-surface-solid: rgba(250, 251, 253, 0.95);
+  --lg-surface-strong: rgba(255, 255, 255, 0.72);
+  --lg-surface-solid: rgba(250, 252, 255, 0.96);
 
   --lg-border: rgba(255, 255, 255, 0.76);
   --lg-border-strong: rgba(255, 255, 255, 0.98);
-  --lg-border-dim: rgba(91, 105, 126, 0.16);
+  --lg-border-dim: rgba(87, 112, 150, 0.16);
 
   --lg-highlight-top: rgba(255, 255, 255, 1);
-  --lg-highlight-soft: rgba(255, 255, 255, 0.68);
-  --lg-highlight-cool: rgba(231, 237, 246, 0.75);
+  --lg-highlight-soft: rgba(255, 255, 255, 0.7);
+  --lg-highlight-cool: rgba(225, 234, 247, 0.8);
 
-  --lg-shadow-color: 75, 87, 108;
+  --lg-shadow-color: 70, 88, 119;
 
-  --lg-text: #2a3748;
-  --lg-text-strong: #131e2b;
-  --lg-text-muted: #687688;
-  --lg-text-faint: #9aa5b3;
+  --lg-shadow-inset:
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    inset 0 -1px 0 rgba(126, 157, 201, 0.1);
 
-  --lg-accent: #4b80f8;
-  --lg-accent-strong: #6970eb;
-  --lg-accent-light: #a8c7ff;
+  --lg-text: #283b58;
+  --lg-text-strong: #13233d;
+  --lg-text-muted: #65758c;
+  --lg-text-faint: #929fb0;
 
-  --lg-accent-glow: rgba(75, 128, 248, 0.22);
-  --lg-accent-glow-strong: rgba(105, 112, 235, 0.2);
+  --lg-accent: #3e7cf1;
+  --lg-accent-strong: #5b6fe0;
+  --lg-accent-light: #a6c7ff;
 
-  --lg-success: #27a96d;
-  --lg-warning: #d7973d;
-  --lg-danger: #da5e67;
-  --lg-info: #4b80f8;
+  --lg-accent-glow: rgba(62, 124, 241, 0.2);
+  --lg-accent-glow-strong: rgba(91, 111, 224, 0.22);
+
+  --lg-success: #249d6d;
+  --lg-warning: #d28f35;
+  --lg-danger: #d85d68;
+  --lg-info: #3e7cf1;
+
+  --lg-focus-ring: 0 0 0 4px rgba(62, 124, 241, 0.22);
 }
 
-/* Midnight: Dark Navy Glass */
+/* =========================================================
+   MIDNIGHT ASH
+   Rich graphite and navy glass.
+   Dark mode without pure black or gaming-neon overload.
+   ========================================================= */
+
 html[data-glass-theme="midnight"] {
-  --lg-page-base: #071224;
-  --lg-page-deep: #0c1b35;
+  --lg-page-base: #0b1322;
+  --lg-page-deep: #111d33;
 
-  --lg-ambient-one: rgba(51, 105, 255, 0.25);
-  --lg-ambient-two: rgba(146, 78, 255, 0.19);
-  --lg-ambient-three: rgba(30, 202, 255, 0.12);
+  --lg-ambient-one: rgba(54, 104, 255, 0.18);
+  --lg-ambient-two: rgba(127, 86, 255, 0.15);
+  --lg-ambient-three: rgba(61, 186, 255, 0.1);
 
-  --lg-surface: rgba(20, 34, 61, 0.5);
-  --lg-surface-soft: rgba(16, 28, 52, 0.3);
-  --lg-surface-strong: rgba(35, 53, 88, 0.74);
-  --lg-surface-solid: rgba(15, 27, 50, 0.94);
+  --lg-surface: rgba(25, 38, 63, 0.54);
+  --lg-surface-soft: rgba(17, 28, 48, 0.36);
+  --lg-surface-strong: rgba(42, 59, 91, 0.74);
+  --lg-surface-solid: rgba(19, 29, 49, 0.94);
 
-  --lg-border: rgba(192, 216, 255, 0.2);
-  --lg-border-strong: rgba(220, 235, 255, 0.42);
-  --lg-border-dim: rgba(150, 180, 255, 0.14);
+  --lg-border: rgba(192, 214, 255, 0.18);
+  --lg-border-strong: rgba(222, 235, 255, 0.38);
+  --lg-border-dim: rgba(129, 162, 226, 0.14);
 
-  --lg-highlight-top: rgba(230, 240, 255, 0.24);
-  --lg-highlight-soft: rgba(201, 222, 255, 0.12);
-  --lg-highlight-cool: rgba(106, 165, 255, 0.15);
+  --lg-highlight-top: rgba(231, 240, 255, 0.22);
+  --lg-highlight-soft: rgba(196, 215, 255, 0.1);
+  --lg-highlight-cool: rgba(87, 152, 255, 0.14);
 
   --lg-shadow-color: 0, 0, 0;
 
-  --lg-text: #dce9ff;
-  --lg-text-strong: #f4f8ff;
-  --lg-text-muted: #a8b9d7;
-  --lg-text-faint: #7184aa;
+  --lg-shadow-inset:
+    inset 0 1px 0 rgba(231, 240, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.26);
 
-  --lg-accent: #6d9cff;
-  --lg-accent-strong: #9a79ff;
-  --lg-accent-light: #b8d0ff;
+  --lg-text: #dce8fb;
+  --lg-text-strong: #f5f8ff;
+  --lg-text-muted: #a8b7d2;
+  --lg-text-faint: #7283a1;
 
-  --lg-accent-glow: rgba(109, 156, 255, 0.3);
-  --lg-accent-glow-strong: rgba(154, 121, 255, 0.32);
+  --lg-accent: #72a0ff;
+  --lg-accent-strong: #a281ff;
+  --lg-accent-light: #bed4ff;
 
-  --lg-success: #3bd297;
-  --lg-warning: #f0b65e;
-  --lg-danger: #ff747e;
-  --lg-info: #6da7ff;
+  --lg-accent-glow: rgba(114, 160, 255, 0.24);
+  --lg-accent-glow-strong: rgba(162, 129, 255, 0.26);
+
+  --lg-success: #46d49f;
+  --lg-warning: #f0b661;
+  --lg-danger: #ff7884;
+  --lg-info: #72a0ff;
+
+  --lg-focus-ring: 0 0 0 4px rgba(114, 160, 255, 0.28);
 }
 
-/* Emerald: Green / Cyan Glass */
-html[data-glass-theme="emerald"] {
-  --lg-page-base: #e8f7f3;
-  --lg-page-deep: #d6eee8;
+/* =========================================================
+   EMERALD
+   Fresh teal and emerald glass.
+   Kept restrained so it remains premium and readable.
+   ========================================================= */
 
-  --lg-ambient-one: rgba(31, 189, 143, 0.25);
-  --lg-ambient-two: rgba(70, 208, 255, 0.18);
-  --lg-ambient-three: rgba(151, 255, 205, 0.16);
+html[data-glass-theme="emerald"] {
+  --lg-page-base: #eaf8f4;
+  --lg-page-deep: #d5eee7;
+
+  --lg-ambient-one: rgba(33, 183, 137, 0.22);
+  --lg-ambient-two: rgba(50, 191, 235, 0.16);
+  --lg-ambient-three: rgba(192, 255, 227, 0.18);
 
   --lg-surface: rgba(255, 255, 255, 0.44);
   --lg-surface-soft: rgba(255, 255, 255, 0.25);
-  --lg-surface-strong: rgba(255, 255, 255, 0.7);
-  --lg-surface-solid: rgba(248, 255, 252, 0.94);
+  --lg-surface-strong: rgba(255, 255, 255, 0.72);
+  --lg-surface-solid: rgba(248, 255, 252, 0.95);
 
-  --lg-border: rgba(255, 255, 255, 0.64);
-  --lg-border-strong: rgba(255, 255, 255, 0.92);
-  --lg-border-dim: rgba(43, 154, 126, 0.18);
+  --lg-border: rgba(255, 255, 255, 0.66);
+  --lg-border-strong: rgba(255, 255, 255, 0.94);
+  --lg-border-dim: rgba(41, 145, 119, 0.16);
 
-  --lg-highlight-top: rgba(255, 255, 255, 0.96);
-  --lg-highlight-soft: rgba(255, 255, 255, 0.56);
-  --lg-highlight-cool: rgba(182, 255, 228, 0.36);
+  --lg-highlight-top: rgba(255, 255, 255, 0.97);
+  --lg-highlight-soft: rgba(255, 255, 255, 0.58);
+  --lg-highlight-cool: rgba(173, 247, 220, 0.34);
 
-  --lg-shadow-color: 43, 128, 110;
+  --lg-shadow-color: 39, 119, 101;
 
-  --lg-text: #143e3a;
-  --lg-text-strong: #082a27;
-  --lg-text-muted: #5c7d78;
-  --lg-text-faint: #88a29f;
+  --lg-shadow-inset:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -1px 0 rgba(38, 165, 131, 0.1);
 
-  --lg-accent: #18aa82;
-  --lg-accent-strong: #18b7b1;
-  --lg-accent-light: #8de7cf;
+  --lg-text: #16463f;
+  --lg-text-strong: #082d29;
+  --lg-text-muted: #5c7974;
+  --lg-text-faint: #8ba29e;
 
-  --lg-accent-glow: rgba(24, 170, 130, 0.28);
-  --lg-accent-glow-strong: rgba(24, 183, 177, 0.24);
+  --lg-accent: #159d7b;
+  --lg-accent-strong: #1da7b7;
+  --lg-accent-light: #91e3cf;
 
-  --lg-success: #18aa82;
-  --lg-warning: #dfa342;
-  --lg-danger: #e85f69;
-  --lg-info: #1ba9c8;
+  --lg-accent-glow: rgba(21, 157, 123, 0.24);
+  --lg-accent-glow-strong: rgba(29, 167, 183, 0.2);
+
+  --lg-success: #159d7b;
+  --lg-warning: #d99b3d;
+  --lg-danger: #e3616d;
+  --lg-info: #1d9fbd;
+
+  --lg-focus-ring: 0 0 0 4px rgba(21, 157, 123, 0.22);
 }
+

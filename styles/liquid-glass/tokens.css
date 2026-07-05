@@ -1,16 +1,36 @@
 /* =========================================================
-   LIQUID GLASS CORE — TOKENS
-   Reusable foundation for React, Next.js, Vue, or plain HTML.
-   Theme colors can override these variables later in themes.css.
+   LIQUID GLASS — DESIGN TOKENS
+   Shared foundation for React, Next.js, Vue, and plain HTML.
+
+   Responsibility:
+   - typography
+   - spacing
+   - radius
+   - blur and glass optics
+   - motion
+   - default Aurora fallback values
+
+   Theme overrides belong only in themes.css.
+   Component classes belong only in core.css.
    ========================================================= */
 
 :root {
-  /* ---------- Typography ---------- */
-  --lg-font-sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+  /* =======================================================
+     TYPOGRAPHY
+     ======================================================= */
 
-  /* ---------- Radius system ---------- */
+  --lg-font-sans:
+    var(--font-geist-sans), Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --lg-font-mono:
+    var(--font-geist-mono), "SFMono-Regular", Consolas, "Liberation Mono",
+    monospace;
+
+  /* =======================================================
+     RADIUS SCALE
+     ======================================================= */
+
   --lg-radius-xs: 10px;
   --lg-radius-sm: 14px;
   --lg-radius-md: 18px;
@@ -18,7 +38,10 @@
   --lg-radius-xl: 30px;
   --lg-radius-pill: 999px;
 
-  /* ---------- Spacing system ---------- */
+  /* =======================================================
+     SPACING SCALE
+     ======================================================= */
+
   --lg-space-1: 4px;
   --lg-space-2: 8px;
   --lg-space-3: 12px;
@@ -27,14 +50,39 @@
   --lg-space-6: 24px;
   --lg-space-7: 28px;
   --lg-space-8: 32px;
+  --lg-space-9: 40px;
+  --lg-space-10: 48px;
 
-  /* ---------- Blur / saturation ---------- */
+  /* =======================================================
+     GLASS OPTICS
+     ======================================================= */
+
   --lg-blur-soft: 12px;
   --lg-blur-medium: 20px;
   --lg-blur-strong: 30px;
-  --lg-saturation: 155%;
 
-  /* ---------- Motion ---------- */
+  --lg-saturation-soft: 135%;
+  --lg-saturation-medium: 155%;
+  --lg-saturation-strong: 175%;
+
+  --lg-glass-filter-soft:
+    blur(var(--lg-blur-soft))
+    saturate(var(--lg-saturation-soft));
+
+  --lg-glass-filter:
+    blur(var(--lg-blur-medium))
+    saturate(var(--lg-saturation-medium));
+
+  --lg-glass-filter-strong:
+    blur(var(--lg-blur-strong))
+    saturate(var(--lg-saturation-strong));
+
+  /* =======================================================
+     MOTION
+     Calm, physical, iOS-inspired.
+     No shine sweep. No bouncy motion.
+     ======================================================= */
+
   --lg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --lg-ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --lg-ease-press: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -43,42 +91,46 @@
   --lg-duration-normal: 240ms;
   --lg-duration-slow: 420ms;
 
-  /* ---------- Reusable transform values ---------- */
   --lg-hover-lift: -2px;
   --lg-hover-scale: 1.012;
   --lg-press-scale: 0.985;
 
   /* =======================================================
-     DEFAULT COLOR FOUNDATION
-     Aurora is the fallback/default theme.
-     themes.css will override these through data-glass-theme.
+     DEFAULT THEME — AURORA
+     Blue identity + controlled violet depth.
+     themes.css will override these values for Frost,
+     Midnight Ash, and Emerald.
      ======================================================= */
 
-  /* ---------- Page / ambient background ---------- */
+  /* ---------- Page canvas ---------- */
+
   --lg-page-base: #edf3ff;
   --lg-page-deep: #dce7ff;
 
-  --lg-ambient-one: rgba(101, 137, 255, 0.3);
-  --lg-ambient-two: rgba(145, 99, 255, 0.24);
-  --lg-ambient-three: rgba(115, 203, 255, 0.16);
+  --lg-ambient-one: rgba(77, 121, 255, 0.34);
+  --lg-ambient-two: rgba(132, 92, 255, 0.26);
+  --lg-ambient-three: rgba(73, 204, 255, 0.16);
 
   /* ---------- Glass material ---------- */
+
   --lg-surface: rgba(255, 255, 255, 0.42);
-  --lg-surface-soft: rgba(255, 255, 255, 0.28);
-  --lg-surface-strong: rgba(255, 255, 255, 0.66);
-  --lg-surface-solid: rgba(248, 251, 255, 0.92);
+  --lg-surface-soft: rgba(255, 255, 255, 0.24);
+  --lg-surface-strong: rgba(255, 255, 255, 0.68);
+  --lg-surface-solid: rgba(249, 251, 255, 0.94);
 
-  /* ---------- Borders / reflected edges ---------- */
-  --lg-border: rgba(255, 255, 255, 0.48);
-  --lg-border-strong: rgba(255, 255, 255, 0.8);
-  --lg-border-dim: rgba(109, 134, 210, 0.16);
+  /* ---------- Edges and reflected highlights ---------- */
 
-  --lg-highlight-top: rgba(255, 255, 255, 0.92);
-  --lg-highlight-soft: rgba(255, 255, 255, 0.48);
-  --lg-highlight-cool: rgba(190, 219, 255, 0.36);
+  --lg-border: rgba(255, 255, 255, 0.58);
+  --lg-border-strong: rgba(255, 255, 255, 0.9);
+  --lg-border-dim: rgba(82, 113, 208, 0.18);
 
-  /* ---------- Shadows ---------- */
-  --lg-shadow-color: 77, 98, 177;
+  --lg-highlight-top: rgba(255, 255, 255, 0.96);
+  --lg-highlight-soft: rgba(255, 255, 255, 0.56);
+  --lg-highlight-cool: rgba(187, 216, 255, 0.4);
+
+  /* ---------- Depth ---------- */
+
+  --lg-shadow-color: 66, 88, 175;
 
   --lg-shadow-soft:
     0 10px 26px rgba(var(--lg-shadow-color), 0.09),
@@ -96,36 +148,31 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.88),
     inset 0 -1px 0 rgba(100, 142, 255, 0.1);
 
-  /* ---------- Text ---------- */
-  --lg-text: #10264a;
-  --lg-text-strong: #071a3b;
-  --lg-text-muted: #61759a;
-  --lg-text-faint: #8a9ab7;
+  /* ---------- Text hierarchy ---------- */
 
-  /* ---------- Accent / interactive colors ---------- */
-  --lg-accent: #4f7cff;
-  --lg-accent-strong: #694ff5;
-  --lg-accent-light: #8eb6ff;
+  --lg-text: #17305a;
+  --lg-text-strong: #081c40;
+  --lg-text-muted: #61769b;
+  --lg-text-faint: #8c9cba;
 
-  --lg-accent-glow: rgba(83, 117, 255, 0.3);
-  --lg-accent-glow-strong: rgba(108, 79, 245, 0.34);
+  /* ---------- Brand interaction ---------- */
 
-  /* ---------- Semantic colors ---------- */
-  --lg-success: #17af79;
-  --lg-warning: #ec9c3c;
-  --lg-danger: #ef5b62;
+  --lg-accent: #3f7cff;
+  --lg-accent-strong: #6e4ff3;
+  --lg-accent-light: #9fc2ff;
+
+  --lg-accent-glow: rgba(63, 124, 255, 0.32);
+  --lg-accent-glow-strong: rgba(110, 79, 243, 0.34);
+
+  /* ---------- Semantic feedback ---------- */
+
+  --lg-success: #19ad79;
+  --lg-warning: #eaa142;
+  --lg-danger: #ef5f68;
   --lg-info: #3f8cff;
 
-  /* ---------- Focus ring ---------- */
-  --lg-focus-ring: 0 0 0 4px rgba(79, 124, 255, 0.2);
+  /* ---------- Accessibility ---------- */
 
-  /* ---------- Surface behavior ---------- */
-  --lg-glass-filter: blur(var(--lg-blur-medium))
-    saturate(var(--lg-saturation));
-
-  --lg-glass-filter-soft: blur(var(--lg-blur-soft))
-    saturate(135%);
-
-  --lg-glass-filter-strong: blur(var(--lg-blur-strong))
-    saturate(175%);
+  --lg-focus-ring: 0 0 0 4px rgba(63, 124, 255, 0.22);
 }
+
