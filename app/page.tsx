@@ -139,7 +139,7 @@ function handleNavigation(
             QUICK CONNECT + AVAILABILITY
             ===================================================== */}
         <div className="sidebar-bottom">
-          <div className="quick-connect-card">
+          <div className="quick-connect-card lg-card">
             <div className="sidebar-card-heading">
               <p className="quick-label">QUICK CONNECT</p>
 
@@ -204,7 +204,7 @@ function handleNavigation(
             </div>
           </div>
 
-          <div className="availability-card">
+          <div className="availability-card lg-card">
             <div className="availability-status">
               <span className="status-dot" aria-hidden="true" />
               <span className="status-pulse" aria-hidden="true" />

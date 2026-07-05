@@ -148,8 +148,15 @@ section[id] {
 
 
 /* =========================================================
-   PREMIUM WATER LIQUID-GLASS LOGO CARD
+   SIDEBAR BRAND IDENTITY
+   Reusable liquid material + portfolio-specific layout.
    ========================================================= */
+
+.brand-card {
+  position: relative;
+  z-index: 1;
+}
+
 .brand-logo {
   position: relative;
   isolation: isolate;
@@ -162,50 +169,75 @@ section[id] {
   min-height: 92px;
   padding: 16px 18px;
 
-  border: 1px solid rgba(255, 255, 255, 0.96);
-  border-radius: 24px;
+  border: 1px solid var(--lg-border-strong);
+  border-radius: var(--lg-radius-lg);
 
   background:
     radial-gradient(
-      circle at 18% 90%,
-      rgba(89, 163, 255, 0.26),
-      transparent 40%
+      ellipse 92% 76% at 18% -18%,
+      var(--lg-highlight-soft) 0%,
+      rgba(255, 255, 255, 0.12) 42%,
+      transparent 72%
     ),
     radial-gradient(
-      circle at 90% 18%,
-      rgba(255, 255, 255, 0.92),
-      transparent 34%
+      ellipse 70% 90% at 100% 118%,
+      var(--lg-highlight-cool) 0%,
+      transparent 68%
     ),
     linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(242, 249, 255, 0.76) 42%,
-      rgba(211, 231, 255, 0.58) 100%
+      145deg,
+      var(--lg-surface-solid) 0%,
+      var(--lg-surface-strong) 54%,
+      var(--lg-surface-soft) 100%
     );
 
   box-shadow:
-    0 18px 34px rgba(72, 117, 190, 0.16),
-    0 5px 12px rgba(72, 117, 190, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(111, 169, 255, 0.2);
+    var(--lg-shadow-soft),
+    var(--lg-shadow-inset);
 
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: var(--lg-glass-filter);
+  -webkit-backdrop-filter: var(--lg-glass-filter);
 
   transition:
-    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform var(--lg-duration-normal) var(--lg-ease-out),
+    box-shadow var(--lg-duration-normal) var(--lg-ease-out),
+    border-color var(--lg-duration-normal) var(--lg-ease-out),
+    filter var(--lg-duration-normal) var(--lg-ease-out);
 }
 
-/* Large soft water glow */
 .brand-logo::before {
+  position: absolute;
+  z-index: 0;
+  top: 7px;
+  right: 10px;
+  left: 10px;
+
+  height: 36%;
+
+  content: "";
+  pointer-events: none;
+
+  border-radius: var(--lg-radius-md);
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--lg-highlight-top) 0%,
+      rgba(255, 255, 255, 0.22) 54%,
+      transparent 100%
+    );
+
+  opacity: 0.58;
+}
+
+.brand-logo::after {
   position: absolute;
   z-index: 0;
   right: -34px;
   bottom: -42px;
 
-  width: 130px;
-  height: 130px;
+  width: 128px;
+  height: 128px;
 
   content: "";
   pointer-events: none;
@@ -215,39 +247,14 @@ section[id] {
   background:
     radial-gradient(
       circle,
-      rgba(77, 151, 255, 0.34) 0%,
-      rgba(118, 180, 255, 0.16) 43%,
+      var(--lg-highlight-cool) 0%,
       transparent 72%
     );
 
-  filter: blur(8px);
+  filter: blur(12px);
+  opacity: 0.72;
 }
 
-/* Wet glossy reflection across the top */
-.brand-logo::after {
-  position: absolute;
-  z-index: 0;
-  top: 7px;
-  right: 10px;
-  left: 10px;
-
-  height: 38%;
-
-  content: "";
-  pointer-events: none;
-
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.86) 0%,
-      rgba(255, 255, 255, 0.32) 52%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
-}
-
-/* Keep the logo sharp above all liquid layers */
 .brand-logo img {
   position: relative;
   z-index: 1;
@@ -259,39 +266,54 @@ section[id] {
   object-fit: contain;
 
   filter:
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.5))
-    drop-shadow(0 7px 12px rgba(37, 80, 152, 0.12));
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.58))
+    drop-shadow(0 7px 12px rgba(var(--lg-shadow-color), 0.12));
 }
 
-/* Small premium lift on hover */
 .brand-logo:hover {
-  transform: translateY(-3px) scale(1.01);
+  border-color: var(--lg-border-strong);
 
   box-shadow:
-    0 24px 42px rgba(72, 117, 190, 0.21),
-    0 8px 16px rgba(72, 117, 190, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(111, 169, 255, 0.24);
+    var(--lg-shadow-medium),
+    var(--lg-shadow-inset);
+
+  filter: brightness(1.018);
+  transform: translateY(var(--lg-hover-lift));
 }
 
+.brand-logo:active {
+  transform: translateY(0) scale(var(--lg-press-scale));
+}
 
 .brand-card h2 {
   margin: 12px 0 6px;
+
+  color: var(--lg-text-strong);
+
   font-size: 20px;
+  font-weight: 760;
   line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .brand-card p {
   margin: 0;
-  color: var(--text-muted);
+
+  color: var(--lg-text-muted);
+
   font-size: 13px;
   line-height: 1.5;
 }
 
+
+
+
+
 /* =========================================================
-   SIDEBAR LIQUID-GLASS NAVIGATION
-   One bright selector pill slides smoothly between items.
+   SIDEBAR NAVIGATION
+   Portfolio-specific vertical selector using Liquid Glass tokens.
    ========================================================= */
+
 .side-nav {
   position: relative;
   isolation: isolate;
@@ -304,7 +326,7 @@ section[id] {
   padding: 6px;
 }
 
-/* Shared sidebar liquid-glass selector. */
+/* One moving glass selector behind the active item. */
 .side-nav::before {
   position: absolute;
   z-index: 0;
@@ -317,38 +339,42 @@ section[id] {
   content: "";
   pointer-events: none;
 
-  border: 1px solid rgba(255, 255, 255, 0.98);
-  border-radius: 16px;
+  border: 1px solid var(--lg-border-strong);
+  border-radius: var(--lg-radius-md);
 
   background:
     radial-gradient(
-      circle at 18% 14%,
-      rgba(255, 255, 255, 1),
-      transparent 30%
+      ellipse 88% 94% at 18% -28%,
+      var(--lg-highlight-top) 0%,
+      rgba(255, 255, 255, 0.18) 44%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 72% 100% at 100% 118%,
+      var(--lg-highlight-cool) 0%,
+      transparent 68%
     ),
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.94),
-      rgba(225, 240, 255, 0.6)
+      var(--lg-surface-solid),
+      var(--lg-surface-strong)
     );
 
   box-shadow:
-    0 12px 24px rgba(66, 111, 190, 0.13),
-    0 3px 8px rgba(66, 111, 190, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(103, 177, 255, 0.28);
+    0 9px 19px rgba(var(--lg-shadow-color), 0.13),
+    0 3px 7px rgba(var(--lg-shadow-color), 0.06),
+    var(--lg-shadow-inset);
 
-  filter: saturate(1.08) brightness(1.02);
   will-change: transform;
 
   transform: translateY(0);
 
   transition:
-    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 280ms ease;
+    transform var(--lg-duration-slow) var(--lg-ease-out),
+    box-shadow var(--lg-duration-normal) var(--lg-ease-out),
+    filter var(--lg-duration-normal) var(--lg-ease-out);
 }
 
-/* Navigation labels remain above the sliding pill. */
 .nav-item {
   position: relative;
   z-index: 1;
@@ -357,32 +383,34 @@ section[id] {
   align-items: center;
 
   padding: 0 15px;
-  border-radius: 16px;
+  border-radius: var(--lg-radius-md);
 
-  color: var(--text-main);
+  color: var(--lg-text);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 720;
+  text-decoration: none;
 
   transition:
-    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Do not let old clicked state create a second blue item. */
-.nav-item[aria-current="page"] {
-  color: var(--text-main);
+    color var(--lg-duration-normal) var(--lg-ease-out),
+    transform var(--lg-duration-normal) var(--lg-ease-out);
 }
 
 .nav-item:hover {
+  color: var(--lg-accent);
   transform: translateX(2px);
 }
 
 .nav-item:focus-visible {
-  outline: 3px solid rgba(47, 120, 255, 0.3);
-  outline-offset: 3px;
+  outline: none;
+  box-shadow: var(--lg-focus-ring);
 }
 
-/* Sidebar liquid-pill positions. */
+/* Prevent aria-current from creating a second active style. */
+.nav-item[aria-current="page"] {
+  color: var(--lg-text);
+}
+
+/* Selector positions: 48px item + 10px gap = 58px step. */
 .side-nav[data-active="home"]::before {
   transform: translateY(0);
 }
@@ -407,15 +435,19 @@ section[id] {
   transform: translateY(290px);
 }
 
-/* Only the item under the moving liquid pill becomes blue. */
+/* Only the item above the selector gets the accent color. */
 .side-nav[data-active="home"] a[href="#home"],
 .side-nav[data-active="work"] a[href="#work"],
 .side-nav[data-active="story"] a[href="#story"],
 .side-nav[data-active="experience"] a[href="#experience"],
 .side-nav[data-active="toolkit"] a[href="#toolkit"],
 .side-nav[data-active="contact"] a[href="#contact"] {
-  color: var(--blue);
+  color: var(--lg-accent);
+  font-weight: 780;
 }
+
+
+
 
 /* =========================================================
    PREMIUM LIQUID-GLASS QUICK CONNECT + AVAILABILITY
@@ -429,104 +461,22 @@ section[id] {
   padding-top: 4px;
 }
 
+
+/* =========================================================
+   SIDEBAR UTILITY CARDS
+   Glass material comes from reusable .lg-card.
+   This section keeps only portfolio-specific behavior.
+   ========================================================= */
+
 .quick-connect-card,
 .availability-card {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-
-  border: 1px solid rgba(255, 255, 255, 0.96);
-  border-radius: 22px;
-
-  background:
-    radial-gradient(
-      circle at 92% 15%,
-      rgba(255, 255, 255, 0.92),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.88) 0%,
-      rgba(244, 250, 255, 0.7) 50%,
-      rgba(218, 235, 255, 0.56) 100%
-    );
-
-  box-shadow:
-    0 14px 28px rgba(70, 111, 178, 0.11),
-    0 4px 10px rgba(70, 111, 178, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(137, 184, 255, 0.14);
-
-  backdrop-filter: blur(22px) saturate(170%);
-  -webkit-backdrop-filter: blur(22px) saturate(170%);
-
-  transition:
-    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Watery blue glow inside each card */
-.quick-connect-card::before,
-.availability-card::before {
-  position: absolute;
-  z-index: 0;
-  right: -34px;
-  bottom: -46px;
 
-  width: 116px;
-  height: 116px;
 
-  content: "";
-  pointer-events: none;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(80, 165, 255, 0.3) 0%,
-      rgba(114, 184, 255, 0.12) 47%,
-      transparent 73%
-    );
-
-  filter: blur(9px);
-}
-
-/* Glossy wet top reflection */
-.quick-connect-card::after,
-.availability-card::after {
-  position: absolute;
-  z-index: 0;
-  top: 7px;
-  right: 10px;
-  left: 10px;
-
-  height: 34%;
-
-  content: "";
-  pointer-events: none;
-
-  border-radius: 16px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.78),
-      rgba(255, 255, 255, 0.22) 56%,
-      transparent
-    );
-}
-
-/* .quick-connect-card:hover,
-.availability-card:hover {
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 20px 36px rgba(70, 111, 178, 0.17),
-    0 7px 15px rgba(70, 111, 178, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(137, 184, 255, 0.18);
-} */
 
 /* ---------- Quick Connect ---------- */
 .quick-connect-card {
@@ -570,26 +520,22 @@ section[id] {
   line-height: 1.5;
 }
 
-/* .quick-links {
-  position: relative;
-  z-index: 1;
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-} */
-
 
 
 /* =========================================================
-   SOCIAL LIQUID-GLASS SLIDER
-   One refined blue glass pill moves between social links.
+   SIDEBAR CONNECT + AVAILABILITY
+   Token-driven Liquid Glass interior system.
+   Outer card material comes from .lg-card.
    ========================================================= */
+
+/* =========================================================
+   QUICK CONNECT — SOCIAL SELECTOR
+   ========================================================= */
+
 .quick-links {
   position: relative;
   z-index: 1;
   isolation: isolate;
-  overflow: visible;
 
   display: grid;
   grid-template-rows: repeat(3, 44px);
@@ -598,10 +544,7 @@ section[id] {
   padding: 4px;
 }
 
-/*
-  One moving pill only.
-  The card's decorative glow remains behind this layer.
-*/
+/* One calm selector behind the active social row. */
 .quick-links::before {
   position: absolute;
   z-index: 0;
@@ -614,53 +557,44 @@ section[id] {
   content: "";
   pointer-events: none;
 
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 16px;
+  border: 0;
+  border-radius: var(--lg-radius-md);
 
-  /*
-    All liquid depth is inside one rounded surface.
-    No background-clip border trick, so every corner stays equal.
-  */
   background:
     radial-gradient(
-      ellipse 95% 100% at 16% -26%,
-      rgba(255, 255, 255, 0.44) 0%,
-      rgba(255, 255, 255, 0.12) 34%,
-      transparent 62%
+      ellipse 92% 100% at 18% -30%,
+      rgba(255, 255, 255, 0.32) 0%,
+      rgba(255, 255, 255, 0.08) 40%,
+      transparent 68%
     ),
     radial-gradient(
-      ellipse 90% 120% at 102% 122%,
-      rgba(202, 186, 255, 0.3) 0%,
-      transparent 58%
+      ellipse 88% 112% at 100% 122%,
+      rgba(177, 150, 255, 0.18) 0%,
+      transparent 66%
     ),
     linear-gradient(
       135deg,
-      rgba(55, 135, 255, 0.94) 0%,
-      rgba(75, 110, 246, 0.93) 52%,
-      rgba(108, 81, 231, 0.95) 100%
+      var(--lg-accent) 0%,
+      #5e76ff 52%,
+      var(--lg-accent-strong) 100%
     );
 
   box-shadow:
-    0 10px 20px rgba(56, 89, 211, 0.2),
-    0 3px 7px rgba(56, 89, 211, 0.09),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    inset 0 -1px 0 rgba(35, 50, 164, 0.18);
+    0 10px 20px var(--lg-accent-glow),
+    0 3px 7px rgba(var(--lg-shadow-color), 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(35, 47, 145, 0.16);
 
   will-change: transform;
+
   transform: translateY(0);
 
   transition:
-    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 280ms ease;
+    transform var(--lg-duration-slow) var(--lg-ease-out),
+    box-shadow var(--lg-duration-normal) var(--lg-ease-out),
+    filter var(--lg-duration-normal) var(--lg-ease-out);
 }
 
-/* There must be no second reflection layer. */
-.quick-links::after {
-  content: none;
-  display: none;
-}
-
-/* Clickable links stay above the one moving pill. */
 .social-link {
   position: relative;
   z-index: 1;
@@ -672,24 +606,21 @@ section[id] {
   min-height: 44px;
   padding: 0 10px;
 
-  border: 0;
-  border-radius: 16px;
-  background: transparent;
-  box-shadow: none;
+  border-radius: var(--lg-radius-md);
 
-  color: var(--text-muted);
+  color: var(--lg-text-muted);
   font-size: 11px;
   font-weight: 750;
+  text-decoration: none;
 
   transition:
-    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    color var(--lg-duration-normal) var(--lg-ease-out),
+    transform var(--lg-duration-normal) var(--lg-ease-out);
 }
 
-/* Hover should not make a second fake active item. */
 .social-link:hover {
-  color: var(--text-muted);
-  transform: none;
+  color: var(--lg-text);
+  transform: translateX(1px);
 }
 
 .social-link svg {
@@ -703,21 +634,20 @@ section[id] {
   height: 13px !important;
   margin-left: auto;
 
-  opacity: 0.46;
+  opacity: 0.45;
 
   transition:
-    opacity 220ms ease,
-    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity var(--lg-duration-normal) var(--lg-ease-out),
+    transform var(--lg-duration-normal) var(--lg-ease-out);
 }
 
-/* Only the row above the pill becomes white. */
+/* Selected row remains readable over the selector. */
 .quick-links[data-active="linkedin"] .linkedin-link,
 .quick-links[data-active="github"] .github-link,
 .quick-links[data-active="email"] .email-link {
   color: #ffffff;
 }
 
-/* Small selected-arrow finishing movement. */
 .quick-links[data-active="linkedin"] .linkedin-link .social-arrow,
 .quick-links[data-active="github"] .github-link .social-arrow,
 .quick-links[data-active="email"] .email-link .social-arrow {
@@ -725,7 +655,7 @@ section[id] {
   transform: translate(2px, -1px);
 }
 
-/* 44px row + 8px gap = 52px step. */
+/* 44px row + 8px gap = 52px movement. */
 .quick-links[data-active="linkedin"]::before {
   transform: translateY(0);
 }
@@ -739,13 +669,16 @@ section[id] {
 }
 
 .social-link:focus-visible {
-  outline: 3px solid rgba(47, 120, 255, 0.34);
-  outline-offset: 3px;
+  outline: none;
+  box-shadow: var(--lg-focus-ring);
 }
 
+/* =========================================================
+   AVAILABILITY
+   Outer material comes from .lg-card.
+   This section handles only internal layout and status UI.
+   ========================================================= */
 
-
-/* ---------- Availability ---------- */
 .availability-card {
   display: flex;
   align-items: flex-start;
@@ -755,18 +688,25 @@ section[id] {
   padding: 15px;
 
   transition:
-    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform var(--lg-duration-normal) var(--lg-ease-out),
+    box-shadow var(--lg-duration-normal) var(--lg-ease-out),
+    border-color var(--lg-duration-normal) var(--lg-ease-out),
+    filter var(--lg-duration-normal) var(--lg-ease-out);
 }
 
 .availability-card:hover {
-  transform: translateY(-2px);
+  border-color: var(--lg-border-strong);
 
   box-shadow:
-    0 19px 34px rgba(70, 111, 178, 0.16),
-    0 6px 13px rgba(70, 111, 178, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(137, 184, 255, 0.16);
+    var(--lg-shadow-medium),
+    var(--lg-shadow-inset);
+
+  filter: brightness(1.018);
+  transform: translateY(var(--lg-hover-lift));
+}
+
+.availability-card:active {
+  transform: translateY(0) scale(var(--lg-press-scale));
 }
 
 .availability-status,
@@ -775,7 +715,6 @@ section[id] {
   z-index: 1;
 }
 
-/* Small premium green availability indicator. */
 .availability-status {
   display: grid;
   width: 28px;
@@ -784,24 +723,24 @@ section[id] {
   margin-top: 1px;
   place-items: center;
 
-  border: 1px solid rgba(33, 196, 138, 0.2);
-  border-radius: 10px;
+  border: 1px solid rgba(27, 169, 120, 0.2);
+  border-radius: var(--lg-radius-xs);
 
   background:
     radial-gradient(
       circle at 30% 24%,
-      rgba(255, 255, 255, 0.84),
-      transparent 34%
+      var(--lg-highlight-top) 0%,
+      transparent 38%
     ),
     linear-gradient(
       145deg,
-      rgba(207, 255, 237, 0.78),
-      rgba(167, 242, 210, 0.3)
+      rgba(214, 255, 238, 0.84),
+      rgba(148, 232, 193, 0.34)
     );
 
   box-shadow:
-    0 7px 14px rgba(24, 181, 125, 0.11),
-    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    0 7px 14px rgba(20, 151, 105, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 .status-dot {
@@ -814,34 +753,22 @@ section[id] {
   border: 2px solid rgba(255, 255, 255, 0.94);
   border-radius: 50%;
 
-  background: #18c58b;
+  background: var(--lg-success);
 
   box-shadow:
-    0 0 0 4px rgba(24, 197, 139, 0.13),
-    0 0 13px rgba(24, 197, 139, 0.4);
+    0 0 0 4px rgba(27, 169, 120, 0.12),
+    0 0 12px rgba(27, 169, 120, 0.28);
 }
 
+/* Static soft halo. No distracting pulse animation. */
 .status-pulse {
   position: absolute;
   inset: 7px;
 
   border-radius: 50%;
-  background: rgba(24, 197, 139, 0.22);
 
-  animation: status-pulse 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-
-@keyframes status-pulse {
-  0% {
-    opacity: 0.7;
-    transform: scale(0.7);
-  }
-
-  70%,
-  100% {
-    opacity: 0;
-    transform: scale(2.15);
-  }
+  background: rgba(27, 169, 120, 0.17);
+  transform: scale(1.75);
 }
 
 .availability-content {
@@ -852,7 +779,6 @@ section[id] {
   align-items: flex-start;
 }
 
-/* Keep title full-width so it never becomes three cramped lines. */
 .availability-heading {
   display: block;
   width: 100%;
@@ -861,7 +787,7 @@ section[id] {
 .availability-title {
   margin: 0;
 
-  color: var(--text-main);
+  color: var(--lg-text-strong);
   font-size: 12px;
   font-weight: 820;
   line-height: 1.34;
@@ -871,35 +797,31 @@ section[id] {
 .availability-text {
   margin: 7px 0 0;
 
-  color: var(--text-muted);
+  color: var(--lg-text-muted);
   font-size: 11px;
   line-height: 1.48;
 }
 
-/*
-  Badge remains in normal document flow.
-  It cannot overlap the title or the description.
-*/
 .availability-badge {
   align-self: flex-start;
   margin-top: 9px;
   padding: 4px 7px;
 
-  border: 1px solid rgba(21, 181, 124, 0.22);
-  border-radius: 999px;
+  border: 1px solid rgba(27, 169, 120, 0.2);
+  border-radius: var(--lg-radius-pill);
 
-  color: #078b5c;
+  color: #087e57;
 
   background:
     linear-gradient(
       135deg,
-      rgba(232, 255, 245, 0.92),
-      rgba(180, 246, 215, 0.4)
+      rgba(234, 255, 246, 0.92),
+      rgba(174, 240, 207, 0.42)
     );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    0 4px 9px rgba(27, 181, 123, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 9px rgba(27, 169, 120, 0.07);
 
   font-size: 8px;
   font-weight: 850;
@@ -907,12 +829,6 @@ section[id] {
   line-height: 1;
 }
 
-/* Reduce animation for accessibility. */
-@media (prefers-reduced-motion: reduce) {
-  .status-pulse {
-    animation: none;
-  }
-}
 
 /* =========================================================
    MAIN CONTENT + TOP BAR
@@ -2168,33 +2084,3 @@ transition:
 }
 
 
-
-/* Final corner correction for the Quick Connect selector pill. */
-.quick-links::before {
-  border: 0;
-  border-radius: 16px;
-
-  background:
-    radial-gradient(
-      ellipse 95% 100% at 16% -26%,
-      rgba(255, 255, 255, 0.38) 0%,
-      rgba(255, 255, 255, 0.1) 34%,
-      transparent 62%
-    ),
-    radial-gradient(
-      ellipse 90% 120% at 102% 122%,
-      rgba(202, 186, 255, 0.24) 0%,
-      transparent 58%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(55, 135, 255, 0.96) 0%,
-      rgba(75, 110, 246, 0.95) 52%,
-      rgba(108, 81, 231, 0.97) 100%
-    );
-
-  box-shadow:
-    0 10px 20px rgba(56, 89, 211, 0.2),
-    0 3px 7px rgba(56, 89, 211, 0.09),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
-}
