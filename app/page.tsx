@@ -98,7 +98,8 @@ function handleNavigation(
       {/* =====================================================
           LEFT SIDEBAR
           ===================================================== */}
-      <aside className="left-rail">
+      <aside className="left-rail lg-panel">
+        
         <div className="brand-card">
           <div className="brand-logo">
             <Image
