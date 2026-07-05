@@ -7,21 +7,25 @@
    DESIGN TOKENS
    ========================================================= */
 :root {
-  --page-bg: #eef4ff;
-  --text-main: #10213b;
-  --text-muted: #62728d;
+  /* Legacy aliases.
+     Existing portfolio CSS can keep working while values now
+     come from the reusable Liquid Glass theme system. */
 
-  --blue: #2f78ff;
-  --violet: #795cff;
-  --success: #16b57d;
+  --page-bg: var(--lg-page-base);
+  --text-main: var(--lg-text);
+  --text-muted: var(--lg-text-muted);
 
-  --glass: rgba(255, 255, 255, 0.56);
-  --glass-border: rgba(255, 255, 255, 0.84);
+  --blue: var(--lg-accent);
+  --violet: var(--lg-accent-strong);
+  --success: var(--lg-success);
 
-  --shadow-soft: 0 14px 38px rgba(58, 91, 150, 0.11);
-  --shadow-glass: 0 12px 26px rgba(67, 105, 179, 0.16);
+  --glass: var(--lg-surface);
+  --glass-border: var(--lg-border-strong);
 
-  --ease-liquid: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-soft: var(--lg-shadow-soft);
+  --shadow-glass: var(--lg-shadow-medium);
+
+  --ease-liquid: var(--lg-ease-out);
 }
 
 /* =========================================================
@@ -41,21 +45,30 @@ body {
   margin: 0;
   overflow-x: hidden;
 
-  color: var(--text-main);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  color: var(--lg-text);
+  font-family: var(--lg-font-sans);
 
   background:
     radial-gradient(
-      circle at 50% 5%,
-      rgba(126, 184, 255, 0.32),
-      transparent 33%
+      ellipse 62% 46% at 50% -8%,
+      var(--lg-ambient-one),
+      transparent 72%
     ),
     radial-gradient(
-      circle at 92% 88%,
-      rgba(184, 151, 255, 0.2),
-      transparent 27%
+      ellipse 38% 36% at 95% 92%,
+      var(--lg-ambient-two),
+      transparent 74%
     ),
-    var(--page-bg);
+    radial-gradient(
+      ellipse 42% 32% at 5% 74%,
+      var(--lg-ambient-three),
+      transparent 76%
+    ),
+    linear-gradient(
+      135deg,
+      var(--lg-page-base),
+      var(--lg-page-deep)
+    );
 }
 
 a {
@@ -87,16 +100,35 @@ section[id] {
 .left-rail,
 .right-rail,
 .hero-placeholder {
-  border: 1px solid var(--glass-border);
-  background: var(--glass);
+  border: 1px solid var(--lg-border);
+
+  background:
+    radial-gradient(
+      ellipse 92% 72% at 18% -18%,
+      var(--lg-highlight-soft) 0%,
+      rgba(255, 255, 255, 0.12) 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 70% 90% at 100% 118%,
+      var(--lg-highlight-cool) 0%,
+      transparent 68%
+    ),
+    linear-gradient(
+      145deg,
+      var(--lg-surface-strong) 0%,
+      var(--lg-surface) 56%,
+      var(--lg-surface-soft) 100%
+    );
 
   box-shadow:
-    var(--shadow-soft),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    var(--lg-shadow-soft),
+    var(--lg-shadow-inset);
 
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: var(--lg-glass-filter);
+  -webkit-backdrop-filter: var(--lg-glass-filter);
 }
+
 
 /* =========================================================
    LEFT SIDEBAR
