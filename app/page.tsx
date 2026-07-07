@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { flushSync } from "react-dom";
 
 import InteractiveBangladeshGlobe from "../components/InteractiveBangladeshGlobe";
 
@@ -16,7 +17,11 @@ import {
 import {
   FiArrowRight,
   FiArrowUpRight,
+  FiCheck,
+  FiChevronDown,
   FiMail,
+  FiMoon,
+  FiSun,
 } from "react-icons/fi";
 
 type SectionId =
@@ -29,10 +34,46 @@ type SectionId =
 
 type SocialId = "linkedin" | "github" | "email";
 
+type GlassTheme = "aurora" | "frost" | "ash" | "emerald";
+type AppearanceMode = "light" | "dark";
+
+
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (callback: () => void) => unknown;
+};
+
+
 type NavigationItem = {
   id: SectionId;
   label: string;
 };
+
+const appearanceThemes: {
+  id: GlassTheme;
+  label: string;
+  description: string;
+}[] = [
+  {
+    id: "aurora",
+    label: "Aurora",
+    description: "Electric blue and violet",
+  },
+  {
+    id: "frost",
+    label: "Frost",
+    description: "Silver-blue daylight",
+  },
+  {
+    id: "ash",
+    label: "Midnight Ash",
+    description: "Graphite and navy",
+  },
+  {
+    id: "emerald",
+    label: "Emerald",
+    description: "Teal and forest glass",
+  },
+];
 
 const sidebarNavigation: NavigationItem[] = [
   { id: "home", label: "Home" },
@@ -45,53 +86,160 @@ const sidebarNavigation: NavigationItem[] = [
 
 const topNavigation = sidebarNavigation.filter((item) => item.id !== "home");
 
-/**
- * Main portfolio homepage.
- *
- * Navigation behavior:
- * - Hover moves each navigation indicator independently.
- * - Click synchronizes sidebar and top navigation indicators.
- * - CSS handles smooth anchor scrolling between page sections.
- */
-export default function Home() {
-  const [activeSection, setActiveSection] = useState<SectionId>("home");
 
-  const [sidebarIndicator, setSidebarIndicator] =
-    useState<SectionId>("home");
-
-  const [topIndicator, setTopIndicator] = useState<SectionId>("work");
-
-  const [socialIndicator, setSocialIndicator] =
-    useState<SocialId>("linkedin");
-
-
-function handleNavigation(
-  event: MouseEvent<HTMLAnchorElement>,
-  section: SectionId
-) {
-  setActiveSection(section);
-  setSidebarIndicator(section);
-
-  // Top navigation has no Home item, so Work is the visual fallback.
-  setTopIndicator(section === "home" ? "work" : section);
-
-  /*
-    Home should always return to the true top of the portfolio,
-    not just the hero section's current anchor offset.
-  */
-  if (section === "home") {
-    event.preventDefault();
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-
-    window.history.replaceState(null, "", "#home");
+function getStoredTheme(): GlassTheme {
+  if (typeof window === "undefined") {
+    return "aurora";
   }
+
+  const savedTheme = window.localStorage.getItem(
+    "portfolio-glass-theme"
+  );
+
+  if (
+    savedTheme === "aurora" ||
+    savedTheme === "frost" ||
+    savedTheme === "ash" ||
+    savedTheme === "emerald"
+  ) {
+    return savedTheme;
+  }
+
+  return "aurora";
+}
+
+function getStoredAppearanceMode(): AppearanceMode {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  const savedMode = window.localStorage.getItem(
+    "portfolio-appearance-mode"
+  );
+
+  if (savedMode === "light" || savedMode === "dark") {
+    return savedMode;
+  }
+
+  return "light";
 }
 
 
+export default function Home() {
+  const [activeSection, setActiveSection] = useState<SectionId>("home");
+  const [sidebarIndicator, setSidebarIndicator] =
+    useState<SectionId>("home");
+  const [topIndicator, setTopIndicator] = useState<SectionId>("work");
+  const [socialIndicator, setSocialIndicator] =
+    useState<SocialId>("linkedin");
+
+ const [glassTheme, setGlassTheme] =
+  useState<GlassTheme>(getStoredTheme);
+
+const [appearanceMode, setAppearanceMode] =
+  useState<AppearanceMode>(getStoredAppearanceMode);
+
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+
+
+
+
+  useEffect(() => {
+    document.documentElement.dataset.glassTheme = glassTheme;
+    document.documentElement.dataset.glassMode = appearanceMode;
+
+    window.localStorage.setItem("portfolio-glass-theme", glassTheme);
+    window.localStorage.setItem("portfolio-appearance-mode", appearanceMode);
+  }, [glassTheme, appearanceMode]);
+
+  function handleNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    section: SectionId
+  ) {
+    setActiveSection(section);
+    setSidebarIndicator(section);
+    setTopIndicator(section === "home" ? "work" : section);
+
+    if (section === "home") {
+      event.preventDefault();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      window.history.replaceState(null, "", "#home");
+    }
+  }
+
+  function selectTheme(theme: GlassTheme) {
+    setGlassTheme(theme);
+
+    window.setTimeout(() => {
+      setIsThemeMenuOpen(false);
+    }, 460);
+  }
+
+
+
+  
+
+function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
+  const button = event.currentTarget;
+  const rect = button.getBoundingClientRect();
+
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+
+  const revealRadius = Math.hypot(
+    Math.max(originX, window.innerWidth - originX),
+    Math.max(originY, window.innerHeight - originY)
+  );
+
+  const nextMode: AppearanceMode =
+    appearanceMode === "light" ? "dark" : "light";
+
+  const root = document.documentElement;
+
+  root.style.setProperty("--appearance-reveal-x", `${originX}px`);
+  root.style.setProperty("--appearance-reveal-y", `${originY}px`);
+  root.style.setProperty(
+    "--appearance-reveal-radius",
+    `${revealRadius}px`
+  );
+
+  /*
+    We keep this value during the animation.
+    CSS uses it to decide whether the circle expands
+    or reverses back into the button.
+  */
+  root.dataset.appearanceTransition = nextMode;
+
+  const applyAppearance = () => {
+    flushSync(() => {
+      setAppearanceMode(nextMode);
+    });
+  };
+
+  const transitionDocument = document as ViewTransitionDocument;
+  const transition =
+    transitionDocument.startViewTransition?.(applyAppearance);
+
+  if (!transition) {
+    applyAppearance();
+    root.removeAttribute("data-appearance-transition");
+    return;
+  }
+
+  transition.finished.finally(() => {
+    root.removeAttribute("data-appearance-transition");
+  });
+}
+
+
+  const currentTheme =
+    appearanceThemes.find((theme) => theme.id === glassTheme) ??
+    appearanceThemes[0];
 
   return (
     <main className="portfolio-shell">
@@ -99,17 +247,32 @@ function handleNavigation(
           LEFT SIDEBAR
           ===================================================== */}
       <aside className="left-rail lg-panel">
-        
         <div className="brand-card">
-          <div className="brand-logo">
+
+
+          <div
+            className="brand-logo"
+            data-appearance-mode={appearanceMode}>
             <Image
+              className="brand-logo-image brand-logo-image-light"
               src="/brand/shahadat-logo-dark.png"
               alt="Shahadat Sardar logo"
               width={180}
               height={70}
               priority
             />
+
+              <Image
+                className="brand-logo-image brand-logo-image-dark"
+                src="/brand/shahadat-logo-white.png"
+                alt=""
+                aria-hidden="true"
+                width={180}
+                height={70}
+                priority
+              />
           </div>
+          
 
           <h2>Shahadat Sardar</h2>
           <p>Full-Stack &amp; Cloud Software Engineer</p>
@@ -135,9 +298,6 @@ function handleNavigation(
           ))}
         </nav>
 
-        {/* =====================================================
-            QUICK CONNECT + AVAILABILITY
-            ===================================================== */}
         <div className="sidebar-bottom">
           <div className="quick-connect-card lg-card">
             <div className="sidebar-card-heading">
@@ -231,7 +391,7 @@ function handleNavigation(
           MAIN CONTENT
           ===================================================== */}
       <section className="main-content">
-        <header className="top-bar">
+        <header className="top-bar" data-theme-menu-open={isThemeMenuOpen ? "true" : "false"}>
           <nav
             className="top-dock"
             aria-label="Primary navigation"
@@ -253,13 +413,89 @@ function handleNavigation(
           </nav>
 
           <div className="top-actions">
+            <div
+              className="appearance-control"
+              data-open={isThemeMenuOpen ? "true" : "false"}
+            >
+              <div
+                className="theme-inline-rail"
+                data-active-theme={glassTheme}
+                role="group"
+                aria-label="Choose color theme"
+              >
+                {appearanceThemes.map((theme) => {
+                  const isSelected = glassTheme === theme.id;
+
+                  return (
+                    <button
+                      key={theme.id}
+                      className="theme-orb-choice"
+                      type="button"
+                      aria-label={`Use ${theme.label} theme`}
+                      aria-pressed={isSelected}
+                      title={theme.label}
+                      tabIndex={isThemeMenuOpen ? 0 : -1}
+                      onClick={() => selectTheme(theme.id)}
+                    >
+                      <span
+                        className={`theme-orb-swatch theme-orb-swatch-${theme.id}`}
+                        aria-hidden="true"
+                      />
+
+                      {isSelected && (
+                        <FiCheck
+                          className="theme-orb-check"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                className="theme-picker-button"
+                type="button"
+                aria-label="Choose color theme"
+                aria-expanded={isThemeMenuOpen}
+                onClick={() => setIsThemeMenuOpen((current) => !current)}
+              >
+                <span
+                  className="appearance-current-swatch"
+                  aria-hidden="true"
+                />
+
+                <span className="appearance-current-label">
+                  {currentTheme.label}
+                </span>
+
+                <FiChevronDown
+                  className="theme-picker-chevron"
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+
             <button
               className="theme-toggle-button"
               type="button"
-              aria-label="Switch to night mode"
-              title="Switch to night mode"
+              aria-label={
+                appearanceMode === "light"
+                  ? "Switch to night mode"
+                  : "Switch to light mode"
+              }
+              title={
+                appearanceMode === "light"
+                  ? "Switch to night mode"
+                  : "Switch to light mode"
+              }
+              onClick={toggleAppearanceMode}
             >
-              <span aria-hidden="true">☀</span>
+              {appearanceMode === "light" ? (
+                <FiMoon aria-hidden="true" />
+              ) : (
+                <FiSun aria-hidden="true" />
+              )}
             </button>
 
             <a
@@ -297,11 +533,10 @@ function handleNavigation(
                 <FiArrowRight aria-hidden="true" />
               </a>
 
-              <a    className="hero-secondary-action" href="#contact">
+              <a className="hero-secondary-action" href="#contact">
                 Let&apos;s connect
                 <FiArrowUpRight aria-hidden="true" />
               </a>
-
             </div>
 
             <div className="hero-stack" aria-label="Core technology stack">
@@ -312,10 +547,7 @@ function handleNavigation(
             </div>
           </div>
 
-          {/* =====================================================
-              CONNECTED SS ENGINEERING VISUAL
-              ===================================================== */}
-          <div className="hero-visual" >
+          <div className="hero-visual">
             <div className="orb-glow" />
 
             <div className="workflow-scene">
@@ -325,16 +557,8 @@ function handleNavigation(
               <span className="workflow-line workflow-line-4" />
               <span className="workflow-line workflow-line-5" />
 
-
-
-
-              {/* Main Shahadat Sardar identity orb */}
-              
               <InteractiveBangladeshGlobe />
 
-
-
-              {/* Product thinking workflow */}
               <div className="workflow-node workflow-node-top-left">
                 <div className="workflow-node-icon workflow-node-icon-product">
                   ✦
@@ -348,7 +572,6 @@ function handleNavigation(
                 </div>
               </div>
 
-              {/* Frontend engineering workflow */}
               <div className="workflow-node workflow-node-top-right">
                 <div className="workflow-node-icon workflow-node-icon-react">
                   <FaReact aria-hidden="true" />
@@ -362,7 +585,6 @@ function handleNavigation(
                 </div>
               </div>
 
-              {/* Backend and cloud workflow */}
               <div className="workflow-node workflow-node-right">
                 <div className="workflow-node-icon workflow-node-icon-node">
                   <FaNodeJs aria-hidden="true" />
@@ -376,21 +598,21 @@ function handleNavigation(
                 </div>
               </div>
 
-              {/* QA and improvement workflow */}
               <div className="workflow-node workflow-node-bottom-right">
                 <div className="workflow-node-icon workflow-node-icon-quality">
                   ✓
                 </div>
 
                 <div className="workflow-node-content">
-                  <p className="workflow-node-title">Quality &amp; Iteration</p>
+                  <p className="workflow-node-title">
+                    Quality &amp; Iteration
+                  </p>
                   <p className="workflow-node-text">
                     Test • refine • improve
                   </p>
                 </div>
               </div>
 
-              {/* Systems thinking workflow */}
               <div className="workflow-node workflow-node-bottom-left">
                 <div className="workflow-node-icon workflow-node-icon-systems">
                   <FaBrain aria-hidden="true" />
@@ -407,9 +629,7 @@ function handleNavigation(
           </div>
         </section>
 
-        {/* =====================================================
-            FUTURE PORTFOLIO SECTIONS
-            ===================================================== */}
+        {/* Future portfolio sections */}
         <section id="work" aria-label="Selected work" />
         <section id="story" aria-label="Engineering story" />
         <section id="experience" aria-label="Experience timeline" />

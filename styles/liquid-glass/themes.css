@@ -1,224 +1,360 @@
 /* =========================================================
-   LIQUID GLASS — THEME ENGINE
-   Four intentional themes using the same design system.
-
-   Default: Aurora
-   Alternatives: Frost, Midnight Ash, Emerald
-
-   This file changes color behavior only.
-   Layout, components, and motion stay identical across themes.
+   LIQUID GLASS APPEARANCE ENGINE
+   4 palettes × Light / Night mode
    ========================================================= */
 
+:root {
+  --lg-glass-filter: blur(22px) saturate(150%);
+
+  --lg-shadow-soft:
+    0 18px 38px rgba(var(--lg-shadow-color), 0.11),
+    0 4px 12px rgba(var(--lg-shadow-color), 0.05);
+
+  --lg-shadow-medium:
+    0 24px 48px rgba(var(--lg-shadow-color), 0.16),
+    0 8px 18px rgba(var(--lg-shadow-color), 0.08);
+
+  --lg-shadow-inset:
+    inset 0 1px 0 var(--lg-edge-top),
+    inset 0 -1px 0 var(--lg-edge-bottom);
+
+  --lg-focus-ring:
+    0 0 0 4px color-mix(in srgb, var(--lg-accent) 28%, transparent);
+}
+
 /* =========================================================
-   AURORA — DEFAULT
-   Electric blue identity with controlled violet depth.
-   Best for the main portfolio experience.
+   AURORA — LIGHT
+   Electric blue + controlled violet daylight
    ========================================================= */
 
 :root,
-html[data-glass-theme="aurora"] {
-  --lg-page-base: #edf3ff;
-  --lg-page-deep: #dce7ff;
+html[data-glass-theme="aurora"][data-glass-mode="light"] {
+  color-scheme: light;
 
-  --lg-ambient-one: rgba(77, 121, 255, 0.34);
-  --lg-ambient-two: rgba(132, 92, 255, 0.26);
-  --lg-ambient-three: rgba(73, 204, 255, 0.16);
+  --lg-page-base: #edf4ff;
+  --lg-page-deep: #daddff;
 
-  --lg-surface: rgba(255, 255, 255, 0.42);
-  --lg-surface-soft: rgba(255, 255, 255, 0.24);
-  --lg-surface-strong: rgba(255, 255, 255, 0.68);
-  --lg-surface-solid: rgba(249, 251, 255, 0.94);
+  --lg-text: #102850;
+  --lg-text-strong: #071d47;
+  --lg-text-muted: #58709b;
 
-  --lg-border: rgba(255, 255, 255, 0.58);
-  --lg-border-strong: rgba(255, 255, 255, 0.9);
-  --lg-border-dim: rgba(82, 113, 208, 0.18);
+  --lg-accent: #417dff;
+  --lg-accent-strong: #6b53ee;
+  --lg-success: #17a36f;
 
-  --lg-highlight-top: rgba(255, 255, 255, 0.96);
-  --lg-highlight-soft: rgba(255, 255, 255, 0.56);
-  --lg-highlight-cool: rgba(187, 216, 255, 0.4);
+  --lg-ambient-one: rgba(95, 135, 255, 0.34);
+  --lg-ambient-two: rgba(137, 103, 255, 0.28);
+  --lg-ambient-three: rgba(99, 193, 255, 0.18);
 
-  --lg-shadow-color: 66, 88, 175;
+  --lg-surface-solid: rgba(255, 255, 255, 0.76);
+  --lg-surface-strong: rgba(246, 250, 255, 0.62);
+  --lg-surface: rgba(235, 243, 255, 0.48);
+  --lg-surface-soft: rgba(218, 230, 255, 0.28);
 
-  --lg-shadow-inset:
-    inset 0 1px 0 rgba(255, 255, 255, 0.88),
-    inset 0 -1px 0 rgba(100, 142, 255, 0.1);
+  --lg-border: rgba(255, 255, 255, 0.62);
+  --lg-border-strong: rgba(255, 255, 255, 0.86);
 
-  --lg-text: #17305a;
-  --lg-text-strong: #081c40;
-  --lg-text-muted: #61769b;
-  --lg-text-faint: #8c9cba;
+  --lg-highlight-top: rgba(255, 255, 255, 0.9);
+  --lg-highlight-soft: rgba(177, 211, 255, 0.3);
+  --lg-highlight-cool: rgba(169, 144, 255, 0.25);
 
-  --lg-accent: #3f7cff;
-  --lg-accent-strong: #6e4ff3;
-  --lg-accent-light: #9fc2ff;
+  --lg-edge-top: rgba(255, 255, 255, 0.84);
+  --lg-edge-bottom: rgba(67, 102, 184, 0.1);
 
-  --lg-accent-glow: rgba(63, 124, 255, 0.32);
-  --lg-accent-glow-strong: rgba(110, 79, 243, 0.34);
-
-  --lg-success: #19ad79;
-  --lg-warning: #eaa142;
-  --lg-danger: #ef5f68;
-  --lg-info: #3f8cff;
-
-  --lg-focus-ring: 0 0 0 4px rgba(63, 124, 255, 0.22);
+  --lg-shadow-color: 48, 73, 145;
+  --lg-accent-glow: rgba(76, 103, 255, 0.27);
 }
 
 /* =========================================================
-   FROST
-   Neutral silver-blue daylight glass.
-   Professional, calm, low-saturation alternative.
+   FROST — LIGHT
+   Silver-blue professional daylight
    ========================================================= */
 
-html[data-glass-theme="frost"] {
-  --lg-page-base: #eef2f8;
-  --lg-page-deep: #d9e1ee;
+html[data-glass-theme="frost"][data-glass-mode="light"] {
+  color-scheme: light;
 
-  --lg-ambient-one: rgba(255, 255, 255, 0.84);
-  --lg-ambient-two: rgba(153, 177, 214, 0.2);
-  --lg-ambient-three: rgba(207, 222, 242, 0.38);
+  --lg-page-base: #f1f6fb;
+  --lg-page-deep: #dbe7f2;
 
-  --lg-surface: rgba(255, 255, 255, 0.4);
-  --lg-surface-soft: rgba(255, 255, 255, 0.22);
-  --lg-surface-strong: rgba(255, 255, 255, 0.72);
-  --lg-surface-solid: rgba(250, 252, 255, 0.96);
+  --lg-text: #17304b;
+  --lg-text-strong: #0a2038;
+  --lg-text-muted: #61758b;
 
-  --lg-border: rgba(255, 255, 255, 0.76);
-  --lg-border-strong: rgba(255, 255, 255, 0.98);
-  --lg-border-dim: rgba(87, 112, 150, 0.16);
+  --lg-accent: #2788c9;
+  --lg-accent-strong: #3976b7;
+  --lg-success: #15966e;
 
-  --lg-highlight-top: rgba(255, 255, 255, 1);
-  --lg-highlight-soft: rgba(255, 255, 255, 0.7);
-  --lg-highlight-cool: rgba(225, 234, 247, 0.8);
+  --lg-ambient-one: rgba(121, 184, 224, 0.26);
+  --lg-ambient-two: rgba(164, 189, 224, 0.24);
+  --lg-ambient-three: rgba(200, 218, 233, 0.3);
 
-  --lg-shadow-color: 70, 88, 119;
-
-  --lg-shadow-inset:
-    inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 -1px 0 rgba(126, 157, 201, 0.1);
-
-  --lg-text: #283b58;
-  --lg-text-strong: #13233d;
-  --lg-text-muted: #65758c;
-  --lg-text-faint: #929fb0;
-
-  --lg-accent: #3e7cf1;
-  --lg-accent-strong: #5b6fe0;
-  --lg-accent-light: #a6c7ff;
-
-  --lg-accent-glow: rgba(62, 124, 241, 0.2);
-  --lg-accent-glow-strong: rgba(91, 111, 224, 0.22);
-
-  --lg-success: #249d6d;
-  --lg-warning: #d28f35;
-  --lg-danger: #d85d68;
-  --lg-info: #3e7cf1;
-
-  --lg-focus-ring: 0 0 0 4px rgba(62, 124, 241, 0.22);
-}
-
-/* =========================================================
-   MIDNIGHT ASH
-   Rich graphite and navy glass.
-   Dark mode without pure black or gaming-neon overload.
-   ========================================================= */
-
-html[data-glass-theme="midnight"] {
-  --lg-page-base: #0b1322;
-  --lg-page-deep: #111d33;
-
-  --lg-ambient-one: rgba(54, 104, 255, 0.18);
-  --lg-ambient-two: rgba(127, 86, 255, 0.15);
-  --lg-ambient-three: rgba(61, 186, 255, 0.1);
-
-  --lg-surface: rgba(25, 38, 63, 0.54);
-  --lg-surface-soft: rgba(17, 28, 48, 0.36);
-  --lg-surface-strong: rgba(42, 59, 91, 0.74);
-  --lg-surface-solid: rgba(19, 29, 49, 0.94);
-
-  --lg-border: rgba(192, 214, 255, 0.18);
-  --lg-border-strong: rgba(222, 235, 255, 0.38);
-  --lg-border-dim: rgba(129, 162, 226, 0.14);
-
-  --lg-highlight-top: rgba(231, 240, 255, 0.22);
-  --lg-highlight-soft: rgba(196, 215, 255, 0.1);
-  --lg-highlight-cool: rgba(87, 152, 255, 0.14);
-
-  --lg-shadow-color: 0, 0, 0;
-
-  --lg-shadow-inset:
-    inset 0 1px 0 rgba(231, 240, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.26);
-
-  --lg-text: #dce8fb;
-  --lg-text-strong: #f5f8ff;
-  --lg-text-muted: #a8b7d2;
-  --lg-text-faint: #7283a1;
-
-  --lg-accent: #72a0ff;
-  --lg-accent-strong: #a281ff;
-  --lg-accent-light: #bed4ff;
-
-  --lg-accent-glow: rgba(114, 160, 255, 0.24);
-  --lg-accent-glow-strong: rgba(162, 129, 255, 0.26);
-
-  --lg-success: #46d49f;
-  --lg-warning: #f0b661;
-  --lg-danger: #ff7884;
-  --lg-info: #72a0ff;
-
-  --lg-focus-ring: 0 0 0 4px rgba(114, 160, 255, 0.28);
-}
-
-/* =========================================================
-   EMERALD
-   Fresh teal and emerald glass.
-   Kept restrained so it remains premium and readable.
-   ========================================================= */
-
-html[data-glass-theme="emerald"] {
-  --lg-page-base: #eaf8f4;
-  --lg-page-deep: #d5eee7;
-
-  --lg-ambient-one: rgba(33, 183, 137, 0.22);
-  --lg-ambient-two: rgba(50, 191, 235, 0.16);
-  --lg-ambient-three: rgba(192, 255, 227, 0.18);
-
-  --lg-surface: rgba(255, 255, 255, 0.44);
-  --lg-surface-soft: rgba(255, 255, 255, 0.25);
-  --lg-surface-strong: rgba(255, 255, 255, 0.72);
-  --lg-surface-solid: rgba(248, 255, 252, 0.95);
+  --lg-surface-solid: rgba(255, 255, 255, 0.74);
+  --lg-surface-strong: rgba(246, 250, 253, 0.62);
+  --lg-surface: rgba(231, 240, 248, 0.5);
+  --lg-surface-soft: rgba(214, 228, 240, 0.28);
 
   --lg-border: rgba(255, 255, 255, 0.66);
-  --lg-border-strong: rgba(255, 255, 255, 0.94);
-  --lg-border-dim: rgba(41, 145, 119, 0.16);
+  --lg-border-strong: rgba(255, 255, 255, 0.88);
 
-  --lg-highlight-top: rgba(255, 255, 255, 0.97);
-  --lg-highlight-soft: rgba(255, 255, 255, 0.58);
-  --lg-highlight-cool: rgba(173, 247, 220, 0.34);
+  --lg-highlight-top: rgba(255, 255, 255, 0.94);
+  --lg-highlight-soft: rgba(185, 217, 240, 0.34);
+  --lg-highlight-cool: rgba(154, 194, 226, 0.23);
 
-  --lg-shadow-color: 39, 119, 101;
+  --lg-edge-top: rgba(255, 255, 255, 0.88);
+  --lg-edge-bottom: rgba(60, 96, 127, 0.1);
 
-  --lg-shadow-inset:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    inset 0 -1px 0 rgba(38, 165, 131, 0.1);
-
-  --lg-text: #16463f;
-  --lg-text-strong: #082d29;
-  --lg-text-muted: #5c7974;
-  --lg-text-faint: #8ba29e;
-
-  --lg-accent: #159d7b;
-  --lg-accent-strong: #1da7b7;
-  --lg-accent-light: #91e3cf;
-
-  --lg-accent-glow: rgba(21, 157, 123, 0.24);
-  --lg-accent-glow-strong: rgba(29, 167, 183, 0.2);
-
-  --lg-success: #159d7b;
-  --lg-warning: #d99b3d;
-  --lg-danger: #e3616d;
-  --lg-info: #1d9fbd;
-
-  --lg-focus-ring: 0 0 0 4px rgba(21, 157, 123, 0.22);
+  --lg-shadow-color: 47, 77, 107;
+  --lg-accent-glow: rgba(54, 139, 202, 0.23);
 }
 
+/* =========================================================
+   MIDNIGHT ASH — LIGHT
+   Premium graphite-silver, not washed-out gray
+   ========================================================= */
+
+html[data-glass-theme="ash"][data-glass-mode="light"] {
+  color-scheme: light;
+
+  --lg-page-base: #f2f4f8;
+  --lg-page-deep: #dce2eb;
+
+  --lg-text: #1c2c42;
+  --lg-text-strong: #0f1d31;
+  --lg-text-muted: #68778b;
+
+  --lg-accent: #536fba;
+  --lg-accent-strong: #6d5cae;
+  --lg-success: #168f69;
+
+  --lg-ambient-one: rgba(111, 130, 172, 0.24);
+  --lg-ambient-two: rgba(147, 132, 183, 0.21);
+  --lg-ambient-three: rgba(164, 181, 201, 0.28);
+
+  --lg-surface-solid: rgba(255, 255, 255, 0.75);
+  --lg-surface-strong: rgba(245, 247, 251, 0.62);
+  --lg-surface: rgba(230, 235, 243, 0.5);
+  --lg-surface-soft: rgba(214, 222, 233, 0.3);
+
+  --lg-border: rgba(255, 255, 255, 0.62);
+  --lg-border-strong: rgba(255, 255, 255, 0.86);
+
+  --lg-highlight-top: rgba(255, 255, 255, 0.9);
+  --lg-highlight-soft: rgba(191, 205, 229, 0.3);
+  --lg-highlight-cool: rgba(186, 174, 220, 0.22);
+
+  --lg-edge-top: rgba(255, 255, 255, 0.84);
+  --lg-edge-bottom: rgba(49, 66, 92, 0.11);
+
+  --lg-shadow-color: 39, 51, 72;
+  --lg-accent-glow: rgba(86, 109, 180, 0.23);
+}
+
+/* =========================================================
+   EMERALD — LIGHT
+   Restrained teal / emerald daylight
+   ========================================================= */
+
+html[data-glass-theme="emerald"][data-glass-mode="light"] {
+  color-scheme: light;
+
+  --lg-page-base: #eaf8f4;
+  --lg-page-deep: #d5eee8;
+
+  --lg-text: #123b3b;
+  --lg-text-strong: #092d31;
+  --lg-text-muted: #5c7b7a;
+
+  --lg-accent: #148c82;
+  --lg-accent-strong: #2871b1;
+  --lg-success: #139568;
+
+  --lg-ambient-one: rgba(58, 182, 163, 0.28);
+  --lg-ambient-two: rgba(72, 145, 209, 0.19);
+  --lg-ambient-three: rgba(112, 212, 184, 0.18);
+
+  --lg-surface-solid: rgba(255, 255, 255, 0.76);
+  --lg-surface-strong: rgba(244, 255, 252, 0.62);
+  --lg-surface: rgba(226, 246, 240, 0.5);
+  --lg-surface-soft: rgba(204, 233, 225, 0.3);
+
+  --lg-border: rgba(255, 255, 255, 0.64);
+  --lg-border-strong: rgba(255, 255, 255, 0.88);
+
+  --lg-highlight-top: rgba(255, 255, 255, 0.92);
+  --lg-highlight-soft: rgba(161, 230, 211, 0.3);
+  --lg-highlight-cool: rgba(140, 207, 235, 0.2);
+
+  --lg-edge-top: rgba(255, 255, 255, 0.88);
+  --lg-edge-bottom: rgba(35, 110, 102, 0.1);
+
+  --lg-shadow-color: 27, 84, 83;
+  --lg-accent-glow: rgba(29, 157, 143, 0.24);
+}
+
+/* =========================================================
+   AURORA — NIGHT
+   Ink navy + blue-violet glass
+   ========================================================= */
+
+html[data-glass-theme="aurora"][data-glass-mode="dark"] {
+  color-scheme: dark;
+
+  --lg-page-base: #0b1122;
+  --lg-page-deep: #15163a;
+
+  --lg-text: #dce8ff;
+  --lg-text-strong: #f2f6ff;
+  --lg-text-muted: #9baed1;
+
+  --lg-accent: #79a8ff;
+  --lg-accent-strong: #9c7dff;
+  --lg-success: #4bd5a0;
+
+  --lg-ambient-one: rgba(50, 97, 230, 0.33);
+  --lg-ambient-two: rgba(124, 80, 230, 0.3);
+  --lg-ambient-three: rgba(43, 145, 214, 0.14);
+
+  --lg-surface-solid: rgba(26, 36, 67, 0.8);
+  --lg-surface-strong: rgba(23, 31, 59, 0.66);
+  --lg-surface: rgba(20, 28, 54, 0.52);
+  --lg-surface-soft: rgba(33, 39, 79, 0.32);
+
+  --lg-border: rgba(185, 210, 255, 0.16);
+  --lg-border-strong: rgba(210, 224, 255, 0.3);
+
+  --lg-highlight-top: rgba(217, 231, 255, 0.17);
+  --lg-highlight-soft: rgba(92, 139, 255, 0.2);
+  --lg-highlight-cool: rgba(151, 114, 255, 0.19);
+
+  --lg-edge-top: rgba(235, 243, 255, 0.16);
+  --lg-edge-bottom: rgba(0, 0, 0, 0.24);
+
+  --lg-shadow-color: 0, 0, 0;
+  --lg-accent-glow: rgba(92, 126, 255, 0.3);
+}
+
+/* =========================================================
+   FROST — NIGHT
+   Cool slate + ice-blue glass
+   ========================================================= */
+
+html[data-glass-theme="frost"][data-glass-mode="dark"] {
+  color-scheme: dark;
+
+  --lg-page-base: #101923;
+  --lg-page-deep: #172636;
+
+  --lg-text: #deedf7;
+  --lg-text-strong: #f1f8ff;
+  --lg-text-muted: #9ab0c0;
+
+  --lg-accent: #68c2ff;
+  --lg-accent-strong: #5795da;
+  --lg-success: #45cfa0;
+
+  --lg-ambient-one: rgba(61, 160, 220, 0.25);
+  --lg-ambient-two: rgba(94, 139, 191, 0.18);
+  --lg-ambient-three: rgba(89, 200, 221, 0.12);
+
+  --lg-surface-solid: rgba(26, 43, 57, 0.8);
+  --lg-surface-strong: rgba(23, 38, 51, 0.66);
+  --lg-surface: rgba(20, 35, 48, 0.52);
+  --lg-surface-soft: rgba(36, 55, 70, 0.3);
+
+  --lg-border: rgba(203, 232, 255, 0.15);
+  --lg-border-strong: rgba(213, 238, 255, 0.28);
+
+  --lg-highlight-top: rgba(231, 247, 255, 0.15);
+  --lg-highlight-soft: rgba(111, 205, 255, 0.17);
+  --lg-highlight-cool: rgba(130, 175, 240, 0.16);
+
+  --lg-edge-top: rgba(238, 249, 255, 0.15);
+  --lg-edge-bottom: rgba(0, 0, 0, 0.24);
+
+  --lg-shadow-color: 0, 0, 0;
+  --lg-accent-glow: rgba(82, 184, 255, 0.26);
+}
+
+/* =========================================================
+   MIDNIGHT ASH — NIGHT
+   Rich graphite / navy, never pure black
+   ========================================================= */
+
+html[data-glass-theme="ash"][data-glass-mode="dark"] {
+  color-scheme: dark;
+
+  --lg-page-base: #11151e;
+  --lg-page-deep: #1b2331;
+
+  --lg-text: #e2e7f0;
+  --lg-text-strong: #f5f7fb;
+  --lg-text-muted: #a8b1c0;
+
+  --lg-accent: #9eaeff;
+  --lg-accent-strong: #b295ed;
+  --lg-success: #56c89c;
+
+  --lg-ambient-one: rgba(95, 116, 181, 0.23);
+  --lg-ambient-two: rgba(132, 111, 173, 0.18);
+  --lg-ambient-three: rgba(96, 133, 164, 0.14);
+
+  --lg-surface-solid: rgba(34, 42, 56, 0.82);
+  --lg-surface-strong: rgba(29, 36, 49, 0.68);
+  --lg-surface: rgba(26, 32, 45, 0.54);
+  --lg-surface-soft: rgba(48, 58, 76, 0.3);
+
+  --lg-border: rgba(220, 227, 240, 0.14);
+  --lg-border-strong: rgba(226, 233, 245, 0.26);
+
+  --lg-highlight-top: rgba(242, 246, 255, 0.14);
+  --lg-highlight-soft: rgba(145, 166, 225, 0.17);
+  --lg-highlight-cool: rgba(173, 150, 221, 0.14);
+
+  --lg-edge-top: rgba(246, 248, 255, 0.14);
+  --lg-edge-bottom: rgba(0, 0, 0, 0.25);
+
+  --lg-shadow-color: 0, 0, 0;
+  --lg-accent-glow: rgba(139, 153, 235, 0.24);
+}
+
+/* =========================================================
+   EMERALD — NIGHT
+   Deep forest-teal glass
+   ========================================================= */
+
+html[data-glass-theme="emerald"][data-glass-mode="dark"] {
+  color-scheme: dark;
+
+  --lg-page-base: #071b1d;
+  --lg-page-deep: #0e2930;
+
+  --lg-text: #d9f1ed;
+  --lg-text-strong: #edfffb;
+  --lg-text-muted: #9bbab4;
+
+  --lg-accent: #55d7bd;
+  --lg-accent-strong: #63a7ff;
+  --lg-success: #52d9a0;
+
+  --lg-ambient-one: rgba(30, 174, 143, 0.26);
+  --lg-ambient-two: rgba(47, 114, 193, 0.2);
+  --lg-ambient-three: rgba(24, 197, 165, 0.12);
+
+  --lg-surface-solid: rgba(17, 53, 55, 0.82);
+  --lg-surface-strong: rgba(14, 45, 49, 0.68);
+  --lg-surface: rgba(12, 39, 44, 0.54);
+  --lg-surface-soft: rgba(27, 68, 70, 0.3);
+
+  --lg-border: rgba(197, 255, 244, 0.14);
+  --lg-border-strong: rgba(208, 255, 247, 0.27);
+
+  --lg-highlight-top: rgba(226, 255, 249, 0.14);
+  --lg-highlight-soft: rgba(79, 207, 181, 0.19);
+  --lg-highlight-cool: rgba(96, 156, 255, 0.16);
+
+  --lg-edge-top: rgba(234, 255, 251, 0.15);
+  --lg-edge-bottom: rgba(0, 0, 0, 0.25);
+
+  --lg-shadow-color: 0, 0, 0;
+  --lg-accent-glow: rgba(62, 209, 177, 0.26);
+}
