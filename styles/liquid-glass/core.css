@@ -17,8 +17,12 @@
    No flashy shine animation.
    ========================================================= */
 
+
+
+
 /* =========================================================
    BASE MATERIAL
+   Token-driven in both Light and Night mode.
    ========================================================= */
 
 .lg-surface,
@@ -34,20 +38,23 @@
 
   background:
     radial-gradient(
-      ellipse 92% 72% at 18% -18%,
-      var(--lg-highlight-soft) 0%,
-      rgba(255, 255, 255, 0.12) 42%,
+      ellipse 92% 74% at 18% -18%,
+      color-mix(
+        in srgb,
+        var(--lg-highlight-top) 58%,
+        transparent
+      ) 0%,
       transparent 72%
     ),
     radial-gradient(
-      ellipse 70% 90% at 100% 118%,
+      ellipse 72% 94% at 100% 118%,
       var(--lg-highlight-cool) 0%,
-      transparent 68%
+      transparent 70%
     ),
     linear-gradient(
       145deg,
-      var(--lg-surface-strong) 0%,
-      var(--lg-surface) 56%,
+      var(--lg-surface-solid) 0%,
+      var(--lg-surface-strong) 54%,
       var(--lg-surface-soft) 100%
     );
 
@@ -70,19 +77,28 @@
   right: 0;
   left: 0;
 
-  height: 38%;
+  height: 40%;
 
   content: "";
   pointer-events: none;
 
-  background: linear-gradient(
-    180deg,
-    var(--lg-highlight-top) 0%,
-    rgba(255, 255, 255, 0.1) 52%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        var(--lg-highlight-top) 72%,
+        transparent
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--lg-highlight-top) 16%,
+        transparent
+      ) 52%,
+      transparent 100%
+    );
 
-  opacity: 0.34;
+  opacity: 0.44;
 }
 
 .lg-surface::after,
@@ -103,15 +119,17 @@
 
   border-radius: 50%;
 
-  background: radial-gradient(
-    circle,
-    var(--lg-highlight-cool) 0%,
-    transparent 70%
-  );
+  background:
+    radial-gradient(
+      circle,
+      var(--lg-highlight-cool) 0%,
+      transparent 70%
+    );
 
   filter: blur(20px);
-  opacity: 0.48;
+  opacity: 0.44;
 }
+
 
 /* =========================================================
    SURFACE SIZES

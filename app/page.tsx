@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+
 import { useEffect, useState, type MouseEvent } from "react";
+
 import { flushSync } from "react-dom";
 
 import InteractiveBangladeshGlobe from "../components/InteractiveBangladeshGlobe";
@@ -39,7 +41,9 @@ type AppearanceMode = "light" | "dark";
 
 
 type ViewTransitionDocument = Document & {
-  startViewTransition?: (callback: () => void) => unknown;
+  startViewTransition?: (callback: () => void) => {
+    finished: Promise<void>;
+  };
 };
 
 
@@ -87,42 +91,6 @@ const sidebarNavigation: NavigationItem[] = [
 const topNavigation = sidebarNavigation.filter((item) => item.id !== "home");
 
 
-function getStoredTheme(): GlassTheme {
-  if (typeof window === "undefined") {
-    return "aurora";
-  }
-
-  const savedTheme = window.localStorage.getItem(
-    "portfolio-glass-theme"
-  );
-
-  if (
-    savedTheme === "aurora" ||
-    savedTheme === "frost" ||
-    savedTheme === "ash" ||
-    savedTheme === "emerald"
-  ) {
-    return savedTheme;
-  }
-
-  return "aurora";
-}
-
-function getStoredAppearanceMode(): AppearanceMode {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  const savedMode = window.localStorage.getItem(
-    "portfolio-appearance-mode"
-  );
-
-  if (savedMode === "light" || savedMode === "dark") {
-    return savedMode;
-  }
-
-  return "light";
-}
 
 
 export default function Home() {
@@ -133,24 +101,54 @@ export default function Home() {
   const [socialIndicator, setSocialIndicator] =
     useState<SocialId>("linkedin");
 
- const [glassTheme, setGlassTheme] =
-  useState<GlassTheme>(getStoredTheme);
-
-const [appearanceMode, setAppearanceMode] =
-  useState<AppearanceMode>(getStoredAppearanceMode);
+  
+    const [glassTheme, setGlassTheme] = useState<GlassTheme>("aurora");
+  const [appearanceMode, setAppearanceMode] =
+    useState<AppearanceMode>("light");
 
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const loadStoredAppearance = window.setTimeout(() => {
+      const savedTheme = window.localStorage.getItem(
+        "portfolio-glass-theme"
+      );
 
+      const savedMode = window.localStorage.getItem(
+        "portfolio-appearance-mode"
+      );
 
+      if (
+        savedTheme === "aurora" ||
+        savedTheme === "frost" ||
+        savedTheme === "ash" ||
+        savedTheme === "emerald"
+      ) {
+        setGlassTheme(savedTheme);
+      }
+
+      if (savedMode === "light" || savedMode === "dark") {
+        setAppearanceMode(savedMode);
+      }
+    }, 0);
+
+    return () => {
+      window.clearTimeout(loadStoredAppearance);
+    };
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.glassTheme = glassTheme;
     document.documentElement.dataset.glassMode = appearanceMode;
 
     window.localStorage.setItem("portfolio-glass-theme", glassTheme);
-    window.localStorage.setItem("portfolio-appearance-mode", appearanceMode);
+    window.localStorage.setItem(
+      "portfolio-appearance-mode",
+      appearanceMode
+    );
   }, [glassTheme, appearanceMode]);
+  
+
 
   function handleNavigation(
     event: MouseEvent<HTMLAnchorElement>,
@@ -317,7 +315,7 @@ function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
                 className="social-link linkedin-link"
                 href="https://www.linkedin.com/in/shahadat-sardar"
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 aria-label="Open Shahadat's LinkedIn profile"
                 onMouseEnter={() => setSocialIndicator("linkedin")}
                 onFocus={() => setSocialIndicator("linkedin")}
@@ -334,7 +332,7 @@ function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
                 className="social-link github-link"
                 href="https://github.com/shahadat178"
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 aria-label="Open Shahadat's GitHub profile"
                 onMouseEnter={() => setSocialIndicator("github")}
                 onFocus={() => setSocialIndicator("github")}
