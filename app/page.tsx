@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 
 import { flushSync } from "react-dom";
 
@@ -107,6 +107,9 @@ export default function Home() {
     useState<AppearanceMode>("light");
 
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const topActionsRef = useRef<HTMLDivElement | null>(null);
+
+
 
   useEffect(() => {
     const loadStoredAppearance = window.setTimeout(() => {
@@ -147,7 +150,40 @@ export default function Home() {
       appearanceMode
     );
   }, [glassTheme, appearanceMode]);
-  
+
+
+  useEffect(() => {
+  if (!isThemeMenuOpen) {
+    return;
+  }
+
+  function handlePointerDown(event: PointerEvent) {
+    const target = event.target;
+
+    if (!(target instanceof Node)) {
+      return;
+    }
+
+    if (!topActionsRef.current?.contains(target)) {
+      setIsThemeMenuOpen(false);
+    }
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      setIsThemeMenuOpen(false);
+    }
+  }
+
+  document.addEventListener("pointerdown", handlePointerDown);
+  document.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.removeEventListener("pointerdown", handlePointerDown);
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+}, [isThemeMenuOpen]);
+
 
 
   function handleNavigation(
@@ -410,7 +446,7 @@ function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
             ))}
           </nav>
 
-          <div className="top-actions">
+          <div className="top-actions" ref={topActionsRef}>
             <div
               className="appearance-control"
               data-open={isThemeMenuOpen ? "true" : "false"}
