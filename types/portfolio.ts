@@ -8,7 +8,7 @@ export type SectionId =
   | "toolkit"
   | "contact";
 
-export type SocialId = "linkedin" | "github" | "email";
+export type SocialId = "linkedin" | "github" | "email" | "phone";
 
 export type GlassTheme = "aurora" | "frost" | "ash" | "emerald";
 
@@ -109,7 +109,7 @@ export type EngineeringPrinciple = Readonly<{
 }>;
 
 export type ContactOption = Readonly<{
-  id: SocialId | "resume";
+  id: SocialId | "resume" | "resume-drive";
   label: string;
   description: string;
   href: string;

@@ -9,7 +9,6 @@ import {
   type ComponentType,
   type RefAttributes,
 } from "react";
-import { FiMinus, FiPlus, FiRotateCcw } from "react-icons/fi";
 
 
 import styles from "./InteractiveBangladeshGlobe.module.css";
@@ -120,11 +119,43 @@ export default function InteractiveBangladeshGlobe({
   compact = false,
 }: InteractiveBangladeshGlobeProps) {
   const globeRef = useRef<GlobeHandle | null>(null);
-  const altitudeRef = useRef(1.2);
 
   const [bangladeshPolygon, setBangladeshPolygon] =
     useState<GeoFeature | null>(null);
+  const [hasHydrated, setHasHydrated] = useState(false);
+  const [webGlStatus, setWebGlStatus] = useState<
+    "checking" | "available" | "unavailable"
+  >("checking");
   const [isGlobeReady, setIsGlobeReady] = useState(false);
+
+  const canMountInteractiveGlobe =
+    hasHydrated && webGlStatus === "available";
+
+  useEffect(() => {
+    setHasHydrated(true);
+
+    /*
+      Check WebGL before mounting Three.js. Some browsers temporarily exhaust
+      their graphics contexts during development/HMR. In that case the static
+      Earth remains visible instead of throwing a full-page runtime overlay.
+    */
+    const canvas = document.createElement("canvas");
+    const context =
+      canvas.getContext("webgl2", {
+        failIfMajorPerformanceCaveat: false,
+      }) ??
+      canvas.getContext("webgl", {
+        failIfMajorPerformanceCaveat: false,
+      });
+
+    if (!context) {
+      setWebGlStatus("unavailable");
+      return;
+    }
+
+    context.getExtension("WEBGL_lose_context")?.loseContext();
+    setWebGlStatus("available");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -234,14 +265,6 @@ export default function InteractiveBangladeshGlobe({
     controls.minDistance = 120;
     controls.maxDistance = 270;
 
-    const syncAltitude = () => {
-      const pointOfView = globe.pointOfView();
-
-      if (Number.isFinite(pointOfView.altitude)) {
-        altitudeRef.current = pointOfView.altitude;
-      }
-    };
-
     /*
       Ambient auto-rotation starts after the intro animation.
       It pauses during drag and resumes gently afterwards.
@@ -260,8 +283,6 @@ export default function InteractiveBangladeshGlobe({
     };
 
     const restartAutoRotate = () => {
-      syncAltitude();
-
       if (resumeRotationTimer !== undefined) {
         window.clearTimeout(resumeRotationTimer);
       }
@@ -278,8 +299,6 @@ export default function InteractiveBangladeshGlobe({
       window.setTimeout(() => {
         controls.autoRotate = true;
       }, 1750);
-    } else {
-      controls.addEventListener("end", syncAltitude);
     }
 
     /*
@@ -296,47 +315,6 @@ export default function InteractiveBangladeshGlobe({
       material.shininess = 34;
       material.bumpScale = 3.1;
     }
-  }
-
-  function changeZoom(delta: number) {
-    const globe = globeRef.current;
-
-    if (!globe) {
-      return;
-    }
-
-    const altitude = Math.min(
-      1.8,
-      Math.max(0.62, altitudeRef.current + delta)
-    );
-
-    altitudeRef.current = altitude;
-    globe.pointOfView(
-      {
-        lat: 23.8,
-        lng: 90.4,
-        altitude,
-      },
-      420
-    );
-  }
-
-  function resetView() {
-    const globe = globeRef.current;
-
-    if (!globe) {
-      return;
-    }
-
-    altitudeRef.current = 1.2;
-    globe.pointOfView(
-      {
-        lat: 23.8,
-        lng: 90.4,
-        altitude: 1.2,
-      },
-      520
-    );
   }
 
   function createBangladeshPin() {
@@ -395,62 +373,41 @@ export default function InteractiveBangladeshGlobe({
           className={styles.globeFallback}
           data-hidden={isGlobeReady ? "true" : "false"}
           role="status"
-          aria-label="Loading interactive globe"
+          aria-label={
+            webGlStatus === "unavailable"
+              ? "Static view of Earth centered on Bangladesh"
+              : "Loading interactive globe"
+          }
         >
           <span className={styles.loadingGlobe} aria-hidden="true" />
         </div>
 
-        <Globe
-          ref={globeRef}
-          width={286}
-          height={286}
-          backgroundColor="rgba(0, 0, 0, 0)"
-          animateIn={false}
-          globeImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg"
-          bumpImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png"
-          showAtmosphere
-          atmosphereColor="#a9a2ff"
-          atmosphereAltitude={0.13}
-          polygonsData={bangladeshPolygon ? [bangladeshPolygon] : []}
-          polygonGeoJsonGeometry="geometry"
-          polygonCapColor={() => "rgba(108, 150, 255, 0.22)"}
-          polygonSideColor={() => "rgba(102, 84, 228, 0.08)"}
-          polygonStrokeColor={() => "rgba(227, 241, 255, 0.94)"}
-          polygonAltitude={0.018}
-          htmlElementsData={[DHAKA_MARKER]}
-          htmlLat="lat"
-          htmlLng="lng"
-          htmlAltitude={0.04}
-          htmlElement={createBangladeshPin}
-          onGlobeReady={handleGlobeReady}
-        />
-      </div>
-
-      <div className={styles.zoomControls} aria-label="Globe zoom controls">
-        <button
-          type="button"
-          aria-label="Zoom in on the globe"
-          disabled={!isGlobeReady}
-          onClick={() => changeZoom(-0.18)}
-        >
-          <FiPlus aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          aria-label="Zoom out from the globe"
-          disabled={!isGlobeReady}
-          onClick={() => changeZoom(0.18)}
-        >
-          <FiMinus aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          aria-label="Reset the globe view"
-          disabled={!isGlobeReady}
-          onClick={resetView}
-        >
-          <FiRotateCcw aria-hidden="true" />
-        </button>
+        {canMountInteractiveGlobe ? (
+          <Globe
+            ref={globeRef}
+            width={286}
+            height={286}
+            backgroundColor="rgba(0, 0, 0, 0)"
+            animateIn={false}
+            globeImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg"
+            bumpImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png"
+            showAtmosphere
+            atmosphereColor="#a9a2ff"
+            atmosphereAltitude={0.13}
+            polygonsData={bangladeshPolygon ? [bangladeshPolygon] : []}
+            polygonGeoJsonGeometry="geometry"
+            polygonCapColor={() => "rgba(108, 150, 255, 0.22)"}
+            polygonSideColor={() => "rgba(102, 84, 228, 0.08)"}
+            polygonStrokeColor={() => "rgba(227, 241, 255, 0.94)"}
+            polygonAltitude={0.018}
+            htmlElementsData={[DHAKA_MARKER]}
+            htmlLat="lat"
+            htmlLng="lng"
+            htmlAltitude={0.04}
+            htmlElement={createBangladeshPin}
+            onGlobeReady={handleGlobeReady}
+          />
+        ) : null}
       </div>
 
       <a

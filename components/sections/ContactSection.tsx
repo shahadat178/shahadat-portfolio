@@ -38,6 +38,22 @@ export function ContactSection() {
               <dt>Work preference</dt>
               <dd>{PORTFOLIO_PROFILE.workPreference}</dd>
             </div>
+            <div>
+              <dt>Email</dt>
+              <dd>
+                <a href={PORTFOLIO_PROFILE.emailHref}>
+                  {PORTFOLIO_PROFILE.email}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd>
+                <a href={PORTFOLIO_PROFILE.phoneHref}>
+                  {PORTFOLIO_PROFILE.phoneDisplay}
+                </a>
+              </dd>
+            </div>
           </dl>
         </div>
 
@@ -71,7 +87,10 @@ export function ContactSection() {
                   <strong>{option.label}</strong>
                   <small>{option.description}</small>
                 </span>
-                {option.statusLabel ? <em>{option.statusLabel}</em> : null}
+                {"statusLabel" in option &&
+                typeof option.statusLabel === "string" ? (
+                  <em>{option.statusLabel}</em>
+                ) : null}
               </div>
             )
           )}
@@ -79,7 +98,7 @@ export function ContactSection() {
       </div>
 
       <p className="contact-configuration-note">
-        <strong>Launch note:</strong> {CONTACT_SECTION.configurationNote}
+        <strong>Résumé access:</strong> {CONTACT_SECTION.configurationNote}
       </p>
     </section>
   );

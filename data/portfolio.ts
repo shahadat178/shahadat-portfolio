@@ -58,10 +58,15 @@ export const PORTFOLIO_PROFILE = {
     "Interested in teams that value product thinking, engineering fundamentals, and continuous learning.",
   linkedInUrl: "https://www.linkedin.com/in/shahadat-sardar",
   githubUrl: "https://github.com/shahadat178",
-  emailHref: "#contact",
-  emailConfigured: false,
+  email: "shahadatsardar73@gmail.com",
+  emailHref: "mailto:shahadatsardar73@gmail.com",
+  emailConfigured: true,
+  phoneDisplay: "(+88) 01303818002",
+  phoneHref: "tel:+8801303818002",
   resumeHref: "/resume/shahadat-sardar-resume.pdf",
-  resumeConfigured: false,
+  resumeDriveHref:
+    "https://drive.google.com/drive/folders/1irVZm7n-RVlfh5r06jWKws6PJe5vjeAF",
+  resumeConfigured: true,
 } as const;
 
 export const PORTFOLIO_STATS = [
@@ -569,11 +574,11 @@ export const CONTACT_SECTION = {
   eyebrow: "Contact",
   title: "Let’s start with the problem worth solving.",
   description:
-    "For engineering roles, project feedback, or thoughtful collaboration, LinkedIn and GitHub are currently the verified public channels.",
+    "For engineering roles, project feedback, or thoughtful collaboration, choose the channel that works best for you.",
   availability:
     "Open to conversations with teams working on useful products and strong engineering foundations.",
   configurationNote:
-    "A public email address and downloadable résumé must be added and verified before production launch.",
+    "The résumé is available as a direct PDF download and through the linked Google Drive folder.",
 } as const;
 
 export const CONTACT_OPTIONS = [
@@ -596,19 +601,33 @@ export const CONTACT_OPTIONS = [
   {
     id: "email",
     label: "Email Shahadat",
-    description: "A verified public email address has not been configured yet.",
-    href: "#contact",
+    description: PORTFOLIO_PROFILE.email,
+    href: PORTFOLIO_PROFILE.emailHref,
     external: false,
-    status: "needs-configuration",
-    statusLabel: "Add before launch",
+    status: "ready",
+  },
+  {
+    id: "phone",
+    label: "Call Shahadat",
+    description: PORTFOLIO_PROFILE.phoneDisplay,
+    href: PORTFOLIO_PROFILE.phoneHref,
+    external: false,
+    status: "ready",
   },
   {
     id: "resume",
-    label: "View résumé",
-    description: "The final résumé file has not been added to the repository yet.",
+    label: "View résumé PDF",
+    description: "Open the résumé directly from this portfolio.",
     href: PORTFOLIO_PROFILE.resumeHref,
-    external: false,
-    status: "needs-configuration",
-    statusLabel: "Add before launch",
+    external: true,
+    status: "ready",
+  },
+  {
+    id: "resume-drive",
+    label: "Résumé files on Drive",
+    description: "Open the shared folder containing the résumé source files.",
+    href: PORTFOLIO_PROFILE.resumeDriveHref,
+    external: true,
+    status: "ready",
   },
 ] as const satisfies readonly ContactOption[];
