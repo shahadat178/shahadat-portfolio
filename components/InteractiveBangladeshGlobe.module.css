@@ -346,8 +346,8 @@
 .mapPin {
   position: relative;
 
-  width: 22px;
-  height: 30px;
+  width: 64px;
+  height: 64px;
   padding: 0;
   border: 0;
 
@@ -359,8 +359,8 @@
 
 .mapPinPulse {
   position: absolute;
-  top: 7px;
-  left: 3px;
+  top: 11px;
+  left: 24px;
 
   width: 16px;
   height: 16px;
@@ -373,8 +373,8 @@
 
 .mapPinHead {
   position: absolute;
-  top: 6px;
-  left: 4px;
+  top: 10px;
+  left: 25px;
 
   width: 15px;
   height: 15px;
@@ -530,24 +530,99 @@
   0% {
     opacity: 0;
     filter: blur(8px);
-    transform: translate(-50%, -43%) scale(0.84);
   }
 
   55% {
     opacity: 1;
     filter: blur(0);
-    transform: translate(-50%, -51%) scale(1.035);
-  }
-
-  78% {
-    transform: translate(-50%, -49.4%) scale(0.992);
   }
 
   100% {
     opacity: 1;
     filter: blur(0);
-    transform: translate(-50%, -50%) scale(1);
   }
+}
+
+.globeFallback {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  opacity: 1;
+  transition: opacity 360ms ease, visibility 360ms ease;
+}
+
+.globeFallback[data-hidden="true"] {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.globeCanvas > :global(div:not([class])) {
+  position: relative;
+  z-index: 1;
+}
+
+.zoomControls {
+  position: absolute;
+  z-index: 12;
+  top: 96px;
+  right: 2px;
+
+  display: grid;
+  gap: 6px;
+}
+
+.zoomControls button {
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 14px;
+
+  color: #3475e8;
+  background: rgba(241, 247, 255, 0.82);
+  box-shadow:
+    0 10px 22px rgba(54, 83, 164, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+
+  cursor: pointer;
+
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.zoomControls button:hover {
+  transform: translateY(-1px);
+}
+
+.zoomControls button:active {
+  transform: scale(0.95);
+}
+
+.zoomControls button:focus-visible {
+  outline: 3px solid rgba(47, 120, 255, 0.34);
+  outline-offset: 3px;
+}
+
+.zoomControls button:disabled {
+  opacity: 0.48;
+  cursor: wait;
+}
+
+.zoomControls svg {
+  width: 17px;
+  height: 17px;
 }
 
 
@@ -651,5 +726,73 @@
 
   .identityTag {
     left: -38px;
+  }
+}
+
+@media (min-width: 921px) {
+  .locationPill {
+    bottom: 42px;
+  }
+}
+
+@media (max-width: 920px) {
+  .globeShell {
+    top: 178px;
+    transform: translate(-50%, -50%) scale(0.74);
+  }
+
+  .identityTag {
+    left: -38px;
+  }
+
+  .globeCanvas {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .zoomControls button {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .globeShell {
+    top: 166px;
+    transform: translate(-50%, -50%) scale(0.68);
+  }
+
+  .identityTag {
+    left: -30px;
+  }
+
+  .zoomControls button {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+/* The portfolio hero uses the globe as a supporting location signature. */
+.globeShell[data-variant="compact"] {
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.76);
+}
+
+@media (max-width: 920px) {
+  .globeShell[data-variant="compact"] {
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+
+  .globeShell[data-variant="compact"] .zoomControls,
+  .globeShell[data-variant="compact"] .identityConnector,
+  .globeShell[data-variant="compact"] .identityTag {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .globeShell[data-variant="compact"] {
+    transform: translate(-50%, -50%) scale(0.54);
   }
 }

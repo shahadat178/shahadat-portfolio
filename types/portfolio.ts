@@ -33,34 +33,87 @@ export type NavigationHandler = (
 export type ProjectLink = Readonly<{
   label: string;
   href: string;
+  kind: "case-study" | "live" | "repository" | "internal";
+  external?: boolean;
+}>;
+
+export type ProjectStatus = "active-build" | "concept" | "planned";
+
+export type ProjectImage = Readonly<{
+  src: string;
+  alt: string;
+}>;
+
+export type ProjectDecision = Readonly<{
+  title: string;
+  rationale: string;
 }>;
 
 export type PortfolioProject = Readonly<{
   slug: string;
   title: string;
+  eyebrow: string;
+  projectType: string;
   summary: string;
+  narrative: string;
   role: string;
   period: string;
-  challenge: string;
-  approach: readonly string[];
+  status: ProjectStatus;
+  statusLabel: string;
+  image: ProjectImage;
+  problem: string;
+  audience: readonly string[];
+  scope: readonly string[];
+  decisions: readonly ProjectDecision[];
   outcomes: readonly string[];
-  technologies: readonly string[];
+  nextSteps: readonly string[];
+  stack: readonly string[];
   links: readonly ProjectLink[];
+  disclaimer?: string;
   featured: boolean;
 }>;
 
+export type ExperienceStatus = "current" | "concept" | "learning";
+
 export type ExperienceItem = Readonly<{
-  company: string;
+  organization: string;
   role: string;
-  startDate: string;
-  endDate: string;
+  period: string;
+  status: ExperienceStatus;
+  statusLabel: string;
   summary: string;
-  achievements: readonly string[];
+  responsibilities: readonly string[];
+  evidenceNote: string;
   technologies: readonly string[];
+}>;
+
+export type ToolkitConfidence = "in-project" | "practicing" | "exploring";
+
+export type ToolkitItem = Readonly<{
+  name: string;
+  confidence: ToolkitConfidence;
+  context: string;
 }>;
 
 export type ToolkitGroup = Readonly<{
   label: string;
   description: string;
-  technologies: readonly string[];
+  items: readonly ToolkitItem[];
+}>;
+
+export type EngineeringPrinciple = Readonly<{
+  id: string;
+  title: string;
+  description: string;
+  application: string;
+}>;
+
+export type ContactOption = Readonly<{
+  id: SocialId | "resume";
+  label: string;
+  description: string;
+  href: string;
+  external: boolean;
+  status: "ready" | "needs-configuration";
+  statusLabel?: string;
 }>;

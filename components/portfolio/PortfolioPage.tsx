@@ -3,8 +3,10 @@
 import { useState, type MouseEvent, type ReactNode } from "react";
 
 import { PortfolioSidebar } from "@/components/layout/PortfolioSidebar";
+import { PortfolioMobileHeader } from "@/components/layout/PortfolioMobileHeader";
 import { PortfolioTopBar } from "@/components/layout/PortfolioTopBar";
 import { useAppearancePreferences } from "@/hooks/useAppearancePreferences";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import type { SectionId } from "@/types/portfolio";
 
 type PortfolioPageProps = {
@@ -13,7 +15,7 @@ type PortfolioPageProps = {
 };
 
 export function PortfolioPage({ children, insightRail }: PortfolioPageProps) {
-  const [activeSection, setActiveSection] = useState<SectionId>("home");
+  const [activeSection, setActiveSection] = useActiveSection("home");
   const [sidebarIndicator, setSidebarIndicator] =
     useState<SectionId>("home");
   const [topIndicator, setTopIndicator] = useState<SectionId>("work");
@@ -34,37 +36,59 @@ export function PortfolioPage({ children, insightRail }: PortfolioPageProps) {
 
     if (section === "home") {
       event.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const shouldReduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      window.scrollTo({
+        top: 0,
+        behavior: shouldReduceMotion ? "auto" : "smooth",
+      });
       window.history.replaceState(null, "", "#home");
     }
   }
 
   return (
-    <main className="portfolio-shell">
-      <PortfolioSidebar
-        activeSection={activeSection}
-        appearanceMode={appearanceMode}
-        indicator={sidebarIndicator}
-        onIndicatorChange={setSidebarIndicator}
-        onNavigate={handleNavigation}
-      />
+    <>
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
 
-      <section className="main-content">
-        <PortfolioTopBar
+      <div className="portfolio-shell">
+        <PortfolioSidebar
           activeSection={activeSection}
           appearanceMode={appearanceMode}
-          glassTheme={glassTheme}
-          indicator={topIndicator}
-          onIndicatorChange={setTopIndicator}
+          indicator={sidebarIndicator}
+          onIndicatorChange={setSidebarIndicator}
           onNavigate={handleNavigation}
-          onThemeChange={setGlassTheme}
-          onToggleAppearance={toggleAppearanceMode}
         />
 
-        {children}
-      </section>
+        <main className="main-content" id="main-content" tabIndex={-1}>
+          <PortfolioMobileHeader
+            activeSection={activeSection}
+            appearanceMode={appearanceMode}
+            glassTheme={glassTheme}
+            onNavigate={handleNavigation}
+            onThemeChange={setGlassTheme}
+            onToggleAppearance={toggleAppearanceMode}
+          />
 
-      {insightRail}
-    </main>
+          <PortfolioTopBar
+            activeSection={activeSection}
+            appearanceMode={appearanceMode}
+            glassTheme={glassTheme}
+            indicator={topIndicator}
+            onIndicatorChange={setTopIndicator}
+            onNavigate={handleNavigation}
+            onThemeChange={setGlassTheme}
+            onToggleAppearance={toggleAppearanceMode}
+          />
+
+          {children}
+        </main>
+
+        {insightRail}
+      </div>
+    </>
   );
 }

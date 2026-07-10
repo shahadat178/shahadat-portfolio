@@ -9,6 +9,7 @@ import {
   type ComponentType,
   type RefAttributes,
 } from "react";
+import { FiMinus, FiPlus, FiRotateCcw } from "react-icons/fi";
 
 
 import styles from "./InteractiveBangladeshGlobe.module.css";
@@ -41,16 +42,18 @@ type GlobeMaterial = {
   bumpScale: number;
 };
 
+type GlobePointOfView = {
+  lat: number;
+  lng: number;
+  altitude: number;
+};
+
 type GlobeHandle = {
   controls: () => GlobeControls | undefined;
-  pointOfView: (
-    position: {
-      lat: number;
-      lng: number;
-      altitude: number;
-    },
-    duration?: number
-  ) => void;
+  pointOfView: {
+    (): GlobePointOfView;
+    (position: GlobePointOfView, duration?: number): void;
+  };
   globeMaterial?: () => GlobeMaterial | undefined;
 };
 
@@ -109,11 +112,19 @@ const DHAKA_MARKER: DhakaMarker = {
 const DHAKA_MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=Dhaka%2C%20Bangladesh";
 
-export default function InteractiveBangladeshGlobe() {
+type InteractiveBangladeshGlobeProps = {
+  compact?: boolean;
+};
+
+export default function InteractiveBangladeshGlobe({
+  compact = false,
+}: InteractiveBangladeshGlobeProps) {
   const globeRef = useRef<GlobeHandle | null>(null);
+  const altitudeRef = useRef(1.2);
 
   const [bangladeshPolygon, setBangladeshPolygon] =
     useState<GeoFeature | null>(null);
+  const [isGlobeReady, setIsGlobeReady] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -167,28 +178,43 @@ export default function InteractiveBangladeshGlobe() {
       return;
     }
 
-    /*
-      Start farther away, then smoothly settle into Bangladesh.
-    */
-    globe.pointOfView(
-      {
-        lat: 23.8,
-        lng: 90.4,
-        altitude: 1.72,
-      },
-      0
-    );
+    const shouldReduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const shouldAutoRotate = !shouldReduceMotion && window.innerWidth > 920;
 
-    window.setTimeout(() => {
+    setIsGlobeReady(true);
+
+    if (shouldReduceMotion) {
       globe.pointOfView(
         {
           lat: 23.8,
           lng: 90.4,
           altitude: 1.2,
         },
-        1350
+        0
       );
-    }, 180);
+    } else {
+      globe.pointOfView(
+        {
+          lat: 23.8,
+          lng: 90.4,
+          altitude: 1.72,
+        },
+        0
+      );
+
+      window.setTimeout(() => {
+        globe.pointOfView(
+          {
+            lat: 23.8,
+            lng: 90.4,
+            altitude: 1.2,
+          },
+          1350
+        );
+      }, 180);
+    }
 
     /*
       Smooth iOS-like movement.
@@ -199,14 +225,22 @@ export default function InteractiveBangladeshGlobe() {
 
     controls.dampingFactor = 0.065;
     controls.rotateSpeed = 0.46;
-    controls.zoomSpeed = 0.34;
+    controls.zoomSpeed = 0.48;
 
     /*
       Zoom in is allowed.
       Zoom out is clamped so the globe never becomes tiny.
     */
-    controls.minDistance = 150;
-    controls.maxDistance = 230;
+    controls.minDistance = 120;
+    controls.maxDistance = 270;
+
+    const syncAltitude = () => {
+      const pointOfView = globe.pointOfView();
+
+      if (Number.isFinite(pointOfView.altitude)) {
+        altitudeRef.current = pointOfView.altitude;
+      }
+    };
 
     /*
       Ambient auto-rotation starts after the intro animation.
@@ -226,6 +260,8 @@ export default function InteractiveBangladeshGlobe() {
     };
 
     const restartAutoRotate = () => {
+      syncAltitude();
+
       if (resumeRotationTimer !== undefined) {
         window.clearTimeout(resumeRotationTimer);
       }
@@ -235,12 +271,16 @@ export default function InteractiveBangladeshGlobe() {
       }, 1600);
     };
 
-    controls.addEventListener("start", stopAutoRotate);
-    controls.addEventListener("end", restartAutoRotate);
+    if (shouldAutoRotate) {
+      controls.addEventListener("start", stopAutoRotate);
+      controls.addEventListener("end", restartAutoRotate);
 
-    window.setTimeout(() => {
-      controls.autoRotate = true;
-    }, 1750);
+      window.setTimeout(() => {
+        controls.autoRotate = true;
+      }, 1750);
+    } else {
+      controls.addEventListener("end", syncAltitude);
+    }
 
     /*
       Material polish without importing THREE directly.
@@ -256,6 +296,47 @@ export default function InteractiveBangladeshGlobe() {
       material.shininess = 34;
       material.bumpScale = 3.1;
     }
+  }
+
+  function changeZoom(delta: number) {
+    const globe = globeRef.current;
+
+    if (!globe) {
+      return;
+    }
+
+    const altitude = Math.min(
+      1.8,
+      Math.max(0.62, altitudeRef.current + delta)
+    );
+
+    altitudeRef.current = altitude;
+    globe.pointOfView(
+      {
+        lat: 23.8,
+        lng: 90.4,
+        altitude,
+      },
+      420
+    );
+  }
+
+  function resetView() {
+    const globe = globeRef.current;
+
+    if (!globe) {
+      return;
+    }
+
+    altitudeRef.current = 1.2;
+    globe.pointOfView(
+      {
+        lat: 23.8,
+        lng: 90.4,
+        altitude: 1.2,
+      },
+      520
+    );
   }
 
   function createBangladeshPin() {
@@ -285,7 +366,10 @@ export default function InteractiveBangladeshGlobe() {
   }
 
   return (
-    <div className={styles.globeShell}>
+    <div
+      className={styles.globeShell}
+      data-variant={compact ? "compact" : "default"}
+    >
       {/* Sky / subtle galaxy environment */}
       <div className={styles.skyParticles} />
       <div className={styles.skyAura} />
@@ -307,6 +391,15 @@ export default function InteractiveBangladeshGlobe() {
       <span className={styles.identityConnector} aria-hidden="true" />
 
       <div className={styles.globeCanvas}>
+        <div
+          className={styles.globeFallback}
+          data-hidden={isGlobeReady ? "true" : "false"}
+          role="status"
+          aria-label="Loading interactive globe"
+        >
+          <span className={styles.loadingGlobe} aria-hidden="true" />
+        </div>
+
         <Globe
           ref={globeRef}
           width={286}
@@ -331,6 +424,33 @@ export default function InteractiveBangladeshGlobe() {
           htmlElement={createBangladeshPin}
           onGlobeReady={handleGlobeReady}
         />
+      </div>
+
+      <div className={styles.zoomControls} aria-label="Globe zoom controls">
+        <button
+          type="button"
+          aria-label="Zoom in on the globe"
+          disabled={!isGlobeReady}
+          onClick={() => changeZoom(-0.18)}
+        >
+          <FiPlus aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          aria-label="Zoom out from the globe"
+          disabled={!isGlobeReady}
+          onClick={() => changeZoom(0.18)}
+        >
+          <FiMinus aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          aria-label="Reset the globe view"
+          disabled={!isGlobeReady}
+          onClick={resetView}
+        >
+          <FiRotateCcw aria-hidden="true" />
+        </button>
       </div>
 
       <a

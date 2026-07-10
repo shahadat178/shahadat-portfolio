@@ -90,6 +90,16 @@ export function useAppearancePreferences() {
       flushSync(() => setAppearanceMode(nextMode));
     };
 
+    const shouldReduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (shouldReduceMotion) {
+      applyAppearance();
+      root.removeAttribute("data-appearance-transition");
+      return;
+    }
+
     const transitionDocument = document as ViewTransitionDocument;
     const transition =
       transitionDocument.startViewTransition?.(applyAppearance);

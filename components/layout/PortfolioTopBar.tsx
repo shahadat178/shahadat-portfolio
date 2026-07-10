@@ -96,7 +96,7 @@ export function PortfolioTopBar({
             key={item.id}
             href={`#${item.id}`}
             className="top-nav-link"
-            aria-current={activeSection === item.id ? "page" : undefined}
+            aria-current={activeSection === item.id ? "location" : undefined}
             onClick={(event) => onNavigate(event, item.id)}
             onMouseEnter={() => onIndicatorChange(item.id)}
             onFocus={() => onIndicatorChange(item.id)}
@@ -185,10 +185,18 @@ export function PortfolioTopBar({
 
         <a
           className="resume-button"
-          href={PORTFOLIO_PROFILE.resumeHref}
-          aria-label="Download Shahadat Sardar's resume"
+          href={
+            PORTFOLIO_PROFILE.resumeConfigured
+              ? PORTFOLIO_PROFILE.resumeHref
+              : "#contact"
+          }
+          aria-label={
+            PORTFOLIO_PROFILE.resumeConfigured
+              ? "Download Shahadat Sardar's resume"
+              : "View resume availability details"
+          }
         >
-          Resume ↓
+          {PORTFOLIO_PROFILE.resumeConfigured ? "Resume ↓" : "Resume soon"}
         </a>
       </div>
     </header>

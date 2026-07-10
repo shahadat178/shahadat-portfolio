@@ -75,7 +75,7 @@ export function PortfolioSidebar({
             key={item.id}
             href={`#${item.id}`}
             className="nav-item"
-            aria-current={activeSection === item.id ? "page" : undefined}
+            aria-current={activeSection === item.id ? "location" : undefined}
             onClick={(event) => onNavigate(event, item.id)}
             onMouseEnter={() => onIndicatorChange(item.id)}
             onFocus={() => onIndicatorChange(item.id)}
