@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -10,6 +11,8 @@ import {
   type RefAttributes,
 } from "react";
 
+import bangladeshBoundaryData from "@/data/bangladesh.geo.json";
+import InteractiveGlobeFallback from "@/components/InteractiveGlobeFallback";
 
 import styles from "./InteractiveBangladeshGlobe.module.css";
 
@@ -30,6 +33,10 @@ type GlobeControls = {
     event: "start" | "end",
     listener: () => void
   ) => void;
+  removeEventListener: (
+    event: "start" | "end",
+    listener: () => void
+  ) => void;
 };
 
 type GlobeMaterial = {
@@ -41,6 +48,16 @@ type GlobeMaterial = {
   bumpScale: number;
 };
 
+type GlobeRenderer = {
+  dispose: () => void;
+  forceContextLoss: () => void;
+};
+
+type GlobeRendererConfig = WebGLContextAttributes & {
+  canvas: HTMLCanvasElement;
+  context: WebGL2RenderingContext;
+};
+
 type GlobePointOfView = {
   lat: number;
   lng: number;
@@ -49,6 +66,8 @@ type GlobePointOfView = {
 
 type GlobeHandle = {
   controls: () => GlobeControls | undefined;
+  getGlobeRadius: () => number;
+  renderer?: () => GlobeRenderer | undefined;
   pointOfView: {
     (): GlobePointOfView;
     (position: GlobePointOfView, duration?: number): void;
@@ -111,6 +130,51 @@ const DHAKA_MARKER: DhakaMarker = {
 const DHAKA_MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=Dhaka%2C%20Bangladesh";
 
+const BANGLADESH_VIEW: GlobePointOfView = {
+  lat: 23.8,
+  lng: 90.4,
+  altitude: 1.2,
+};
+
+const BANGLADESH_POLYGON =
+  bangladeshBoundaryData.features[0] as GeoFeature;
+
+const WEBGL_CONTEXT_PROFILES = [
+  { alpha: true, antialias: true },
+  { alpha: true, antialias: false },
+  {
+    alpha: false,
+    antialias: false,
+    depth: true,
+    preserveDrawingBuffer: false,
+    stencil: false,
+  },
+] satisfies WebGLContextAttributes[];
+
+function createBangladeshPin() {
+  const link = document.createElement("a");
+
+  link.className = styles.mapPin;
+  link.href = DHAKA_MAP_URL;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.setAttribute(
+    "aria-label",
+    "Open Dhaka, Bangladesh in Google Maps"
+  );
+
+  const pulse = document.createElement("span");
+  pulse.className = styles.mapPinPulse;
+
+  const pinHead = document.createElement("span");
+  pinHead.className = styles.mapPinHead;
+
+  link.appendChild(pulse);
+  link.appendChild(pinHead);
+
+  return link;
+}
+
 type InteractiveBangladeshGlobeProps = {
   compact?: boolean;
 };
@@ -119,133 +183,144 @@ export default function InteractiveBangladeshGlobe({
   compact = false,
 }: InteractiveBangladeshGlobeProps) {
   const globeRef = useRef<GlobeHandle | null>(null);
-
-  const [bangladeshPolygon, setBangladeshPolygon] =
-    useState<GeoFeature | null>(null);
-  const [hasHydrated, setHasHydrated] = useState(false);
-  const [webGlStatus, setWebGlStatus] = useState<
-    "checking" | "available" | "unavailable"
-  >("checking");
-  const [isGlobeReady, setIsGlobeReady] = useState(false);
-
-  const canMountInteractiveGlobe =
-    hasHydrated && webGlStatus === "available";
+  const controlsCleanupRef = useRef<(() => void) | null>(null);
+  const controlsConfiguredRef = useRef(false);
+  const controlsRetryFrameRef = useRef<number | null>(null);
+  const controlsRetryCountRef = useRef(0);
+  const patchedRenderersRef = useRef(new WeakSet<GlobeRenderer>());
+  const rendererAttachedRef = useRef(false);
+  const ownedWebGlContextRef = useRef<WebGL2RenderingContext | null>(null);
+  const [rendererConfig, setRendererConfig] =
+    useState<GlobeRendererConfig | null>(null);
 
   useEffect(() => {
-    setHasHydrated(true);
+    let isCancelled = false;
+    let retryTimer: number | undefined;
 
-    /*
-      Check WebGL before mounting Three.js. Some browsers temporarily exhaust
-      their graphics contexts during development/HMR. In that case the static
-      Earth remains visible instead of throwing a full-page runtime overlay.
-    */
-    const canvas = document.createElement("canvas");
-    const context =
-      canvas.getContext("webgl2", {
-        failIfMajorPerformanceCaveat: false,
-      }) ??
-      canvas.getContext("webgl", {
-        failIfMajorPerformanceCaveat: false,
-      });
+    const tryCreateWebGlContext = () => {
+      if (isCancelled) {
+        return;
+      }
 
-    if (!context) {
-      setWebGlStatus("unavailable");
-      return;
-    }
+      for (const profile of WEBGL_CONTEXT_PROFILES) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 286;
+        canvas.height = 286;
 
-    context.getExtension("WEBGL_lose_context")?.loseContext();
-    setWebGlStatus("available");
-  }, []);
+        const context = canvas.getContext(
+          "webgl2",
+          profile
+        ) as WebGL2RenderingContext | null;
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadBangladeshBoundary() {
-      try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
-        );
-
-        if (!response.ok) {
+        if (context) {
+          ownedWebGlContextRef.current = context;
+          setRendererConfig({
+            ...profile,
+            canvas,
+            context,
+          });
           return;
         }
-
-        const data: { features?: GeoFeature[] } = await response.json();
-
-        const bangladesh = data.features?.find(
-          (country) =>
-            country.properties?.name === "Bangladesh" ||
-            country.properties?.ADMIN === "Bangladesh"
-        );
-
-        if (isMounted && bangladesh) {
-          setBangladeshPolygon(bangladesh);
-        }
-      } catch {
-        /*
-          If the country boundary cannot load, the globe still works.
-          The red Dhaka pin remains visible.
-        */
       }
-    }
 
-    loadBangladeshBoundary();
+      retryTimer = window.setTimeout(tryCreateWebGlContext, 2400);
+    };
+
+    const initialFrame = window.requestAnimationFrame(
+      tryCreateWebGlContext
+    );
 
     return () => {
-      isMounted = false;
+      isCancelled = true;
+      window.cancelAnimationFrame(initialFrame);
+
+      if (retryTimer !== undefined) {
+        window.clearTimeout(retryTimer);
+      }
+
+      if (!rendererAttachedRef.current) {
+        ownedWebGlContextRef.current
+          ?.getExtension("WEBGL_lose_context")
+          ?.loseContext();
+      }
     };
   }, []);
 
-  function handleGlobeReady() {
+  const prepareRendererForDisposal = useCallback(
+    (globe: GlobeHandle) => {
+      const renderer = globe.renderer?.();
+
+      if (!renderer || patchedRenderersRef.current.has(renderer)) {
+        return;
+      }
+
+      patchedRenderersRef.current.add(renderer);
+      rendererAttachedRef.current = true;
+
+      const originalDispose = renderer.dispose.bind(renderer);
+      let isDisposed = false;
+
+      renderer.dispose = () => {
+        if (isDisposed) {
+          return;
+        }
+
+        isDisposed = true;
+
+        try {
+          originalDispose();
+        } finally {
+          renderer.forceContextLoss();
+          rendererAttachedRef.current = false;
+          ownedWebGlContextRef.current = null;
+        }
+      };
+    },
+    []
+  );
+
+  const captureGlobe = useCallback(
+    (globe: GlobeHandle | null) => {
+      globeRef.current = globe;
+
+      if (globe) {
+        prepareRendererForDisposal(globe);
+      }
+    },
+    [prepareRendererForDisposal]
+  );
+
+  useEffect(
+    () => () => {
+      if (controlsRetryFrameRef.current !== null) {
+        window.cancelAnimationFrame(controlsRetryFrameRef.current);
+      }
+
+      controlsCleanupRef.current?.();
+    },
+    []
+  );
+
+  const configureGlobeControls = useCallback(() => {
+    if (controlsConfiguredRef.current) {
+      return true;
+    }
+
     const globe = globeRef.current;
 
     if (!globe) {
-      return;
+      return false;
     }
 
     const controls = globe.controls();
 
     if (!controls) {
-      return;
+      return false;
     }
 
-    const shouldReduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const shouldAutoRotate = !shouldReduceMotion && window.innerWidth > 920;
-
-    setIsGlobeReady(true);
-
-    if (shouldReduceMotion) {
-      globe.pointOfView(
-        {
-          lat: 23.8,
-          lng: 90.4,
-          altitude: 1.2,
-        },
-        0
-      );
-    } else {
-      globe.pointOfView(
-        {
-          lat: 23.8,
-          lng: 90.4,
-          altitude: 1.72,
-        },
-        0
-      );
-
-      window.setTimeout(() => {
-        globe.pointOfView(
-          {
-            lat: 23.8,
-            lng: 90.4,
-            altitude: 1.2,
-          },
-          1350
-        );
-      }, 180);
-    }
+    controlsCleanupRef.current?.();
+    controlsConfiguredRef.current = true;
+    globe.pointOfView(BANGLADESH_VIEW, 0);
 
     /*
       Smooth iOS-like movement.
@@ -256,27 +331,37 @@ export default function InteractiveBangladeshGlobe({
 
     controls.dampingFactor = 0.065;
     controls.rotateSpeed = 0.46;
-    controls.zoomSpeed = 0.48;
+    controls.zoomSpeed = 0.34;
 
     /*
       Zoom in is allowed.
       Zoom out is clamped so the globe never becomes tiny.
     */
-    controls.minDistance = 120;
-    controls.maxDistance = 270;
+    const globeRadius = globe.getGlobeRadius();
+
+    controls.minDistance = globeRadius * 1.5;
+    controls.maxDistance =
+      globeRadius * (1 + BANGLADESH_VIEW.altitude);
 
     /*
-      Ambient auto-rotation starts after the intro animation.
-      It pauses during drag and resumes gently afterwards.
+      Restore the original ambient motion: start gently, pause while the
+      visitor drags, then resume after the interaction settles.
     */
     controls.autoRotate = false;
     controls.autoRotateSpeed = 0.05;
 
+    let startRotationTimer: number | undefined;
     let resumeRotationTimer: number | undefined;
 
     const stopAutoRotate = () => {
+      if (startRotationTimer !== undefined) {
+        window.clearTimeout(startRotationTimer);
+        startRotationTimer = undefined;
+      }
+
       if (resumeRotationTimer !== undefined) {
         window.clearTimeout(resumeRotationTimer);
+        resumeRotationTimer = undefined;
       }
 
       controls.autoRotate = false;
@@ -292,14 +377,27 @@ export default function InteractiveBangladeshGlobe({
       }, 1600);
     };
 
-    if (shouldAutoRotate) {
-      controls.addEventListener("start", stopAutoRotate);
-      controls.addEventListener("end", restartAutoRotate);
+    controls.addEventListener("start", stopAutoRotate);
+    controls.addEventListener("end", restartAutoRotate);
 
-      window.setTimeout(() => {
-        controls.autoRotate = true;
-      }, 1750);
-    }
+    startRotationTimer = window.setTimeout(() => {
+      controls.autoRotate = true;
+    }, 1750);
+
+    controlsCleanupRef.current = () => {
+      if (startRotationTimer !== undefined) {
+        window.clearTimeout(startRotationTimer);
+      }
+
+      if (resumeRotationTimer !== undefined) {
+        window.clearTimeout(resumeRotationTimer);
+      }
+
+      controls.removeEventListener("start", stopAutoRotate);
+      controls.removeEventListener("end", restartAutoRotate);
+      controls.autoRotate = false;
+      controlsConfiguredRef.current = false;
+    };
 
     /*
       Material polish without importing THREE directly.
@@ -315,33 +413,47 @@ export default function InteractiveBangladeshGlobe({
       material.shininess = 34;
       material.bumpScale = 3.1;
     }
-  }
 
-  function createBangladeshPin() {
-    const button = document.createElement("button");
+    return true;
+  }, []);
 
-    button.type = "button";
-    button.className = styles.mapPin;
-    button.setAttribute(
-      "aria-label",
-      "Open Dhaka, Bangladesh in Google Maps"
-    );
+  const scheduleGlobeConfiguration = useCallback(() => {
+    if (
+      controlsConfiguredRef.current ||
+      controlsRetryFrameRef.current !== null
+    ) {
+      return;
+    }
 
-    button.onclick = () => {
-      window.open(DHAKA_MAP_URL, "_blank", "noopener,noreferrer");
+    const tryConfigure = () => {
+      controlsRetryFrameRef.current = null;
+
+      if (configureGlobeControls()) {
+        controlsRetryCountRef.current = 0;
+        return;
+      }
+
+      if (controlsRetryCountRef.current >= 60) {
+        return;
+      }
+
+      controlsRetryCountRef.current += 1;
+      controlsRetryFrameRef.current =
+        window.requestAnimationFrame(tryConfigure);
     };
 
-    const pulse = document.createElement("span");
-    pulse.className = styles.mapPinPulse;
+    tryConfigure();
+  }, [configureGlobeControls]);
 
-    const pinHead = document.createElement("span");
-    pinHead.className = styles.mapPinHead;
+  const handleGlobeReady = useCallback(() => {
+    const globe = globeRef.current;
 
-    button.appendChild(pulse);
-    button.appendChild(pinHead);
+    if (globe) {
+      prepareRendererForDisposal(globe);
+    }
 
-    return button;
-  }
+    scheduleGlobeConfiguration();
+  }, [prepareRendererForDisposal, scheduleGlobeConfiguration]);
 
   return (
     <div
@@ -369,24 +481,12 @@ export default function InteractiveBangladeshGlobe({
       <span className={styles.identityConnector} aria-hidden="true" />
 
       <div className={styles.globeCanvas}>
-        <div
-          className={styles.globeFallback}
-          data-hidden={isGlobeReady ? "true" : "false"}
-          role="status"
-          aria-label={
-            webGlStatus === "unavailable"
-              ? "Static view of Earth centered on Bangladesh"
-              : "Loading interactive globe"
-          }
-        >
-          <span className={styles.loadingGlobe} aria-hidden="true" />
-        </div>
-
-        {canMountInteractiveGlobe ? (
+        {rendererConfig ? (
           <Globe
-            ref={globeRef}
+            ref={captureGlobe}
             width={286}
             height={286}
+            rendererConfig={rendererConfig}
             backgroundColor="rgba(0, 0, 0, 0)"
             animateIn={false}
             globeImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg"
@@ -394,7 +494,7 @@ export default function InteractiveBangladeshGlobe({
             showAtmosphere
             atmosphereColor="#a9a2ff"
             atmosphereAltitude={0.13}
-            polygonsData={bangladeshPolygon ? [bangladeshPolygon] : []}
+            polygonsData={[BANGLADESH_POLYGON]}
             polygonGeoJsonGeometry="geometry"
             polygonCapColor={() => "rgba(108, 150, 255, 0.22)"}
             polygonSideColor={() => "rgba(102, 84, 228, 0.08)"}
@@ -407,7 +507,9 @@ export default function InteractiveBangladeshGlobe({
             htmlElement={createBangladeshPin}
             onGlobeReady={handleGlobeReady}
           />
-        ) : null}
+        ) : (
+          <InteractiveGlobeFallback mapUrl={DHAKA_MAP_URL} />
+        )}
       </div>
 
       <a

@@ -98,7 +98,7 @@ export function ContactSection() {
       </div>
 
       <p className="contact-configuration-note">
-        <strong>Résumé access:</strong> {CONTACT_SECTION.configurationNote}
+        <strong>Resume access:</strong> {CONTACT_SECTION.configurationNote}
       </p>
     </section>
   );

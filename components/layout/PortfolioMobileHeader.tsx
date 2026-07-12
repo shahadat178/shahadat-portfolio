@@ -51,12 +51,15 @@ export function PortfolioMobileHeader({
   onToggleAppearance,
 }: PortfolioMobileHeaderProps) {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuClosing, setIsMenuClosing] = useState(false);
 
   function openMenu() {
     const dialog = dialogRef.current;
 
     if (dialog && !dialog.open) {
+      setIsMenuClosing(false);
       dialog.showModal();
       setIsMenuOpen(true);
     }
@@ -65,9 +68,24 @@ export function PortfolioMobileHeader({
   function closeMenu() {
     const dialog = dialogRef.current;
 
-    if (dialog?.open) {
-      dialog.close();
+    if (!dialog?.open || isMenuClosing || closeTimerRef.current !== null) {
+      return;
     }
+
+    const shouldReduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (shouldReduceMotion) {
+      dialog.close();
+      return;
+    }
+
+    setIsMenuClosing(true);
+    closeTimerRef.current = window.setTimeout(() => {
+      dialog.close();
+      closeTimerRef.current = null;
+    }, 300);
   }
 
   function handleNavigation(
@@ -83,6 +101,14 @@ export function PortfolioMobileHeader({
       closeMenu();
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -182,9 +208,22 @@ export function PortfolioMobileHeader({
         className={styles.dialog}
         id="portfolio-mobile-menu"
         ref={dialogRef}
+        data-closing={isMenuClosing ? "true" : "false"}
         aria-labelledby="portfolio-mobile-menu-title"
         onClick={handleBackdropClick}
-        onClose={() => setIsMenuOpen(false)}
+        onCancel={(event) => {
+          event.preventDefault();
+          closeMenu();
+        }}
+        onClose={() => {
+          if (closeTimerRef.current !== null) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+          }
+
+          setIsMenuOpen(false);
+          setIsMenuClosing(false);
+        }}
       >
         <div className={styles.sheet}>
           <div className={styles.sheetHeader}>

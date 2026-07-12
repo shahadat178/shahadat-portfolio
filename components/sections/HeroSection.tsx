@@ -45,7 +45,7 @@ export function HeroSection() {
             }
           >
             <FiDownload aria-hidden="true" />
-            {PORTFOLIO_PROFILE.resumeConfigured ? "Résumé" : "Résumé soon"}
+            {PORTFOLIO_PROFILE.resumeConfigured ? "Resume" : "Resume soon"}
           </a>
         </div>
 
@@ -58,7 +58,10 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="hero-visual" aria-label="Shahadat's global engineering perspective">
+      <div
+        className="hero-visual"
+        aria-label="Shahadat's global engineering perspective"
+      >
         <div className="orb-glow" aria-hidden="true" />
         <div className="workflow-scene">
           <span className="workflow-line workflow-line-1" aria-hidden="true" />
@@ -74,7 +77,7 @@ export function HeroSection() {
               className="workflow-node-icon workflow-node-icon-product"
               aria-hidden="true"
             >
-                ✦
+              ✦
             </span>
             <div className="workflow-node-content">
               <p className="workflow-node-title">Product Thinking</p>
@@ -87,11 +90,13 @@ export function HeroSection() {
               className="workflow-node-icon workflow-node-icon-react"
               aria-hidden="true"
             >
-                <FaReact />
+              <FaReact />
             </span>
             <div className="workflow-node-content">
               <p className="workflow-node-title">Frontend Craft</p>
-              <p className="workflow-node-text">React · Next.js · UI systems</p>
+              <p className="workflow-node-text">
+                React · Next.js · UI systems
+              </p>
             </div>
           </article>
 
@@ -100,11 +105,13 @@ export function HeroSection() {
               className="workflow-node-icon workflow-node-icon-node"
               aria-hidden="true"
             >
-                <FaNodeJs />
+              <FaNodeJs />
             </span>
             <div className="workflow-node-content">
               <p className="workflow-node-title">Backend &amp; Cloud</p>
-              <p className="workflow-node-text">APIs · deployment · scalability</p>
+              <p className="workflow-node-text">
+                APIs · deployment · scalability
+              </p>
             </div>
           </article>
 
@@ -113,7 +120,7 @@ export function HeroSection() {
               className="workflow-node-icon workflow-node-icon-quality"
               aria-hidden="true"
             >
-                <FiCheck />
+              <FiCheck />
             </span>
             <div className="workflow-node-content">
               <p className="workflow-node-title">Quality &amp; Iteration</p>
@@ -126,7 +133,7 @@ export function HeroSection() {
               className="workflow-node-icon workflow-node-icon-systems"
               aria-hidden="true"
             >
-                <FaBrain />
+              <FaBrain />
             </span>
             <div className="workflow-node-content">
               <p className="workflow-node-title">Systems Mindset</p>

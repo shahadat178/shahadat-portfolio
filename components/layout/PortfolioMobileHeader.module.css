@@ -183,8 +183,49 @@
     -webkit-backdrop-filter: blur(18px) saturate(120%);
   }
 
-  .dialog[open] {
-    animation: mobile-sheet-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  .dialog[open]::backdrop {
+    animation: mobile-backdrop-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .sheet {
+    animation: mobile-sheet-enter 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .dialog[data-closing="true"]::backdrop {
+    animation: mobile-backdrop-exit 300ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  .dialog[data-closing="true"] .sheet {
+    pointer-events: none;
+    animation: mobile-sheet-exit 300ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .sheetHeader,
+  .dialog[open]:not([data-closing="true"]) .navigation,
+  .dialog[open]:not([data-closing="true"]) .preferenceSection,
+  .dialog[open]:not([data-closing="true"]) .primaryActions,
+  .dialog[open]:not([data-closing="true"]) .availability {
+    animation: mobile-content-enter 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .sheetHeader {
+    animation-delay: 70ms;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .navigation {
+    animation-delay: 105ms;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .preferenceSection {
+    animation-delay: 140ms;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .primaryActions {
+    animation-delay: 175ms;
+  }
+
+  .dialog[open]:not([data-closing="true"]) .availability {
+    animation-delay: 210ms;
   }
 
   .sheet {
@@ -563,17 +604,79 @@
 @keyframes mobile-sheet-enter {
   from {
     opacity: 0;
-    transform: translateY(26px) scale(0.975);
+    filter: blur(8px);
+    transform: translateY(34px) scale(0.965);
   }
 
   to {
     opacity: 1;
+    filter: blur(0);
     transform: translateY(0) scale(1);
   }
 }
 
+@keyframes mobile-sheet-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(22px) scale(0.98);
+  }
+}
+
+@keyframes mobile-backdrop-enter {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0) saturate(100%);
+    -webkit-backdrop-filter: blur(0) saturate(100%);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+  }
+}
+
+@keyframes mobile-backdrop-exit {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+  }
+
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0) saturate(100%);
+    -webkit-backdrop-filter: blur(0) saturate(100%);
+  }
+}
+
+@keyframes mobile-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .dialog[open] {
+  .dialog[open]::backdrop,
+  .dialog[open] .sheet,
+  .dialog[open] .sheetHeader,
+  .dialog[open] .navigation,
+  .dialog[open] .preferenceSection,
+  .dialog[open] .primaryActions,
+  .dialog[open] .availability {
     animation: none;
   }
 }

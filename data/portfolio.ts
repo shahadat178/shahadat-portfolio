@@ -144,7 +144,7 @@ export const PORTFOLIO_PROJECTS = [
     ],
     nextSteps: [
       "Replace concept imagery with final, optimized project artwork.",
-      "Attach a verified public email address and final résumé.",
+      "Attach a verified public email address and final resume.",
       "Run production performance, accessibility, and cross-device audits before launch.",
     ],
     stack: [
@@ -578,7 +578,7 @@ export const CONTACT_SECTION = {
   availability:
     "Open to conversations with teams working on useful products and strong engineering foundations.",
   configurationNote:
-    "The résumé is available as a direct PDF download and through the linked Google Drive folder.",
+    "The resume is available as a direct PDF download and through the linked Google Drive folder.",
 } as const;
 
 export const CONTACT_OPTIONS = [
@@ -616,16 +616,16 @@ export const CONTACT_OPTIONS = [
   },
   {
     id: "resume",
-    label: "View résumé PDF",
-    description: "Open the résumé directly from this portfolio.",
+    label: "View resume PDF",
+    description: "Open the resume directly from this portfolio.",
     href: PORTFOLIO_PROFILE.resumeHref,
     external: true,
     status: "ready",
   },
   {
     id: "resume-drive",
-    label: "Résumé files on Drive",
-    description: "Open the shared folder containing the résumé source files.",
+    label: "Resume files on Drive",
+    description: "Open the shared folder containing the resume source files.",
     href: PORTFOLIO_PROFILE.resumeDriveHref,
     external: true,
     status: "ready",

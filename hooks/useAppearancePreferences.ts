@@ -30,10 +30,11 @@ function isAppearanceMode(value: string | null): value is AppearanceMode {
 }
 
 export function useAppearancePreferences() {
-  const [glassTheme, setGlassTheme] = useState<GlassTheme>("aurora");
+  const [glassTheme, setGlassThemeState] = useState<GlassTheme>("aurora");
   const [appearanceMode, setAppearanceMode] =
     useState<AppearanceMode>("light");
   const hasLoadedPreferences = useRef(false);
+  const themeTransitionId = useRef(0);
 
   useEffect(() => {
     const loadStoredAppearance = window.setTimeout(() => {
@@ -41,7 +42,7 @@ export function useAppearancePreferences() {
       const savedMode = window.localStorage.getItem(MODE_STORAGE_KEY);
 
       if (isGlassTheme(savedTheme)) {
-        setGlassTheme(savedTheme);
+        setGlassThemeState(savedTheme);
       }
 
       if (isAppearanceMode(savedMode)) {
@@ -65,6 +66,46 @@ export function useAppearancePreferences() {
       window.localStorage.setItem(MODE_STORAGE_KEY, appearanceMode);
     }
   }, [glassTheme, appearanceMode]);
+
+  function setGlassTheme(nextTheme: GlassTheme) {
+    if (nextTheme === glassTheme) {
+      return;
+    }
+
+    const root = document.documentElement;
+    const applyTheme = () => {
+      flushSync(() => setGlassThemeState(nextTheme));
+    };
+    const shouldReduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (shouldReduceMotion) {
+      applyTheme();
+      return;
+    }
+
+    const transitionDocument = document as ViewTransitionDocument;
+    const transitionId = themeTransitionId.current + 1;
+    themeTransitionId.current = transitionId;
+    root.dataset.themeTransition = "true";
+
+    const transition = transitionDocument.startViewTransition?.(applyTheme);
+
+    if (!transition) {
+      applyTheme();
+      root.removeAttribute("data-theme-transition");
+      return;
+    }
+
+    transition.finished
+      .catch(() => undefined)
+      .finally(() => {
+        if (themeTransitionId.current === transitionId) {
+          root.removeAttribute("data-theme-transition");
+        }
+      });
+  }
 
   function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
