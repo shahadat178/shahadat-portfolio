@@ -1,15 +1,44 @@
 import Image from "next/image";
-import { FiArrowUpRight } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiCheckCircle,
+  FiClock,
+  FiCompass,
+  FiExternalLink,
+  FiGitBranch,
+  FiLayers,
+  FiShield,
+  FiZap,
+} from "react-icons/fi";
 
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { PORTFOLIO_PROJECTS, WORK_SECTION } from "@/data/portfolio";
 import type { PortfolioProject } from "@/types/portfolio";
+import styles from "@/components/sections/WorkSection.module.css";
+
+const PROJECT_ORDER = {
+  "shahadat-engineering-portfolio": 0,
+  "sardar-atelier": 1,
+  "derma-aware": 2,
+} as const;
+
+const SELECTED_PROJECTS = [...PORTFOLIO_PROJECTS].sort(
+  (first, second) => PROJECT_ORDER[first.slug] - PROJECT_ORDER[second.slug],
+);
+
+const PROJECT_STATUS_META = {
+  "active-build": { icon: FiZap, label: "Building" },
+  concept: { icon: FiCompass, label: "Research" },
+  planned: { icon: FiClock, label: "Scheduled" },
+} as const;
 
 function ProjectStory({
   project,
   index,
 }: Readonly<{ project: PortfolioProject; index: number }>) {
   const projectNumber = String(index + 1).padStart(2, "0");
+  const statusMeta = PROJECT_STATUS_META[project.status];
+  const StatusIcon = statusMeta.icon;
 
   return (
     <article
@@ -19,46 +48,101 @@ function ProjectStory({
       data-status={project.status}
     >
       <figure className="project-visual">
-        <Image
-          className="project-image"
-          src={project.image.src}
-          alt={project.image.alt}
-          width={1440}
-          height={960}
-          sizes="(max-width: 920px) 100vw, (max-width: 1640px) 72vw, 52vw"
-        />
+        <a
+          className="project-preview-link"
+          href={project.image.src}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={`Open the full-resolution ${project.title} preview in a new tab`}
+        >
+          <Image
+            className="project-image"
+            src={project.image.src}
+            alt={project.image.alt}
+            width={1536}
+            height={1024}
+            sizes="(max-width: 700px) 94vw, (max-width: 1100px) 88vw, (max-width: 1640px) 68vw, 1120px"
+            priority={index === 0}
+            unoptimized
+            draggable={false}
+          />
+          <span className="project-preview-action" aria-hidden="true">
+            Full-resolution preview
+            <FiExternalLink />
+          </span>
+        </a>
         <figcaption>
           <span>{project.projectType}</span>
-          <span>{project.statusLabel}</span>
+          <span>
+            <StatusIcon aria-hidden="true" />
+            {project.statusLabel}
+          </span>
         </figcaption>
       </figure>
 
       <div className="project-story-body">
-        <header className="project-story-header">
-          <div className="project-story-meta">
-            <span aria-hidden="true">{projectNumber}</span>
-            <p>{project.eyebrow}</p>
-          </div>
+        <div className="project-story-overview">
+          <header className="project-story-header">
+            <div className="project-story-meta">
+              <span aria-hidden="true">{projectNumber}</span>
+              <div>
+                <p>{project.eyebrow}</p>
+                <small>
+                  <StatusIcon aria-hidden="true" />
+                  {statusMeta.label}
+                </small>
+              </div>
+            </div>
 
-          <h3 id={`project-${project.slug}-title`}>{project.title}</h3>
-          <p className="project-summary">{project.summary}</p>
-          <p className="project-narrative">{project.narrative}</p>
-        </header>
+            <h3 id={`project-${project.slug}-title`}>{project.title}</h3>
+            <p className="project-summary">{project.summary}</p>
+            <p className="project-narrative">{project.narrative}</p>
+          </header>
 
-        <dl className="project-facts">
-          <div>
-            <dt>Role</dt>
-            <dd>{project.role}</dd>
+          <div className="project-story-evidence">
+            <dl className="project-facts">
+              <div>
+                <dt>Role</dt>
+                <dd>{project.role}</dd>
+              </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>{project.period}</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>{project.statusLabel}</dd>
+              </div>
+            </dl>
+
+            <dl
+              className="project-proof-summary"
+              aria-label="Engineering proof summary"
+            >
+              <div>
+                <dt>
+                  <FiGitBranch aria-hidden="true" />
+                  Decisions documented
+                </dt>
+                <dd>{String(project.decisions.length).padStart(2, "0")}</dd>
+              </div>
+              <div>
+                <dt>
+                  <FiCheckCircle aria-hidden="true" />
+                  Evidence points
+                </dt>
+                <dd>{String(project.outcomes.length).padStart(2, "0")}</dd>
+              </div>
+              <div>
+                <dt>
+                  <FiLayers aria-hidden="true" />
+                  Implementation surface
+                </dt>
+                <dd>{String(project.stack.length).padStart(2, "0")}</dd>
+              </div>
+            </dl>
           </div>
-          <div>
-            <dt>Timeline</dt>
-            <dd>{project.period}</dd>
-          </div>
-          <div>
-            <dt>Status</dt>
-            <dd>{project.statusLabel}</dd>
-          </div>
-        </dl>
+        </div>
 
         <div className="project-story-grid">
           <section aria-labelledby={`project-${project.slug}-problem`}>
@@ -82,12 +166,21 @@ function ProjectStory({
           </section>
         </div>
 
-        <details className="project-case-study">
-          <summary>Explore the case-study outline</summary>
+        <details className="project-case-study" open={index === 0}>
+          <summary>
+            <span>
+              <FiShield aria-hidden="true" />
+              Engineering case study
+            </span>
+            <small>{index === 0 ? "Open by default" : "Expand record"}</small>
+          </summary>
 
           <div className="project-case-study-content">
             <section aria-labelledby={`project-${project.slug}-scope`}>
-              <p className="project-detail-label">Scope</p>
+              <p className="project-detail-label">
+                <FiLayers aria-hidden="true" />
+                Scope
+              </p>
               <h4 id={`project-${project.slug}-scope`}>What I am building</h4>
               <ul>
                 {project.scope.map((item) => (
@@ -97,7 +190,10 @@ function ProjectStory({
             </section>
 
             <section aria-labelledby={`project-${project.slug}-decisions`}>
-              <p className="project-detail-label">Decision record</p>
+              <p className="project-detail-label">
+                <FiGitBranch aria-hidden="true" />
+                Decision record
+              </p>
               <h4 id={`project-${project.slug}-decisions`}>
                 Engineering choices and rationale
               </h4>
@@ -112,7 +208,10 @@ function ProjectStory({
             </section>
 
             <section aria-labelledby={`project-${project.slug}-outcomes`}>
-              <p className="project-detail-label">Current evidence</p>
+              <p className="project-detail-label">
+                <FiCheckCircle aria-hidden="true" />
+                Current evidence
+              </p>
               <h4 id={`project-${project.slug}-outcomes`}>
                 What exists today
               </h4>
@@ -124,7 +223,10 @@ function ProjectStory({
             </section>
 
             <section aria-labelledby={`project-${project.slug}-next`}>
-              <p className="project-detail-label">Next iteration</p>
+              <p className="project-detail-label">
+                <FiClock aria-hidden="true" />
+                Next iteration
+              </p>
               <h4 id={`project-${project.slug}-next`}>What comes next</h4>
               <ul>
                 {project.nextSteps.map((step) => (
@@ -178,7 +280,7 @@ function ProjectStory({
 export function WorkSection() {
   return (
     <section
-      className="portfolio-section work-section"
+      className={`${styles.section} portfolio-section work-section`}
       id="work"
       aria-labelledby="work-title"
     >
@@ -189,8 +291,35 @@ export function WorkSection() {
         titleId="work-title"
       />
 
+      <nav className="work-project-index" aria-label="Selected project index">
+        {SELECTED_PROJECTS.map((project, index) => {
+          const statusMeta = PROJECT_STATUS_META[project.status];
+          const StatusIcon = statusMeta.icon;
+
+          return (
+            <a key={project.slug} href={`#project-${project.slug}`}>
+              <span aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <strong>{project.title}</strong>
+                <small>
+                  <StatusIcon aria-hidden="true" />
+                  {project.statusLabel}
+                </small>
+              </div>
+              {index === 0 ? (
+                <FiCheckCircle aria-hidden="true" />
+              ) : (
+                <FiLayers aria-hidden="true" />
+              )}
+            </a>
+          );
+        })}
+      </nav>
+
       <div className="project-story-list">
-        {PORTFOLIO_PROJECTS.map((project, index) => (
+        {SELECTED_PROJECTS.map((project, index) => (
           <ProjectStory key={project.slug} project={project} index={index} />
         ))}
       </div>

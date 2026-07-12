@@ -61,8 +61,6 @@ export const PORTFOLIO_PROFILE = {
   email: "shahadatsardar73@gmail.com",
   emailHref: "mailto:shahadatsardar73@gmail.com",
   emailConfigured: true,
-  phoneDisplay: "(+88) 01303818002",
-  phoneHref: "tel:+8801303818002",
   resumeHref: "/resume/shahadat-sardar-resume.pdf",
   resumeDriveHref:
     "https://drive.google.com/drive/folders/1irVZm7n-RVlfh5r06jWKws6PJe5vjeAF",
@@ -77,9 +75,9 @@ export const PORTFOLIO_STATS = [
 
 export const WORK_SECTION = {
   eyebrow: "Selected work",
-  title: "Three products, each built around a different kind of trust.",
+  title: "Three products. Three different trust problems.",
   description:
-    "The portfolio is an active implementation. The health and commerce products are transparent concepts with research, validation, and delivery work still ahead.",
+    "The portfolio and commerce platform are active builds. The skin-health product remains a deliberately later research track because safety, clinical review, privacy, and inclusive validation must come first.",
 } as const;
 
 export const PORTFOLIO_PROJECTS = [
@@ -97,8 +95,8 @@ export const PORTFOLIO_PROJECTS = [
     status: "active-build",
     statusLabel: "In active development",
     image: {
-      src: "/images/projects/shahadat-portfolio-showcase-v2.webp",
-      alt: "Responsive views of the Shahadat engineering portfolio across desktop and mobile devices",
+      src: "/images/projects/shahadat-engineering-portfolio-v3.png",
+      alt: "High-resolution responsive views of the Shahadat engineering portfolio and its evidence-first case study across desktop and mobile devices",
     },
     problem:
       "A portfolio can look polished and still fail if a hiring team cannot quickly understand the engineer, the work, and the evidence behind the claims.",
@@ -143,7 +141,7 @@ export const PORTFOLIO_PROJECTS = [
       "Prepared the site for deeper case studies without claiming unverified business or hiring results.",
     ],
     nextSteps: [
-      "Replace concept imagery with final, optimized project artwork.",
+      "Capture final production screenshots after the remaining section polish is complete.",
       "Attach a verified public email address and final resume.",
       "Run production performance, accessibility, and cross-device audits before launch.",
     ],
@@ -167,16 +165,16 @@ export const PORTFOLIO_PROJECTS = [
   {
     slug: "derma-aware",
     title: "DermaAware",
-    eyebrow: "02 / Responsible product concept",
+    eyebrow: "03 / Future research track",
     projectType: "Skin-health education · Care navigation",
     summary:
       "A privacy-conscious skin-health companion designed to help people document concerns, learn from reviewed information, and prepare for appropriate professional care.",
     narrative:
       "People often search alarming image results or receive overconfident automated answers when they are worried about a skin concern. DermaAware explores a safer path: organize observations, communicate uncertainty, surface reviewed guidance, and make professional care easier to approach.",
     role: "Product discovery and full-stack systems planning",
-    period: "Concept and research plan",
-    status: "concept",
-    statusLabel: "Not a launched medical product",
+    period: "Scheduled after the commerce build",
+    status: "planned",
+    statusLabel: "Future research · Not launched",
     image: {
       src: "/images/projects/derma-aware.webp",
       alt: "Concept interface for a calm and inclusive skin-health education and care-navigation product",
@@ -244,25 +242,25 @@ export const PORTFOLIO_PROJECTS = [
   },
   {
     slug: "sardar-atelier",
-    title: "Sardar Atelier",
-    eyebrow: "03 / Premium commerce concept",
-    projectType: "Fashion brand · Full-commerce ecosystem",
+    title: "Shahadat Zenith Commerce",
+    eyebrow: "02 / Active full-stack build",
+    projectType: "Premium lifestyle brand · Full-stack commerce",
     summary:
-      "A proposed premium fashion label that extends Shahadat's visual identity into a complete shopping experience for womenswear, menswear, and accessories.",
+      "A premium full-stack marketplace extending Shahadat's identity into a responsive shopping experience across fashion, gadgets, beauty, skincare, and everyday essentials.",
     narrative:
-      "Premium commerce depends on more than polished product cards. Sardar Atelier is planned as a coherent brand and product system where editorial storytelling, fast discovery, confident product detail, and dependable fulfilment all express the same standard.",
-    role: "Brand systems, product design, and commerce architecture",
-    period: "Planned case study",
-    status: "planned",
-    statusLabel: "Concept definition",
+      "Premium commerce depends on more than polished product cards. Shahadat Zenith is being built as one coherent brand and product system where discovery, catalogue data, accounts, cart, checkout, payments, fulfilment, and support reinforce the same customer promise.",
+    role: "Independent full-stack product engineer and brand designer",
+    period: "Current build",
+    status: "active-build",
+    statusLabel: "Under active construction",
     image: {
       src: "/images/projects/sardar-atelier.webp",
-      alt: "Premium Sardar Atelier fashion commerce concept featuring womenswear, menswear, and accessories",
+      alt: "Responsive Shahadat Zenith premium e-commerce experience across desktop and mobile layouts",
     },
     problem:
       "A new fashion identity needs to earn trust without existing brand recognition while keeping a large catalogue easy to explore and purchase on any device.",
     audience: [
-      "Style-conscious womenswear and menswear shoppers",
+      "Style-conscious women and men shopping across lifestyle categories",
       "Mobile-first returning customers",
       "Merchandising and fulfilment teams",
     ],
@@ -296,16 +294,16 @@ export const PORTFOLIO_PROJECTS = [
       },
     ],
     outcomes: [
-      "Defined the proposed brand position and end-to-end commerce surface area.",
-      "Mapped customer journeys alongside merchandising and fulfilment responsibilities.",
-      "Established performance, accessibility, content, and operational quality as launch criteria.",
-      "No sales, conversion, inventory, or customer metric is claimed before the product exists.",
+      "Created the responsive desktop and mobile storefront direction shown in this case study.",
+      "Defined brand, navigation, category, trust, membership, and merchandising surfaces.",
+      "Mapped full-stack catalogue, account, cart, checkout, payment, order, and fulfilment responsibilities now being implemented.",
+      "No sales, conversion, inventory, or customer metric is claimed while the product remains under construction.",
     ],
     nextSteps: [
-      "Validate the working brand name, audience, product range, and visual direction.",
-      "Prototype discovery, product-detail, sizing, and checkout journeys on mobile first.",
-      "Choose commerce, payment, CMS, inventory, and fulfilment services after requirements are validated.",
-      "Create a seeded demonstration catalogue with clearly fictional products and pricing.",
+      "Finish catalogue, search, filtering, product-detail, wishlist, cart, and account flows.",
+      "Implement secure checkout, payment, order, inventory, and fulfilment boundaries.",
+      "Seed a clearly fictional demonstration catalogue and connect editorial content management.",
+      "Run accessibility, performance, security, and cross-device validation before release.",
     ],
     stack: [
       "Next.js (proposed)",
@@ -322,15 +320,15 @@ export const PORTFOLIO_PROJECTS = [
 
 export const STORY_SECTION = {
   eyebrow: "My story",
-  title: "Learning to connect product intent with production detail.",
+  title: "I build to understand the whole system.",
   introduction:
-    "I am Shahadat Sardar, a product-minded full-stack and cloud engineering learner building complete product journeys rather than isolated screens.",
+    "I am Shahadat Sardar, an early-career full-stack and cloud engineer using independent product work to connect thoughtful interfaces, resilient application logic, and reliable delivery.",
   paragraphs: [
-    "My current work is independent and project-based. I use each build to practise how interface decisions, application logic, data, delivery, accessibility, and operations affect one another.",
-    "I am especially interested in teams where strong fundamentals, thoughtful feedback, and customer outcomes matter more than technology for its own sake.",
+    "My path is being shaped through hands-on builds. Each project helps me understand how interface decisions, application logic, data, accessibility, delivery, and operations influence one another.",
+    "I am drawn to teams where strong fundamentals, thoughtful feedback, and useful customer outcomes matter more than technology for its own sake.",
   ],
   currentFocus:
-    "Turning these three product concepts into evidence-backed case studies, beginning with the portfolio platform itself.",
+    "Turning three product concepts into evidence-backed case studies, beginning with this portfolio platform.",
 } as const;
 
 export const EXPERIENCE_SECTION = {
@@ -603,14 +601,6 @@ export const CONTACT_OPTIONS = [
     label: "Email Shahadat",
     description: PORTFOLIO_PROFILE.email,
     href: PORTFOLIO_PROFILE.emailHref,
-    external: false,
-    status: "ready",
-  },
-  {
-    id: "phone",
-    label: "Call Shahadat",
-    description: PORTFOLIO_PROFILE.phoneDisplay,
-    href: PORTFOLIO_PROFILE.phoneHref,
     external: false,
     status: "ready",
   },

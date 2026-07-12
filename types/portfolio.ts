@@ -8,7 +8,7 @@ export type SectionId =
   | "toolkit"
   | "contact";
 
-export type SocialId = "linkedin" | "github" | "email" | "phone";
+export type SocialId = "linkedin" | "github" | "email";
 
 export type GlassTheme = "aurora" | "frost" | "ash" | "emerald";
 
