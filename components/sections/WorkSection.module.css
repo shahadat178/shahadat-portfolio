@@ -624,6 +624,17 @@
   color: var(--lg-text-strong);
 }
 
+.stackBlock {
+  display: grid;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.stackBlock :global(.project-stack),
+.stackBlock :global(.project-disclaimer) {
+  margin: 0;
+}
+
 .section :global(.project-links) {
   margin-top: 18px;
 }

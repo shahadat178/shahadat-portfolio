@@ -237,20 +237,22 @@ function ProjectStory({
           </div>
         </details>
 
-        <ul
-          className="project-stack"
-          aria-label={`${project.title} technology stack`}
-        >
-          {project.stack.map((technology) => (
-            <li key={technology}>{technology}</li>
-          ))}
-        </ul>
+        <div className={styles.stackBlock}>
+          <ul
+            className="project-stack"
+            aria-label={`${project.title} technology stack`}
+          >
+            {project.stack.map((technology) => (
+              <li key={technology}>{technology}</li>
+            ))}
+          </ul>
 
-        {project.disclaimer ? (
-          <p className="project-disclaimer">
-            <strong>Project note:</strong> {project.disclaimer}
-          </p>
-        ) : null}
+          {project.disclaimer ? (
+            <p className="project-disclaimer">
+              <strong>Project note:</strong> {project.disclaimer}
+            </p>
+          ) : null}
+        </div>
 
         {project.links.length > 0 ? (
           <nav className="project-links" aria-label={`${project.title} links`}>
