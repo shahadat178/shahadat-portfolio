@@ -68,9 +68,9 @@ export const PORTFOLIO_PROFILE = {
 } as const;
 
 export const PORTFOLIO_STATS = [
-  { value: "03", label: "Featured product concepts" },
-  { value: "04", label: "Engineering layers explored" },
-  { value: "A11y", label: "A design baseline" },
+  { value: "03", label: "Product case studies" },
+  { value: "02", label: "Active product builds" },
+  { value: "04", label: "Toolkit domains" },
 ] as const;
 
 export const WORK_SECTION = {

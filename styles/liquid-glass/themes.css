@@ -7,12 +7,12 @@
   --lg-glass-filter: blur(22px) saturate(150%);
 
   --lg-shadow-soft:
-    0 18px 38px rgba(var(--lg-shadow-color), 0.11),
-    0 4px 12px rgba(var(--lg-shadow-color), 0.05);
+    0 18px 38px rgba(var(--lg-shadow-color), 0.14),
+    0 4px 12px rgba(var(--lg-shadow-color), 0.07);
 
   --lg-shadow-medium:
-    0 24px 48px rgba(var(--lg-shadow-color), 0.16),
-    0 8px 18px rgba(var(--lg-shadow-color), 0.08);
+    0 24px 48px rgba(var(--lg-shadow-color), 0.19),
+    0 8px 18px rgba(var(--lg-shadow-color), 0.1);
 
   --lg-shadow-inset:
     inset 0 1px 0 var(--lg-edge-top),
@@ -51,8 +51,9 @@ html[data-glass-theme="aurora"][data-glass-mode="light"] {
   --lg-surface: rgba(235, 243, 255, 0.48);
   --lg-surface-soft: rgba(218, 230, 255, 0.28);
 
-  --lg-border: rgba(255, 255, 255, 0.62);
-  --lg-border-strong: rgba(255, 255, 255, 0.86);
+  --lg-border: rgba(66, 91, 166, 0.18);
+  --lg-border-strong: rgba(53, 77, 151, 0.28);
+  --lg-border-dim: rgba(66, 91, 166, 0.12);
 
   --lg-highlight-top: rgba(255, 255, 255, 0.9);
   --lg-highlight-soft: rgba(177, 211, 255, 0.3);
@@ -93,8 +94,9 @@ html[data-glass-theme="frost"][data-glass-mode="light"] {
   --lg-surface: rgba(231, 240, 248, 0.5);
   --lg-surface-soft: rgba(214, 228, 240, 0.28);
 
-  --lg-border: rgba(255, 255, 255, 0.66);
-  --lg-border-strong: rgba(255, 255, 255, 0.88);
+  --lg-border: rgba(47, 77, 107, 0.17);
+  --lg-border-strong: rgba(38, 69, 99, 0.27);
+  --lg-border-dim: rgba(47, 77, 107, 0.11);
 
   --lg-highlight-top: rgba(255, 255, 255, 0.94);
   --lg-highlight-soft: rgba(185, 217, 240, 0.34);
@@ -135,8 +137,9 @@ html[data-glass-theme="ash"][data-glass-mode="light"] {
   --lg-surface: rgba(230, 235, 243, 0.5);
   --lg-surface-soft: rgba(214, 222, 233, 0.3);
 
-  --lg-border: rgba(255, 255, 255, 0.62);
-  --lg-border-strong: rgba(255, 255, 255, 0.86);
+  --lg-border: rgba(39, 51, 72, 0.17);
+  --lg-border-strong: rgba(32, 44, 66, 0.27);
+  --lg-border-dim: rgba(39, 51, 72, 0.11);
 
   --lg-highlight-top: rgba(255, 255, 255, 0.9);
   --lg-highlight-soft: rgba(191, 205, 229, 0.3);
@@ -177,8 +180,9 @@ html[data-glass-theme="emerald"][data-glass-mode="light"] {
   --lg-surface: rgba(226, 246, 240, 0.5);
   --lg-surface-soft: rgba(204, 233, 225, 0.3);
 
-  --lg-border: rgba(255, 255, 255, 0.64);
-  --lg-border-strong: rgba(255, 255, 255, 0.88);
+  --lg-border: rgba(27, 84, 83, 0.18);
+  --lg-border-strong: rgba(20, 76, 75, 0.28);
+  --lg-border-dim: rgba(27, 84, 83, 0.12);
 
   --lg-highlight-top: rgba(255, 255, 255, 0.92);
   --lg-highlight-soft: rgba(161, 230, 211, 0.3);
@@ -219,8 +223,9 @@ html[data-glass-theme="aurora"][data-glass-mode="dark"] {
   --lg-surface: rgba(20, 28, 54, 0.52);
   --lg-surface-soft: rgba(33, 39, 79, 0.32);
 
-  --lg-border: rgba(185, 210, 255, 0.16);
-  --lg-border-strong: rgba(210, 224, 255, 0.3);
+  --lg-border: rgba(185, 210, 255, 0.22);
+  --lg-border-strong: rgba(210, 224, 255, 0.38);
+  --lg-border-dim: rgba(185, 210, 255, 0.12);
 
   --lg-highlight-top: rgba(217, 231, 255, 0.17);
   --lg-highlight-soft: rgba(92, 139, 255, 0.2);
@@ -261,8 +266,9 @@ html[data-glass-theme="frost"][data-glass-mode="dark"] {
   --lg-surface: rgba(20, 35, 48, 0.52);
   --lg-surface-soft: rgba(36, 55, 70, 0.3);
 
-  --lg-border: rgba(203, 232, 255, 0.15);
-  --lg-border-strong: rgba(213, 238, 255, 0.28);
+  --lg-border: rgba(203, 232, 255, 0.21);
+  --lg-border-strong: rgba(213, 238, 255, 0.36);
+  --lg-border-dim: rgba(203, 232, 255, 0.11);
 
   --lg-highlight-top: rgba(231, 247, 255, 0.15);
   --lg-highlight-soft: rgba(111, 205, 255, 0.17);
@@ -303,8 +309,9 @@ html[data-glass-theme="ash"][data-glass-mode="dark"] {
   --lg-surface: rgba(26, 32, 45, 0.54);
   --lg-surface-soft: rgba(48, 58, 76, 0.3);
 
-  --lg-border: rgba(220, 227, 240, 0.14);
-  --lg-border-strong: rgba(226, 233, 245, 0.26);
+  --lg-border: rgba(220, 227, 240, 0.2);
+  --lg-border-strong: rgba(226, 233, 245, 0.34);
+  --lg-border-dim: rgba(220, 227, 240, 0.1);
 
   --lg-highlight-top: rgba(242, 246, 255, 0.14);
   --lg-highlight-soft: rgba(145, 166, 225, 0.17);
@@ -345,8 +352,9 @@ html[data-glass-theme="emerald"][data-glass-mode="dark"] {
   --lg-surface: rgba(12, 39, 44, 0.54);
   --lg-surface-soft: rgba(27, 68, 70, 0.3);
 
-  --lg-border: rgba(197, 255, 244, 0.14);
-  --lg-border-strong: rgba(208, 255, 247, 0.27);
+  --lg-border: rgba(197, 255, 244, 0.2);
+  --lg-border-strong: rgba(208, 255, 247, 0.35);
+  --lg-border-dim: rgba(197, 255, 244, 0.1);
 
   --lg-highlight-top: rgba(226, 255, 249, 0.14);
   --lg-highlight-soft: rgba(79, 207, 181, 0.19);

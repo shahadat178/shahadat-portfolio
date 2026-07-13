@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shahadat Sardar — Engineering Portfolio
 
-## Getting Started
+A responsive, evidence-first engineering portfolio built to present product thinking, implementation depth, and honest project status in one cohesive experience.
 
-First, run the development server:
+## What this repository contains
+
+- A recruiter-focused portfolio shell with desktop, compact desktop, tablet, and mobile layouts
+- An interactive Bangladesh-centered globe with a resilient non-WebGL fallback
+- Three evidence-led product case studies with clear build-status boundaries
+- Story, experience, engineering-depth, principles, toolkit, and contact sections
+- Four visual themes with light and dark appearance modes
+- Accessible navigation, reduced-motion support, keyboard focus states, and responsive typography
+
+## Technology
+
+- Next.js 16 App Router
+- React 19 and TypeScript
+- CSS Modules plus a shared liquid-glass token system
+- Three.js through `react-globe.gl`
+- React Icons
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quality checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npx tsc --noEmit --incremental false
+npm run build
+```
 
-## Learn More
+The production build is the final source of truth for CSS ordering and Next.js integration.
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+app/                    App Router entry points and global foundations
+components/layout/      Desktop and mobile portfolio shell
+components/sections/    Evidence-led page sections
+components/portfolio/   Client orchestration and responsive shell rules
+data/                   Typed portfolio content and navigation model
+hooks/                  Appearance and active-section behavior
+styles/liquid-glass/     Shared visual tokens, themes, and glass primitives
+public/                 Brand, project, profile, and resume assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content and status policy
 
-## Deploy on Vercel
+The portfolio distinguishes implemented work, active builds, and future concepts. Proposed technologies and unverified outcomes are labelled explicitly. DermaAware is a product concept for general education and care-navigation support; it is not a medical diagnostic or treatment product.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Personal phone information is intentionally not published. Contact is available through the public email and professional profile links shown in the portfolio.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Ownership
+
+Designed and engineered by Shahadat Sardar. All rights reserved.

@@ -1,4 +1,3 @@
-import { PortfolioInsightRail } from "@/components/layout/PortfolioInsightRail";
 import { PortfolioFooter } from "@/components/layout/PortfolioFooter";
 import { PortfolioPage } from "@/components/portfolio/PortfolioPage";
 import { ContactSection } from "@/components/sections/ContactSection";
@@ -13,7 +12,7 @@ import { WorkSection } from "@/components/sections/WorkSection";
 
 export default function Home() {
   return (
-    <PortfolioPage insightRail={<PortfolioInsightRail />}>
+    <PortfolioPage>
       <HeroSection />
       <PortfolioStatsStrip />
       <WorkSection />

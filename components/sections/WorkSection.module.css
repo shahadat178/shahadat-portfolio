@@ -607,7 +607,7 @@
 }
 
 .section :global(.project-disclaimer) {
-  margin-top: 16px;
+  margin-top: 24px;
   padding: 15px 17px;
   border: 1px solid
     color-mix(in srgb, var(--lg-success) 34%, var(--lg-border-strong));

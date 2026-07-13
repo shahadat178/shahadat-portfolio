@@ -1,0 +1,866 @@
+.shell {
+  --shell-edge: 18px;
+  --shell-topbar-height: 70px;
+}
+
+@media (min-width: 1641px) {
+  .shell {
+    grid-template-columns: 230px minmax(0, 1fr) 238px;
+    gap: 18px;
+    padding: var(--shell-edge);
+  }
+
+  .shell :global(.left-rail),
+  .shell :global(.right-rail) {
+    top: var(--shell-edge);
+    height: calc(100svh - (var(--shell-edge) * 2));
+    min-height: 0;
+  }
+
+  .shell :global(.left-rail) {
+    padding: 16px 16px max(20px, env(safe-area-inset-bottom));
+    border-color: var(--lg-border-strong);
+    box-shadow:
+      0 22px 52px rgba(var(--lg-shadow-color), 0.14),
+      var(--lg-shadow-inset);
+  }
+
+  .shell :global(.sidebar-bottom) {
+    margin-top: auto;
+    padding: 14px 0 4px;
+  }
+
+  .shell :global(.left-rail .quick-connect-card) {
+    border-color: var(--lg-border-strong);
+  }
+
+  .shell :global(.left-rail .availability-card) {
+    display: flex;
+    border-color: color-mix(
+      in srgb,
+      var(--lg-success) 28%,
+      var(--lg-border-strong)
+    );
+    background:
+      radial-gradient(
+        circle at 5% 8%,
+        color-mix(in srgb, var(--lg-success) 14%, transparent),
+        transparent 42%
+      ),
+      linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--lg-surface-solid) 90%, transparent),
+        color-mix(in srgb, var(--lg-surface-strong) 82%, transparent)
+      );
+  }
+
+  .shell :global(.right-rail) {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    gap: clamp(8px, 1.2vh, 12px);
+    padding: 14px;
+    border: 1px solid var(--lg-border-strong);
+    background:
+      radial-gradient(
+        ellipse 100% 62% at 12% -12%,
+        color-mix(in srgb, var(--lg-highlight-top) 58%, transparent),
+        transparent 72%
+      ),
+      linear-gradient(
+        155deg,
+        color-mix(in srgb, var(--lg-surface-solid) 91%, transparent),
+        color-mix(in srgb, var(--lg-surface-strong) 84%, transparent)
+      );
+    box-shadow:
+      0 22px 52px rgba(var(--lg-shadow-color), 0.14),
+      var(--lg-shadow-inset);
+    overscroll-behavior: none;
+  }
+
+  .shell :global(.rail-introduction) {
+    padding: 7px 6px 13px;
+    border-bottom: 1px solid var(--lg-border-strong);
+  }
+
+  .shell :global(.rail-introduction p),
+  .shell :global(.rail-introduction strong),
+  .shell :global(.rail-introduction span),
+  .shell :global(.rail-progress p),
+  .shell :global(.rail-progress strong) {
+    margin: 0;
+  }
+
+  .shell :global(.rail-introduction p),
+  .shell :global(.rail-progress-heading > p),
+  .shell :global(.rail-current-context > span),
+  .shell :global(.rail-next-step > span) {
+    color: var(--lg-accent);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.11em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .shell :global(.rail-introduction strong) {
+    display: block;
+    margin-top: 6px;
+    color: var(--lg-text-strong);
+    font-size: 19px;
+    font-weight: 840;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+  }
+
+  .shell :global(.rail-introduction span) {
+    display: block;
+    margin-top: 7px;
+    color: var(--lg-text);
+    font-size: 11.5px;
+    font-weight: 630;
+    line-height: 1.52;
+  }
+
+  .shell :global(.rail-stat-list) {
+    display: grid;
+    gap: clamp(7px, 1vh, 9px);
+  }
+
+  .shell :global(.rail-card) {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 14px;
+    align-items: center;
+    gap: 10px;
+    min-height: clamp(76px, 9.4vh, 88px);
+    padding: clamp(9px, 1.25vh, 12px);
+    border-color: color-mix(
+      in srgb,
+      var(--lg-accent) 18%,
+      var(--lg-border-strong)
+    );
+    border-radius: 18px;
+    color: var(--lg-text);
+    text-decoration: none;
+  }
+
+  .shell :global(.rail-card-icon) {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid
+      color-mix(in srgb, var(--lg-accent) 30%, var(--lg-border-strong));
+    border-radius: 13px;
+    color: var(--lg-accent);
+    background: color-mix(in srgb, var(--lg-accent) 8%, var(--lg-surface-solid));
+    box-shadow: var(--lg-shadow-inset);
+  }
+
+  .shell :global(.rail-card-icon svg) {
+    width: 17px;
+    height: 17px;
+  }
+
+  .shell :global(.rail-card > div) {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .shell :global(.rail-card strong) {
+    color: var(--lg-text-strong);
+    font-size: 24px;
+    font-weight: 850;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  .shell :global(.rail-card > div > span) {
+    color: var(--lg-text-strong);
+    font-size: 11.5px;
+    font-weight: 780;
+    line-height: 1.3;
+  }
+
+  .shell :global(.rail-card > div > small) {
+    color: var(--lg-text);
+    font-size: 10.5px;
+    font-weight: 620;
+    line-height: 1.35;
+  }
+
+  .shell :global(.rail-card-arrow) {
+    width: 14px;
+    height: 14px;
+    color: var(--lg-accent);
+    transition: transform var(--lg-duration-fast) var(--lg-ease-out);
+  }
+
+  .shell :global(.rail-card:hover .rail-card-arrow) {
+    transform: translate(2px, 2px);
+  }
+
+  .shell :global(.rail-card:focus-visible) {
+    outline: none;
+    box-shadow: var(--lg-focus-ring);
+  }
+
+  .shell :global(.rail-progress) {
+    display: grid;
+    gap: clamp(8px, 1.05vh, 11px);
+    margin-top: auto;
+    padding: clamp(10px, 1.25vh, 13px) 5px 0;
+    border-top: 1px solid var(--lg-border-strong);
+  }
+
+  .shell :global(.rail-progress-heading) {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .shell :global(.rail-progress-heading > strong) {
+    color: var(--lg-text-strong);
+    font-size: 17px;
+    font-weight: 850;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  .shell :global(.rail-progress-heading > strong span) {
+    color: var(--lg-text-muted);
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .shell :global(.rail-progress-track) {
+    overflow: hidden;
+    height: 6px;
+    border: 1px solid var(--lg-border-strong);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lg-text-muted) 9%, transparent);
+    box-shadow: var(--lg-shadow-inset);
+  }
+
+  .shell :global(.rail-progress-track > span) {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--lg-accent), var(--lg-accent-strong));
+    box-shadow: 0 0 14px color-mix(in srgb, var(--lg-accent) 38%, transparent);
+    transition: width var(--lg-duration-slow) var(--lg-ease-out);
+  }
+
+  .shell :global(.rail-current-context) {
+    display: grid;
+    gap: 5px;
+    padding: 12px;
+    border: 1px solid var(--lg-border-strong);
+    border-radius: 16px;
+    background:
+      radial-gradient(
+        circle at 100% 0%,
+        color-mix(in srgb, var(--lg-accent) 11%, transparent),
+        transparent 48%
+      ),
+      color-mix(in srgb, var(--lg-surface-soft) 78%, transparent);
+    box-shadow: var(--lg-shadow-inset);
+  }
+
+  .shell :global(.rail-current-context > span),
+  .shell :global(.rail-next-step > span) {
+    font-size: 9px;
+  }
+
+  .shell :global(.rail-current-context > strong) {
+    color: var(--lg-text-strong);
+    font-size: 13px;
+    font-weight: 820;
+    line-height: 1.3;
+  }
+
+  .shell :global(.rail-current-context > p) {
+    color: var(--lg-text);
+    font-size: 10.5px;
+    font-weight: 620;
+    line-height: 1.5;
+  }
+
+  .shell :global(.rail-next-step) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 8px;
+    min-height: 48px;
+    padding: 9px 11px;
+    border: 1px solid var(--lg-border-strong);
+    border-radius: 15px;
+    color: var(--lg-text);
+    background: color-mix(in srgb, var(--lg-surface-solid) 78%, transparent);
+    box-shadow: var(--lg-shadow-inset);
+    text-decoration: none;
+    transition:
+      transform var(--lg-duration-fast) var(--lg-ease-out),
+      border-color var(--lg-duration-normal) var(--lg-ease-out),
+      background var(--lg-duration-normal) var(--lg-ease-out);
+  }
+
+  .shell :global(.rail-next-step > span),
+  .shell :global(.rail-next-step > strong) {
+    grid-column: 1;
+  }
+
+  .shell :global(.rail-next-step > strong) {
+    color: var(--lg-text-strong);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .shell :global(.rail-next-step > svg) {
+    grid-row: 1 / 3;
+    grid-column: 2;
+    width: 14px;
+    height: 14px;
+    color: var(--lg-accent);
+  }
+
+  .shell :global(.rail-next-step:hover) {
+    border-color: color-mix(
+      in srgb,
+      var(--lg-accent) 34%,
+      var(--lg-border-strong)
+    );
+    background: color-mix(in srgb, var(--lg-accent) 8%, var(--lg-surface-solid));
+    transform: translateY(-1px);
+  }
+
+  .shell :global(.rail-next-step:focus-visible) {
+    outline: none;
+    box-shadow: var(--lg-focus-ring);
+  }
+
+  .shell :global(.top-bar) {
+    position: sticky;
+    z-index: 100;
+    top: 16px;
+    width: calc(100% - 20px);
+    min-height: var(--shell-topbar-height);
+    margin-right: auto;
+    margin-bottom: 30px;
+    margin-left: auto;
+    padding: 8px 14px;
+    border: 1px solid var(--lg-border);
+    border-radius: 26px;
+    background:
+      radial-gradient(
+        ellipse 44% 120% at 10% -20%,
+        color-mix(in srgb, var(--lg-highlight-top) 64%, transparent),
+        transparent 72%
+      ),
+      linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--lg-surface-solid) 88%, transparent),
+        color-mix(in srgb, var(--lg-surface-strong) 82%, transparent)
+      );
+    box-shadow:
+      0 18px 40px rgba(var(--lg-shadow-color), 0.13),
+      0 1px 0 color-mix(in srgb, var(--lg-highlight-top) 72%, transparent) inset,
+      var(--lg-shadow-inset);
+    backdrop-filter: blur(24px) saturate(1.16);
+    -webkit-backdrop-filter: blur(24px) saturate(1.16);
+  }
+
+  .shell :global(.top-actions) {
+    right: 12px;
+  }
+
+  .shell :global(section[id]) {
+    scroll-margin-top: calc(var(--shell-topbar-height) + 34px);
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1640px) {
+  .shell :global(.left-rail) {
+    top: 16px;
+    height: calc(100svh - 32px);
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  .shell :global(.sidebar-bottom) {
+    margin-top: auto;
+    padding-bottom: 4px;
+  }
+
+  .shell :global(.top-bar) {
+    position: sticky;
+    z-index: 100;
+    top: 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    justify-content: stretch;
+    gap: 12px;
+    width: calc(100% - 20px);
+    min-height: var(--shell-topbar-height);
+    margin-right: auto;
+    margin-bottom: 30px;
+    margin-left: auto;
+    padding: 8px 14px;
+    border: 1px solid var(--lg-border);
+    border-radius: 26px;
+    background: color-mix(in srgb, var(--lg-surface-solid) 86%, transparent);
+    box-shadow:
+      0 18px 40px rgba(var(--lg-shadow-color), 0.13),
+      var(--lg-shadow-inset);
+    backdrop-filter: blur(24px) saturate(1.16);
+    -webkit-backdrop-filter: blur(24px) saturate(1.16);
+  }
+
+  .shell :global(.top-dock) {
+    justify-self: center;
+  }
+
+  .shell :global(.top-actions) {
+    position: static;
+    justify-self: end;
+  }
+
+  .shell :global(section[id]) {
+    scroll-margin-top: calc(var(--shell-topbar-height) + 34px);
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1180px) {
+  .shell :global(.top-dock) {
+    grid-template-columns: 64px 64px 96px 72px 76px;
+    gap: 3px;
+    padding: 5px;
+  }
+
+  .shell :global(.top-dock::before) {
+    top: 5px;
+    left: 5px;
+    width: 64px;
+    height: calc(100% - 10px);
+  }
+
+  .shell :global(.top-nav-link) {
+    min-height: 38px;
+    font-size: 11px;
+  }
+
+  .shell :global(.top-dock[data-active="work"]::before) {
+    width: 64px;
+    transform: translateX(0);
+  }
+
+  .shell :global(.top-dock[data-active="story"]::before) {
+    width: 64px;
+    transform: translateX(67px);
+  }
+
+  .shell :global(.top-dock[data-active="experience"]::before) {
+    width: 96px;
+    transform: translateX(134px);
+  }
+
+  .shell :global(.top-dock[data-active="toolkit"]::before) {
+    width: 72px;
+    transform: translateX(233px);
+  }
+
+  .shell :global(.top-dock[data-active="contact"]::before) {
+    width: 76px;
+    transform: translateX(308px);
+  }
+
+  .shell :global(.top-actions) {
+    gap: 6px;
+  }
+
+  .shell :global(.theme-picker-button) {
+    min-width: 110px;
+    padding: 0 10px;
+  }
+
+  .shell :global(.resume-button) {
+    min-width: 105px;
+    padding: 0 14px;
+  }
+}
+
+@media (min-width: 1641px) and (max-height: 760px) {
+  .shell :global(.right-rail) {
+    gap: 7px;
+    padding: 11px;
+  }
+
+  .shell :global(.rail-introduction) {
+    padding: 4px 5px 8px;
+  }
+
+  .shell :global(.rail-introduction strong) {
+    margin-top: 3px;
+    font-size: 17px;
+  }
+
+  .shell :global(.rail-introduction span) {
+    margin-top: 4px;
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+
+  .shell :global(.rail-stat-list) {
+    gap: 6px;
+  }
+
+  .shell :global(.rail-card) {
+    grid-template-columns: 36px minmax(0, 1fr) 12px;
+    min-height: 70px;
+    padding: 8px 9px;
+  }
+
+  .shell :global(.rail-card-icon) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .shell :global(.rail-card strong) {
+    font-size: 21px;
+  }
+
+  .shell :global(.rail-card > div > span) {
+    font-size: 10.5px;
+  }
+
+  .shell :global(.rail-card > div > small) {
+    font-size: 9.5px;
+  }
+
+  .shell :global(.rail-progress) {
+    gap: 7px;
+    padding-top: 8px;
+  }
+
+  .shell :global(.rail-current-context) {
+    gap: 3px;
+    padding: 9px 10px;
+  }
+
+  .shell :global(.rail-current-context > p) {
+    overflow: hidden;
+    display: -webkit-box;
+    font-size: 10px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .shell :global(.rail-next-step) {
+    min-height: 42px;
+    padding: 7px 10px;
+  }
+}
+
+/* 110% browser zoom on a 1080p display lands near this effective height. */
+@media (min-width: 1081px) and (max-height: 900px) {
+  .shell :global(.left-rail) {
+    padding: 14px 14px max(14px, env(safe-area-inset-bottom));
+  }
+
+  .shell :global(.brand-logo) {
+    min-height: 72px;
+    padding: 10px 12px;
+  }
+
+  .shell :global(.brand-logo-image) {
+    max-width: 148px;
+  }
+
+  .shell :global(.brand-card h2) {
+    margin: 8px 0 3px;
+    font-size: 17px;
+  }
+
+  .shell :global(.brand-card p) {
+    font-size: 11.5px;
+    line-height: 1.36;
+  }
+
+  .shell :global(.side-nav) {
+    grid-template-rows: repeat(6, 36px);
+    gap: 4px;
+    margin-top: 12px;
+    padding: 4px;
+  }
+
+  .shell :global(.side-nav::before) {
+    top: 4px;
+    right: 4px;
+    left: 4px;
+    height: 36px;
+  }
+
+  .shell :global(.nav-item) {
+    min-height: 36px;
+    padding: 0 10px;
+    font-size: 12.5px;
+  }
+
+  .shell :global(.side-nav[data-active="work"]::before) {
+    transform: translateY(40px);
+  }
+
+  .shell :global(.side-nav[data-active="story"]::before) {
+    transform: translateY(80px);
+  }
+
+  .shell :global(.side-nav[data-active="experience"]::before) {
+    transform: translateY(120px);
+  }
+
+  .shell :global(.side-nav[data-active="toolkit"]::before) {
+    transform: translateY(160px);
+  }
+
+  .shell :global(.side-nav[data-active="contact"]::before) {
+    transform: translateY(200px);
+  }
+
+  .shell :global(.sidebar-bottom) {
+    gap: 8px;
+    margin-top: 8px;
+    padding: 0 0 2px;
+  }
+
+  .shell :global(.quick-connect-card) {
+    padding: 10px;
+  }
+
+  .shell :global(.quick-connect-text) {
+    margin: 5px 0 7px;
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+
+  .shell :global(.quick-links) {
+    grid-template-rows: repeat(3, 33px);
+    gap: 3px;
+    padding: 2px;
+  }
+
+  .shell :global(.quick-links::before) {
+    top: 2px;
+    right: 2px;
+    left: 2px;
+    height: 33px;
+  }
+
+  .shell :global(.quick-links[data-active="github"]::before) {
+    transform: translateY(36px);
+  }
+
+  .shell :global(.quick-links[data-active="email"]::before) {
+    transform: translateY(72px);
+  }
+
+  .shell :global(.social-link) {
+    min-height: 33px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .shell :global(.left-rail .availability-card) {
+    gap: 8px;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .shell :global(.availability-status) {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+
+  .shell :global(.availability-title) {
+    font-size: 11px;
+  }
+
+  .shell :global(.availability-badge) {
+    margin-top: 5px;
+  }
+
+  .shell :global(.availability-text) {
+    margin-top: 4px;
+    font-size: 10.5px;
+    line-height: 1.34;
+  }
+}
+
+/*
+ * Browser zoom reduces the effective CSS viewport. Keep the complete desktop
+ * rail visible on short viewports without introducing a nested scrollbar.
+ */
+@media (min-width: 1081px) and (max-height: 820px) {
+  .shell :global(.left-rail) {
+    padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+  }
+
+  .shell :global(.brand-logo) {
+    min-height: 58px;
+    padding: 8px 10px;
+  }
+
+  .shell :global(.brand-logo-image) {
+    max-width: 136px;
+  }
+
+  .shell :global(.brand-card h2) {
+    margin: 6px 0 2px;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .shell :global(.brand-card p) {
+    font-size: 10.5px;
+    line-height: 1.32;
+  }
+
+  .shell :global(.side-nav) {
+    grid-template-rows: repeat(6, 30px);
+    gap: 3px;
+    margin-top: 8px;
+    padding: 4px;
+  }
+
+  .shell :global(.side-nav::before) {
+    top: 4px;
+    right: 4px;
+    left: 4px;
+    height: 30px;
+  }
+
+  .shell :global(.nav-item) {
+    min-height: 30px;
+    padding: 0 9px;
+    font-size: 11.5px;
+  }
+
+  .shell :global(.side-nav[data-active="work"]::before) {
+    transform: translateY(33px);
+  }
+
+  .shell :global(.side-nav[data-active="story"]::before) {
+    transform: translateY(66px);
+  }
+
+  .shell :global(.side-nav[data-active="experience"]::before) {
+    transform: translateY(99px);
+  }
+
+  .shell :global(.side-nav[data-active="toolkit"]::before) {
+    transform: translateY(132px);
+  }
+
+  .shell :global(.side-nav[data-active="contact"]::before) {
+    transform: translateY(165px);
+  }
+
+  .shell :global(.sidebar-bottom) {
+    gap: 6px;
+    margin-top: 7px;
+    padding: 0 0 2px;
+  }
+
+  .shell :global(.quick-connect-card) {
+    padding: 8px;
+  }
+
+  .shell :global(.sidebar-card-heading) {
+    min-height: 14px;
+  }
+
+  .shell :global(.quick-label) {
+    font-size: 8.5px;
+  }
+
+  .shell :global(.sidebar-card-sparkle) {
+    font-size: 12px;
+  }
+
+  .shell :global(.quick-connect-text) {
+    margin: 4px 0 5px;
+    font-size: 10px;
+    line-height: 1.28;
+  }
+
+  .shell :global(.quick-links) {
+    grid-template-rows: repeat(3, 29px);
+    gap: 2px;
+    padding: 2px;
+  }
+
+  .shell :global(.quick-links::before) {
+    top: 2px;
+    right: 2px;
+    left: 2px;
+    height: 29px;
+  }
+
+  .shell :global(.quick-links[data-active="github"]::before) {
+    transform: translateY(31px);
+  }
+
+  .shell :global(.quick-links[data-active="email"]::before) {
+    transform: translateY(62px);
+  }
+
+  .shell :global(.social-link) {
+    min-height: 29px;
+    padding: 0 7px;
+    font-size: 10.5px;
+  }
+
+  .shell :global(.social-link svg) {
+    width: 13px;
+    height: 13px;
+  }
+
+  .shell :global(.left-rail .availability-card) {
+    gap: 8px;
+    min-height: 0;
+    padding: 8px;
+  }
+
+  .shell :global(.availability-status) {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+  }
+
+  .shell :global(.availability-title) {
+    font-size: 10.5px;
+    line-height: 1.24;
+  }
+
+  .shell :global(.availability-badge) {
+    margin-top: 4px;
+    padding: 3px 6px;
+    font-size: 7.5px;
+  }
+
+  .shell :global(.availability-text) {
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 1.28;
+  }
+}
+
+@media (min-width: 1081px) and (max-height: 680px) {
+  .shell :global(.quick-connect-text),
+  .shell :global(.availability-text) {
+    display: none;
+  }
+}

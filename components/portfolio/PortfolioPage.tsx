@@ -3,18 +3,19 @@
 import { useState, type MouseEvent, type ReactNode } from "react";
 
 import { PortfolioSidebar } from "@/components/layout/PortfolioSidebar";
+import { PortfolioInsightRail } from "@/components/layout/PortfolioInsightRail";
 import { PortfolioMobileHeader } from "@/components/layout/PortfolioMobileHeader";
 import { PortfolioTopBar } from "@/components/layout/PortfolioTopBar";
 import { useAppearancePreferences } from "@/hooks/useAppearancePreferences";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import type { SectionId } from "@/types/portfolio";
+import styles from "@/components/portfolio/PortfolioPage.module.css";
 
 type PortfolioPageProps = {
   children: ReactNode;
-  insightRail: ReactNode;
 };
 
-export function PortfolioPage({ children, insightRail }: PortfolioPageProps) {
+export function PortfolioPage({ children }: PortfolioPageProps) {
   const [activeSection, setActiveSection] = useActiveSection("home");
   const [sidebarIndicator, setSidebarIndicator] =
     useState<SectionId>("home");
@@ -30,21 +31,34 @@ export function PortfolioPage({ children, insightRail }: PortfolioPageProps) {
     event: MouseEvent<HTMLAnchorElement>,
     section: SectionId
   ) {
+    event.preventDefault();
+
     setActiveSection(section);
     setSidebarIndicator(section);
     setTopIndicator(section === "home" ? "work" : section);
 
-    if (section === "home") {
-      event.preventDefault();
-      const shouldReduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+    const shouldReduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const behavior = shouldReduceMotion ? "auto" : "smooth";
+    const nextHash = `#${section}`;
 
+    if (section === "home") {
       window.scrollTo({
         top: 0,
-        behavior: shouldReduceMotion ? "auto" : "smooth",
+        behavior,
       });
-      window.history.replaceState(null, "", "#home");
+    } else {
+      document.getElementById(section)?.scrollIntoView({
+        behavior,
+        block: "start",
+      });
+    }
+
+    if (window.location.hash === nextHash) {
+      window.history.replaceState(null, "", nextHash);
+    } else {
+      window.history.pushState(null, "", nextHash);
     }
   }
 
@@ -54,7 +68,7 @@ export function PortfolioPage({ children, insightRail }: PortfolioPageProps) {
         Skip to main content
       </a>
 
-      <div className="portfolio-shell">
+      <div className={`${styles.shell} portfolio-shell`}>
         <PortfolioSidebar
           activeSection={activeSection}
           appearanceMode={appearanceMode}
@@ -87,7 +101,10 @@ export function PortfolioPage({ children, insightRail }: PortfolioPageProps) {
           {children}
         </main>
 
-        {insightRail}
+        <PortfolioInsightRail
+          activeSection={activeSection}
+          onNavigate={handleNavigation}
+        />
       </div>
     </>
   );
