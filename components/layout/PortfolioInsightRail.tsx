@@ -14,24 +14,28 @@ const EVIDENCE_SIGNALS = [
     id: "work",
     href: "#work",
     icon: FiBookOpen,
-    detail: "Evidence-led project stories",
+    label: "Case studies",
+    detail: "Evidence-led product stories",
   },
   {
     id: "work",
     href: "#project-sardar-atelier",
     icon: FiZap,
+    label: "Active builds",
     detail: "Portfolio and commerce",
   },
   {
     id: "toolkit",
     href: "#toolkit",
     icon: FiTool,
+    label: "Toolkit scope",
     detail: "Frontend through cloud",
   },
 ] as const satisfies readonly {
   id: SectionId;
   href: `#${string}`;
   icon: IconType;
+  label: string;
   detail: string;
 }[];
 
@@ -106,14 +110,14 @@ export function PortfolioInsightRail({
                   ? (event) => onNavigate(event, signal.id)
                   : undefined
               }
-              aria-label={`${stat.value} ${stat.label}: ${signal.detail}`}
+              aria-label={`${stat.value} ${signal.label}: ${signal.detail}`}
             >
               <span className="rail-card-icon" aria-hidden="true">
                 <StatIcon />
               </span>
               <div>
                 <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
+                <span>{signal.label}</span>
                 <small>{signal.detail}</small>
               </div>
               <FiArrowDownRight className="rail-card-arrow" aria-hidden="true" />

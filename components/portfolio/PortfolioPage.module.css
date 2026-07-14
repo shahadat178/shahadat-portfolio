@@ -5,7 +5,7 @@
 
 @media (min-width: 1641px) {
   .shell {
-    grid-template-columns: 230px minmax(0, 1fr) 238px;
+    grid-template-columns: 230px minmax(0, 1fr) 248px;
     gap: 18px;
     padding: var(--shell-edge);
   }
@@ -97,7 +97,7 @@
   .shell :global(.rail-next-step > span) {
     color: var(--lg-accent);
     font-size: 10px;
-    font-weight: 850;
+    font-weight: 760;
     letter-spacing: 0.11em;
     line-height: 1.4;
     text-transform: uppercase;
@@ -108,9 +108,10 @@
     margin-top: 6px;
     color: var(--lg-text-strong);
     font-size: 19px;
-    font-weight: 840;
-    letter-spacing: -0.035em;
-    line-height: 1.2;
+    font-weight: 760;
+    letter-spacing: -0.025em;
+    line-height: 1.24;
+    text-wrap: balance;
   }
 
   .shell :global(.rail-introduction span) {
@@ -118,8 +119,9 @@
     margin-top: 7px;
     color: var(--lg-text);
     font-size: 11.5px;
-    font-weight: 630;
-    line-height: 1.52;
+    font-weight: 520;
+    line-height: 1.58;
+    text-wrap: pretty;
   }
 
   .shell :global(.rail-stat-list) {
@@ -129,9 +131,9 @@
 
   .shell :global(.rail-card) {
     display: grid;
-    grid-template-columns: 40px minmax(0, 1fr) 14px;
+    grid-template-columns: 38px minmax(0, 1fr) 12px;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     min-height: clamp(76px, 9.4vh, 88px);
     padding: clamp(9px, 1.25vh, 12px);
     border-color: color-mix(
@@ -146,8 +148,8 @@
 
   .shell :global(.rail-card-icon) {
     display: grid;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     place-items: center;
     border: 1px solid
       color-mix(in srgb, var(--lg-accent) 30%, var(--lg-border-strong));
@@ -169,25 +171,28 @@
   }
 
   .shell :global(.rail-card strong) {
-    color: var(--lg-text-strong);
-    font-size: 24px;
-    font-weight: 850;
-    letter-spacing: -0.035em;
+    color: var(--lg-accent-strong);
+    font-size: 23px;
+    font-weight: 760;
+    letter-spacing: -0.02em;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
 
   .shell :global(.rail-card > div > span) {
     color: var(--lg-text-strong);
     font-size: 11.5px;
-    font-weight: 780;
-    line-height: 1.3;
+    font-weight: 700;
+    line-height: 1.32;
+    text-wrap: balance;
   }
 
   .shell :global(.rail-card > div > small) {
     color: var(--lg-text);
     font-size: 10.5px;
-    font-weight: 620;
-    line-height: 1.35;
+    font-weight: 520;
+    line-height: 1.42;
+    text-wrap: pretty;
   }
 
   .shell :global(.rail-card-arrow) {
@@ -224,8 +229,8 @@
   .shell :global(.rail-progress-heading > strong) {
     color: var(--lg-text-strong);
     font-size: 17px;
-    font-weight: 850;
-    letter-spacing: -0.035em;
+    font-weight: 760;
+    letter-spacing: -0.02em;
     line-height: 1;
   }
 
@@ -277,15 +282,17 @@
   .shell :global(.rail-current-context > strong) {
     color: var(--lg-text-strong);
     font-size: 13px;
-    font-weight: 820;
-    line-height: 1.3;
+    font-weight: 720;
+    line-height: 1.36;
+    text-wrap: balance;
   }
 
   .shell :global(.rail-current-context > p) {
     color: var(--lg-text);
     font-size: 10.5px;
-    font-weight: 620;
-    line-height: 1.5;
+    font-weight: 520;
+    line-height: 1.56;
+    text-wrap: pretty;
   }
 
   .shell :global(.rail-next-step) {
@@ -315,8 +322,8 @@
   .shell :global(.rail-next-step > strong) {
     color: var(--lg-text-strong);
     font-size: 12px;
-    font-weight: 800;
-    line-height: 1.2;
+    font-weight: 700;
+    line-height: 1.3;
   }
 
   .shell :global(.rail-next-step > svg) {
@@ -354,21 +361,10 @@
     padding: 8px 14px;
     border: 1px solid var(--lg-border);
     border-radius: 26px;
-    background:
-      radial-gradient(
-        ellipse 44% 120% at 10% -20%,
-        color-mix(in srgb, var(--lg-highlight-top) 64%, transparent),
-        transparent 72%
-      ),
-      linear-gradient(
-        145deg,
-        color-mix(in srgb, var(--lg-surface-solid) 88%, transparent),
-        color-mix(in srgb, var(--lg-surface-strong) 82%, transparent)
-      );
+    background: color-mix(in srgb, var(--lg-surface-solid) 86%, transparent);
     box-shadow:
-      0 18px 40px rgba(var(--lg-shadow-color), 0.13),
-      0 1px 0 color-mix(in srgb, var(--lg-highlight-top) 72%, transparent) inset,
-      var(--lg-shadow-inset);
+      0 16px 36px rgba(var(--lg-shadow-color), 0.11),
+      0 1px 0 color-mix(in srgb, var(--lg-highlight-top) 62%, transparent) inset;
     backdrop-filter: blur(24px) saturate(1.16);
     -webkit-backdrop-filter: blur(24px) saturate(1.16);
   }
@@ -413,8 +409,8 @@
     border-radius: 26px;
     background: color-mix(in srgb, var(--lg-surface-solid) 86%, transparent);
     box-shadow:
-      0 18px 40px rgba(var(--lg-shadow-color), 0.13),
-      var(--lg-shadow-inset);
+      0 16px 36px rgba(var(--lg-shadow-color), 0.11),
+      0 1px 0 color-mix(in srgb, var(--lg-highlight-top) 62%, transparent) inset;
     backdrop-filter: blur(24px) saturate(1.16);
     -webkit-backdrop-filter: blur(24px) saturate(1.16);
   }

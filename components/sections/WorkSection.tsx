@@ -7,10 +7,10 @@ import {
   FiExternalLink,
   FiGitBranch,
   FiLayers,
-  FiShield,
   FiZap,
 } from "react-icons/fi";
 
+import { ProjectCaseStudyDisclosure } from "@/components/sections/ProjectCaseStudyDisclosure";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { PORTFOLIO_PROJECTS, WORK_SECTION } from "@/data/portfolio";
 import type { PortfolioProject } from "@/types/portfolio";
@@ -166,16 +166,7 @@ function ProjectStory({
           </section>
         </div>
 
-        <details className="project-case-study" open={index === 0}>
-          <summary>
-            <span>
-              <FiShield aria-hidden="true" />
-              Engineering case study
-            </span>
-            <small>{index === 0 ? "Open by default" : "Expand record"}</small>
-          </summary>
-
-          <div className="project-case-study-content">
+        <ProjectCaseStudyDisclosure defaultOpen={index === 0}>
             <section aria-labelledby={`project-${project.slug}-scope`}>
               <p className="project-detail-label">
                 <FiLayers aria-hidden="true" />
@@ -234,8 +225,7 @@ function ProjectStory({
                 ))}
               </ul>
             </section>
-          </div>
-        </details>
+        </ProjectCaseStudyDisclosure>
 
         <div className={styles.stackBlock}>
           <ul
