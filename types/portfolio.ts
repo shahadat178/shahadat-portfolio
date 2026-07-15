@@ -6,6 +6,7 @@ export type SectionId =
   | "story"
   | "experience"
   | "toolkit"
+  | "achievements"
   | "contact";
 
 export type SocialId = "linkedin" | "github" | "email";
@@ -108,6 +109,26 @@ export type EngineeringPrinciple = Readonly<{
   title: string;
   description: string;
   application: string;
+}>;
+
+export type AchievementCredential = Readonly<{
+  id: string;
+  index: string;
+  title: string;
+  track: string;
+  issuer: string;
+  provider?: string;
+  description: string;
+  period?: string;
+  issued?: string;
+  duration?: string;
+  credentialId?: string;
+  certificateHref: string;
+  previewSrc: string;
+  previewAlt: string;
+  validationHref?: string;
+  validationLabel?: string;
+  highlights: readonly string[];
 }>;
 
 export type ContactOption = Readonly<{

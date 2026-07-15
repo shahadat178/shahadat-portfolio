@@ -1,4 +1,5 @@
 import type {
+  AchievementCredential,
   AppearanceTheme,
   ContactOption,
   EngineeringPrinciple,
@@ -37,6 +38,7 @@ export const SIDEBAR_NAVIGATION = [
   { id: "story", label: "Story" },
   { id: "experience", label: "Experience" },
   { id: "toolkit", label: "Toolkit" },
+  { id: "achievements", label: "Achievements" },
   { id: "contact", label: "Contact" },
 ] as const satisfies readonly NavigationItem[];
 
@@ -526,6 +528,78 @@ export const TOOLKIT_GROUPS = [
     ],
   },
 ] as const satisfies readonly ToolkitGroup[];
+
+export const ACHIEVEMENTS_SECTION = {
+  eyebrow: "Achievements & certificates",
+  title: "Learning backed by inspectable credentials.",
+  description:
+    "Three completion records spanning algorithms, full-stack development, and an 80-hour instructor-led web development program.",
+} as const;
+
+export const ACHIEVEMENT_CREDENTIALS = [
+  {
+    id: "edge-web-development-essentials",
+    index: "01",
+    title: "Web Development Essentials",
+    track: "Instructor-led training",
+    issuer: "EDGE Project · Bangladesh Computer Council · ICT Division",
+    provider: "Department of CSE, Jagannath University",
+    description:
+      "Completed a structured web development program delivered through the EDGE Digital Skills Training initiative.",
+    period: "Sep 2024 – Mar 2025",
+    issued: "16 Jun 2025",
+    duration: "80 hours",
+    credentialId: "EDGE-DSTS-106-2418-00024",
+    certificateHref: "/certificates/edge-certificate.pdf",
+    previewSrc: "/certificates/edge-web-development-essentials.webp",
+    previewAlt:
+      "EDGE Web Development Essentials certificate awarded to Shahadat Sardar",
+    validationHref: "https://training.edge.gov.bd/certificate-validation",
+    validationLabel: "Validate with EDGE",
+    highlights: [
+      "Web development foundations",
+      "Structured instructor-led practice",
+      "Official serial-number validation",
+    ],
+  },
+  {
+    id: "apna-college-delta-full-stack",
+    index: "02",
+    title: "Full Stack Web Development",
+    track: "Delta program",
+    issuer: "Apna College",
+    description:
+      "Completed the Delta full-stack web development course and its guided implementation curriculum.",
+    credentialId: "68a36e13b4c7000a0e00a8a8",
+    certificateHref: "/certificates/apna-college-delta-certificate.pdf",
+    previewSrc: "/certificates/apna-college-delta-full-stack.webp",
+    previewAlt:
+      "Apna College Delta Full Stack Web Development certificate awarded to Shahadat Sardar",
+    highlights: [
+      "Frontend development",
+      "Backend foundations",
+      "End-to-end application practice",
+    ],
+  },
+  {
+    id: "apna-college-alpha-dsa",
+    index: "03",
+    title: "Data Structures & Algorithms with Java",
+    track: "Alpha program",
+    issuer: "Apna College",
+    description:
+      "Completed the Alpha data structures and algorithms course using Java as the implementation language.",
+    certificateHref: "/certificates/apna-college-alpha-dsa-certificate.pdf",
+    previewSrc: "/certificates/apna-college-alpha-dsa.webp",
+    previewAlt:
+      "Apna College Alpha Data Structures and Algorithms with Java certificate awarded to Shahadat Sardar",
+    highlights: [
+      "Data structures",
+      "Algorithmic problem solving",
+      "Java implementation practice",
+    ],
+  },
+] as const satisfies readonly AchievementCredential[];
 
 export const ENGINEERING_PRINCIPLES = [
   {

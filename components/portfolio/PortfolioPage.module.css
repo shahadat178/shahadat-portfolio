@@ -581,7 +581,7 @@
 
 @media (min-width: 1081px) and (max-width: 1180px) {
   .shell :global(.top-dock) {
-    grid-template-columns: 64px 64px 96px 72px 76px;
+    grid-template-columns: 64px 64px 96px 72px 92px 76px;
     gap: 3px;
     padding: 5px;
   }
@@ -618,9 +618,14 @@
     transform: translateX(233px);
   }
 
+  .shell :global(.top-dock[data-active="achievements"]::before) {
+    width: 92px;
+    transform: translateX(308px);
+  }
+
   .shell :global(.top-dock[data-active="contact"]::before) {
     width: 76px;
-    transform: translateX(308px);
+    transform: translateX(403px);
   }
 
   .shell :global(.top-actions) {
@@ -756,7 +761,7 @@
   }
 
   .shell :global(.side-nav) {
-    grid-template-rows: repeat(6, 36px);
+    grid-template-rows: repeat(7, 36px);
     gap: 4px;
     margin-top: 12px;
     padding: 4px;
@@ -791,8 +796,12 @@
     transform: translateY(160px);
   }
 
-  .shell :global(.side-nav[data-active="contact"]::before) {
+  .shell :global(.side-nav[data-active="achievements"]::before) {
     transform: translateY(200px);
+  }
+
+  .shell :global(.side-nav[data-active="contact"]::before) {
+    transform: translateY(240px);
   }
 
   .shell :global(.sidebar-bottom) {
@@ -895,7 +904,7 @@
   }
 
   .shell :global(.side-nav) {
-    grid-template-rows: repeat(6, 30px);
+    grid-template-rows: repeat(7, 30px);
     gap: 3px;
     margin-top: 8px;
     padding: 4px;
@@ -930,8 +939,12 @@
     transform: translateY(132px);
   }
 
-  .shell :global(.side-nav[data-active="contact"]::before) {
+  .shell :global(.side-nav[data-active="achievements"]::before) {
     transform: translateY(165px);
+  }
+
+  .shell :global(.side-nav[data-active="contact"]::before) {
+    transform: translateY(198px);
   }
 
   .shell :global(.sidebar-bottom) {

@@ -103,6 +103,11 @@ const REVIEW_CONTEXT: Record<
     title: "Technical depth",
     description: "Tools grouped by applied experience, current practice, and exploration.",
   },
+  achievements: {
+    title: "Credentials and continued learning",
+    description:
+      "Inspectable course records across algorithms, full-stack development, and structured web training.",
+  },
   contact: {
     title: "Start a conversation",
     description: "Direct channels for engineering roles, collaboration, or project feedback.",

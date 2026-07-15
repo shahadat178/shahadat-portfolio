@@ -67,7 +67,7 @@ app/page.tsx
     │   ├── hero + interactive globe
     │   ├── selected work + case-study disclosures
     │   ├── engineering depth, story, and build log
-    │   ├── principles and technical toolkit
+    │   ├── principles, technical toolkit, and credentials
     │   └── contact + release footer
     └── Preferences
         ├── theme and appearance persistence
@@ -95,7 +95,7 @@ data/                   Typed portfolio content and navigation model
 docs/                   Engineering standards and release discipline
 hooks/                  Preferences and active-section behavior
 styles/liquid-glass/     Shared tokens, themes, and glass primitives
-public/                 Production brand, project, and profile assets
+public/                 Production brand, project, profile, and certificate assets
 ```
 
 ## Run locally

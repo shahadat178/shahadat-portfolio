@@ -586,9 +586,33 @@
     padding: 15px;
   }
 
+  .navigation {
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .navigationLink {
+    min-height: 44px;
+  }
+
+  .preferenceSection {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .themeGrid {
+    gap: 7px;
+    margin-top: 10px;
+  }
+
+  .themeChoice {
+    min-height: 42px;
+  }
+
   .primaryActions {
     align-items: stretch;
     flex-direction: column;
+    margin-top: 12px;
   }
 
   .socialLinks {
@@ -598,6 +622,11 @@
 
   .socialLinks a {
     width: auto;
+  }
+
+  .availability {
+    margin-top: 9px;
+    padding-block: 9px;
   }
 }
 

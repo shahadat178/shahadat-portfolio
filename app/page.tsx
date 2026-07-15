@@ -1,5 +1,6 @@
 import { PortfolioFooter } from "@/components/layout/PortfolioFooter";
 import { PortfolioPage } from "@/components/portfolio/PortfolioPage";
+import { AchievementsSection } from "@/components/sections/AchievementsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { EngineeringDepthSection } from "@/components/sections/EngineeringDepthSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -21,6 +22,7 @@ export default function Home() {
       <ExperienceSection />
       <HowIWorkSection />
       <ToolkitSection />
+      <AchievementsSection />
       <ContactSection />
       <PortfolioFooter />
     </PortfolioPage>
