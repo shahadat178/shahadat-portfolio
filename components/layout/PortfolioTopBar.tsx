@@ -192,11 +192,17 @@ export function PortfolioTopBar({
           }
           aria-label={
             PORTFOLIO_PROFILE.resumeConfigured
-              ? "Download Shahadat Sardar's resume"
+              ? "Open Shahadat Sardar's current resume in a new tab"
               : "View resume availability details"
           }
+          target={PORTFOLIO_PROFILE.resumeConfigured ? "_blank" : undefined}
+          rel={
+            PORTFOLIO_PROFILE.resumeConfigured
+              ? "noreferrer noopener"
+              : undefined
+          }
         >
-          {PORTFOLIO_PROFILE.resumeConfigured ? "Resume ↓" : "Resume soon"}
+          {PORTFOLIO_PROFILE.resumeConfigured ? "Resume ↗" : "Resume soon"}
         </a>
       </div>
     </header>

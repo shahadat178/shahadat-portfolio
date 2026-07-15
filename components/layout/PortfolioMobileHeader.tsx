@@ -11,7 +11,6 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import {
   FiArrowUpRight,
   FiCheck,
-  FiDownload,
   FiMail,
   FiMenu,
   FiMoon,
@@ -324,9 +323,17 @@ export function PortfolioMobileHeader({
                   ? PORTFOLIO_PROFILE.resumeHref
                   : "#contact"
               }
+              target={
+                PORTFOLIO_PROFILE.resumeConfigured ? "_blank" : undefined
+              }
+              rel={
+                PORTFOLIO_PROFILE.resumeConfigured
+                  ? "noreferrer noopener"
+                  : undefined
+              }
               onClick={closeMenu}
             >
-              <FiDownload aria-hidden="true" />
+              <FiArrowUpRight aria-hidden="true" />
               <span>
                 {PORTFOLIO_PROFILE.resumeConfigured
                   ? "View resume"

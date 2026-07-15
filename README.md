@@ -95,7 +95,7 @@ data/                   Typed portfolio content and navigation model
 docs/                   Engineering standards and release discipline
 hooks/                  Preferences and active-section behavior
 styles/liquid-glass/     Shared tokens, themes, and glass primitives
-public/                 Production brand, project, profile, and resume assets
+public/                 Production brand, project, and profile assets
 ```
 
 ## Run locally

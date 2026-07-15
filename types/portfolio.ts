@@ -111,7 +111,7 @@ export type EngineeringPrinciple = Readonly<{
 }>;
 
 export type ContactOption = Readonly<{
-  id: SocialId | "resume" | "resume-drive";
+  id: SocialId | "resume" | "resume-download";
   label: string;
   description: string;
   href: string;

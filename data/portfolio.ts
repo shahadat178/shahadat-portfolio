@@ -61,9 +61,10 @@ export const PORTFOLIO_PROFILE = {
   email: "shahadatsardar73@gmail.com",
   emailHref: "mailto:shahadatsardar73@gmail.com",
   emailConfigured: true,
-  resumeHref: "/resume/shahadat-sardar-resume.pdf",
-  resumeDriveHref:
-    "https://drive.google.com/drive/folders/1irVZm7n-RVlfh5r06jWKws6PJe5vjeAF",
+  resumeHref:
+    "https://docs.google.com/document/d/1X2tlhmAi6izrvLUzo9TX6EI8iHlSi6wq/edit?usp=sharing",
+  resumeDownloadHref:
+    "https://docs.google.com/document/d/1X2tlhmAi6izrvLUzo9TX6EI8iHlSi6wq/export?format=pdf",
   resumeConfigured: true,
 } as const;
 
@@ -577,7 +578,7 @@ export const CONTACT_SECTION = {
   availability:
     "Open to conversations with teams working on useful products and strong engineering foundations.",
   configurationNote:
-    "The resume is available as a direct PDF download and through the linked Google Drive folder.",
+    "The current resume is view-only for visitors and editable only by the owner. A live PDF export is also available.",
 } as const;
 
 export const CONTACT_OPTIONS = [
@@ -607,17 +608,17 @@ export const CONTACT_OPTIONS = [
   },
   {
     id: "resume",
-    label: "View resume PDF",
-    description: "Open the resume directly from this portfolio.",
+    label: "View current resume",
+    description: "Open the latest version in Google Docs.",
     href: PORTFOLIO_PROFILE.resumeHref,
     external: true,
     status: "ready",
   },
   {
-    id: "resume-drive",
-    label: "Resume files on Drive",
-    description: "Open the shared folder containing the resume source files.",
-    href: PORTFOLIO_PROFILE.resumeDriveHref,
+    id: "resume-download",
+    label: "Download resume PDF",
+    description: "Export the latest document as a PDF copy.",
+    href: PORTFOLIO_PROFILE.resumeDownloadHref,
     external: true,
     status: "ready",
   },

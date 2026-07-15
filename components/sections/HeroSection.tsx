@@ -1,5 +1,5 @@
 import { FaBrain, FaNodeJs, FaReact } from "react-icons/fa6";
-import { FiArrowRight, FiCheck, FiDownload } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight, FiCheck } from "react-icons/fi";
 
 import InteractiveBangladeshGlobe from "@/components/InteractiveBangladeshGlobe";
 import { AnimatedHeroTitle } from "@/components/sections/AnimatedHeroTitle";
@@ -43,8 +43,14 @@ export function HeroSection() {
                 ? PORTFOLIO_PROFILE.resumeHref
                 : "#contact"
             }
+            target={PORTFOLIO_PROFILE.resumeConfigured ? "_blank" : undefined}
+            rel={
+              PORTFOLIO_PROFILE.resumeConfigured
+                ? "noreferrer noopener"
+                : undefined
+            }
           >
-            <FiDownload aria-hidden="true" />
+            <FiArrowUpRight aria-hidden="true" />
             {PORTFOLIO_PROFILE.resumeConfigured ? "Resume" : "Resume soon"}
           </a>
         </div>
