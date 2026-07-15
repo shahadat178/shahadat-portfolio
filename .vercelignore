@@ -13,8 +13,6 @@ artifacts
 *.tsbuildinfo
 .env*
 
-# Repository-only guidance and documentation are not deployment inputs.
-AGENTS.md
-CLAUDE.md
+# Repository-only documentation is not a deployment input.
 README.md
 docs

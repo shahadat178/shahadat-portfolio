@@ -53,11 +53,17 @@ A section is complete only when it has:
   separate reviewable steps.
 - Measure performance and accessibility instead of judging them by appearance.
 
-## Current launch blockers
+## Current release state
 
-- Replace the placeholder email address in `data/portfolio.ts`.
-- Add the resume PDF referenced by `PORTFOLIO_PROFILE.resumeHref`, or remove the
-  link until it exists.
-- Populate project, experience, and toolkit data with verified information.
-- Implement the five currently empty content sections.
-- Add production URL-dependent metadata only after the canonical domain is known.
+The portfolio is released at
+`https://shahadat-engineering-portfolio.vercel.app` with:
+
+- reviewed profile, project, experience, toolkit, and contact content;
+- a published resume and public professional contact channels;
+- canonical metadata, social sharing metadata, robots rules, and a sitemap;
+- a repeatable lint, type-check, and production-build quality gate;
+- baseline production security headers and deployment-file exclusions;
+- verified responsive, keyboard, reduced-motion, and WebGL fallback behavior.
+
+Future changes should preserve this release baseline and pass `npm run check`
+before they are merged into the default branch.

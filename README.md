@@ -6,6 +6,8 @@ A released, responsive engineering portfolio that makes product reasoning, imple
 
 **Live product:** [shahadat-engineering-portfolio.vercel.app](https://shahadat-engineering-portfolio.vercel.app)
 
+[![Quality gate](https://github.com/shahadat178/shahadat-portfolio/actions/workflows/quality.yml/badge.svg)](https://github.com/shahadat178/shahadat-portfolio/actions/workflows/quality.yml)
+
 ![Responsive desktop and mobile views of the Shahadat engineering portfolio](public/images/projects/shahadat-engineering-portfolio-v3.png)
 
 ## Product brief
@@ -90,6 +92,7 @@ components/layout/      Desktop and mobile portfolio shell
 components/portfolio/   Client orchestration and responsive shell rules
 components/sections/    Evidence-led product sections
 data/                   Typed portfolio content and navigation model
+docs/                   Engineering standards and release discipline
 hooks/                  Preferences and active-section behavior
 styles/liquid-glass/     Shared tokens, themes, and glass primitives
 public/                 Production brand, project, profile, and resume assets
