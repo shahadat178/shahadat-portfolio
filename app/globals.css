@@ -6464,6 +6464,20 @@ html[data-glass-mode="dark"] .site-footer-logo-dark {
   }
 }
 
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-pointer-mode="liquid"],
+  html[data-pointer-mode="liquid"] * {
+    cursor: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  html[data-pointer-mode="liquid"],
+  html[data-pointer-mode="liquid"] * {
+    cursor: revert !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-image,
   .project-links a,

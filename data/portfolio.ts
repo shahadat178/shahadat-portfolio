@@ -155,9 +155,10 @@ export const PORTFOLIO_PROJECTS = [
     ],
     links: [
       {
-        label: "Explore this portfolio",
-        href: "#home",
-        kind: "internal",
+        label: "View live portfolio",
+        href: "https://shahadat-engineering-portfolio.vercel.app",
+        kind: "live",
+        external: true,
       },
     ],
     featured: true,

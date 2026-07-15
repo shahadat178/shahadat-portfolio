@@ -1,0 +1,20 @@
+.git
+.github
+.next
+.vercel
+node_modules
+out
+build
+coverage
+artifacts
+.vscode
+.idea
+*.log
+*.tsbuildinfo
+.env*
+
+# Repository-only guidance and documentation are not deployment inputs.
+AGENTS.md
+CLAUDE.md
+README.md
+docs
