@@ -3935,6 +3935,7 @@ html[data-theme-transition="true"]::view-transition-new(root) {
     var(--lg-shadow-inset);
 }
 
+.project-story[data-status="released"],
 .project-story[data-status="active-build"] {
   border-color: color-mix(in srgb, var(--lg-accent) 42%, var(--lg-border));
 }

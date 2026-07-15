@@ -18,7 +18,9 @@ const DECISION_ICONS = [FiShield, FiLayers, FiCompass, FiGitBranch] as const;
 
 export function EngineeringDepthSection() {
   const referenceProject =
-    PORTFOLIO_PROJECTS.find((project) => project.status === "active-build") ??
+    PORTFOLIO_PROJECTS.find(
+      (project) => project.slug === "shahadat-engineering-portfolio",
+    ) ??
     PORTFOLIO_PROJECTS[0];
 
   return (
@@ -30,7 +32,7 @@ export function EngineeringDepthSection() {
       <SectionHeading
         eyebrow="Engineering depth"
         title="The visible interface is only one layer of the product."
-        description="This decision record exposes the reasoning behind an active build: the problem boundary, implementation choices, evidence available today and the next validation step."
+        description="This decision record exposes the reasoning behind the released portfolio: the problem boundary, implementation choices, shipped evidence, and the next improvement cycle."
         titleId="engineering-depth-title"
       />
 
@@ -113,8 +115,8 @@ export function EngineeringDepthSection() {
                   <FiCheckCircle />
                 </span>
                 <div>
-                  <p>Verified in the current build</p>
-                  <h4 id="engineering-evidence-title">Evidence available now</h4>
+                  <p>Verified in the released product</p>
+                  <h4 id="engineering-evidence-title">Evidence shipped</h4>
                 </div>
               </header>
               <ul>
@@ -130,8 +132,8 @@ export function EngineeringDepthSection() {
                   <FiClock />
                 </span>
                 <div>
-                  <p>Open work, stated clearly</p>
-                  <h4 id="engineering-next-title">Next validation steps</h4>
+                  <p>Post-release work, stated clearly</p>
+                  <h4 id="engineering-next-title">Next improvement cycle</h4>
                 </div>
               </header>
               <ul>

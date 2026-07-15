@@ -27,6 +27,7 @@ const SELECTED_PROJECTS = [...PORTFOLIO_PROJECTS].sort(
 );
 
 const PROJECT_STATUS_META = {
+  released: { icon: FiCheckCircle, label: "Released" },
   "active-build": { icon: FiZap, label: "Building" },
   concept: { icon: FiCompass, label: "Research" },
   planned: { icon: FiClock, label: "Scheduled" },
@@ -39,6 +40,7 @@ function ProjectStory({
   const projectNumber = String(index + 1).padStart(2, "0");
   const statusMeta = PROJECT_STATUS_META[project.status];
   const StatusIcon = statusMeta.icon;
+  const isReleased = project.status === "released";
 
   return (
     <article
@@ -167,64 +169,68 @@ function ProjectStory({
         </div>
 
         <ProjectCaseStudyDisclosure defaultOpen={index === 0}>
-            <section aria-labelledby={`project-${project.slug}-scope`}>
-              <p className="project-detail-label">
-                <FiLayers aria-hidden="true" />
-                Scope
-              </p>
-              <h4 id={`project-${project.slug}-scope`}>What I am building</h4>
-              <ul>
-                {project.scope.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
+          <section aria-labelledby={`project-${project.slug}-scope`}>
+            <p className="project-detail-label">
+              <FiLayers aria-hidden="true" />
+              {isReleased ? "Delivered scope" : "Scope"}
+            </p>
+            <h4 id={`project-${project.slug}-scope`}>
+              {isReleased ? "What I built" : "What I am building"}
+            </h4>
+            <ul>
+              {project.scope.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
 
-            <section aria-labelledby={`project-${project.slug}-decisions`}>
-              <p className="project-detail-label">
-                <FiGitBranch aria-hidden="true" />
-                Decision record
-              </p>
-              <h4 id={`project-${project.slug}-decisions`}>
-                Engineering choices and rationale
-              </h4>
-              <dl className="project-decisions">
-                {project.decisions.map((decision) => (
-                  <div key={decision.title}>
-                    <dt>{decision.title}</dt>
-                    <dd>{decision.rationale}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
+          <section aria-labelledby={`project-${project.slug}-decisions`}>
+            <p className="project-detail-label">
+              <FiGitBranch aria-hidden="true" />
+              Decision record
+            </p>
+            <h4 id={`project-${project.slug}-decisions`}>
+              Engineering choices and rationale
+            </h4>
+            <dl className="project-decisions">
+              {project.decisions.map((decision) => (
+                <div key={decision.title}>
+                  <dt>{decision.title}</dt>
+                  <dd>{decision.rationale}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
 
-            <section aria-labelledby={`project-${project.slug}-outcomes`}>
-              <p className="project-detail-label">
-                <FiCheckCircle aria-hidden="true" />
-                Current evidence
-              </p>
-              <h4 id={`project-${project.slug}-outcomes`}>
-                What exists today
-              </h4>
-              <ul>
-                {project.outcomes.map((outcome) => (
-                  <li key={outcome}>{outcome}</li>
-                ))}
-              </ul>
-            </section>
+          <section aria-labelledby={`project-${project.slug}-outcomes`}>
+            <p className="project-detail-label">
+              <FiCheckCircle aria-hidden="true" />
+              {isReleased ? "Release evidence" : "Implemented now"}
+            </p>
+            <h4 id={`project-${project.slug}-outcomes`}>
+              {isReleased ? "What shipped" : "Delivered so far"}
+            </h4>
+            <ul>
+              {project.outcomes.map((outcome) => (
+                <li key={outcome}>{outcome}</li>
+              ))}
+            </ul>
+          </section>
 
-            <section aria-labelledby={`project-${project.slug}-next`}>
-              <p className="project-detail-label">
-                <FiClock aria-hidden="true" />
-                Next iteration
-              </p>
-              <h4 id={`project-${project.slug}-next`}>What comes next</h4>
-              <ul>
-                {project.nextSteps.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ul>
-            </section>
+          <section aria-labelledby={`project-${project.slug}-next`}>
+            <p className="project-detail-label">
+              <FiClock aria-hidden="true" />
+              {isReleased ? "Post-release roadmap" : "Engineering backlog"}
+            </p>
+            <h4 id={`project-${project.slug}-next`}>
+              {isReleased ? "Future improvements" : "Planned work"}
+            </h4>
+            <ul>
+              {project.nextSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ul>
+          </section>
         </ProjectCaseStudyDisclosure>
 
         <div className={styles.stackBlock}>

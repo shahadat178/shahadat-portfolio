@@ -14,6 +14,8 @@ export type GlassTheme = "aurora" | "frost" | "ash" | "emerald";
 
 export type AppearanceMode = "light" | "dark";
 
+export type PointerMode = "system" | "liquid" | "crystal" | "orbit";
+
 export type NavigationItem = Readonly<{
   id: SectionId;
   label: string;
@@ -37,7 +39,7 @@ export type ProjectLink = Readonly<{
   external?: boolean;
 }>;
 
-export type ProjectStatus = "active-build" | "concept" | "planned";
+export type ProjectStatus = "released" | "active-build" | "concept" | "planned";
 
 export type ProjectImage = Readonly<{
   src: string;
@@ -73,7 +75,7 @@ export type PortfolioProject = Readonly<{
   featured: boolean;
 }>;
 
-export type ExperienceStatus = "current" | "concept" | "learning";
+export type ExperienceStatus = "released" | "current" | "concept" | "learning";
 
 export type ExperienceItem = Readonly<{
   organization: string;

@@ -1,0 +1,108 @@
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(html[data-pointer-mode="liquid"]),
+  :global(html[data-pointer-mode="liquid"] *) {
+    cursor: none !important;
+  }
+
+  .liquidLayer,
+  .emojiCanvas,
+  .clockCanvas {
+    position: fixed;
+    z-index: 2147483647;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  .liquidLayer {
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .emojiCanvas,
+  .clockCanvas {
+    inset: 0;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .clockCanvas {
+    opacity: 0;
+    transition: opacity 120ms ease-out;
+  }
+
+  .clockCanvas[data-visible="true"] {
+    opacity: 1;
+  }
+
+  .filterDefinition {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .liquidCanvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    filter: url("#portfolio-liquid-cursor-filter");
+  }
+
+  .liquidCore {
+    --pointer-x: -100px;
+    --pointer-y: -100px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid color-mix(in srgb, white 68%, var(--lg-accent) 32%);
+    border-radius: 50%;
+    opacity: 0;
+    background:
+      radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.94), transparent 23%),
+      linear-gradient(145deg, var(--lg-accent), var(--lg-accent-strong));
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--lg-accent) 10%, transparent),
+      0 7px 20px color-mix(in srgb, var(--lg-accent) 32%, transparent),
+      inset -3px -4px 8px rgba(var(--lg-shadow-color), 0.19);
+    transform: translate3d(var(--pointer-x), var(--pointer-y), 0)
+      translate(-50%, -50%);
+    transition:
+      width 180ms var(--lg-ease-out),
+      height 180ms var(--lg-ease-out),
+      opacity 120ms ease-out,
+      box-shadow 180ms var(--lg-ease-out);
+    will-change: transform;
+  }
+
+  .liquidCore[data-visible="true"] {
+    opacity: 0.96;
+  }
+
+  .liquidCore[data-pressed="true"] {
+    width: 27px;
+    height: 27px;
+    box-shadow:
+      0 0 0 7px color-mix(in srgb, var(--lg-accent) 13%, transparent),
+      0 8px 26px color-mix(in srgb, var(--lg-accent) 38%, transparent),
+      inset -3px -4px 8px rgba(var(--lg-shadow-color), 0.19);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  :global(html[data-pointer-mode="liquid"]),
+  :global(html[data-pointer-mode="liquid"] *) {
+    cursor: revert !important;
+  }
+
+  .liquidLayer,
+  .emojiCanvas,
+  .clockCanvas {
+    display: none !important;
+  }
+}

@@ -33,7 +33,7 @@ const STORY_LENSES = [
     icon: FiTrendingUp,
     title: "Make progress visible and claims verifiable.",
     description:
-      "This portfolio distinguishes active builds from concepts and records what exists, what I learned and what comes next.",
+      "This portfolio distinguishes released work, active builds, and future concepts while recording what shipped, what I learned, and what comes next.",
   },
 ] as const;
 

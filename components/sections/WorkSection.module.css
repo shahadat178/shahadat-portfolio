@@ -132,6 +132,7 @@
     var(--lg-shadow-inset);
 }
 
+.section :global(.project-story[data-status="released"]),
 .section :global(.project-story[data-status="active-build"]) {
   border-color: color-mix(
     in srgb,
@@ -564,13 +565,13 @@
   cursor: pointer;
 }
 
-.section :global(.project-case-study-trigger > span) {
+.section :global(.project-case-study-trigger > span:first-child) {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.section :global(.project-case-study-trigger > span svg) {
+.section :global(.project-case-study-trigger > span:first-child svg) {
   width: 16px;
   height: 16px;
   color: var(--lg-accent);
@@ -583,29 +584,35 @@
   font-weight: 700;
 }
 
-.section :global(.project-case-study-trigger::before),
-.section :global(.project-case-study-trigger::after) {
+.section :global(.project-case-study-toggle) {
   position: absolute;
   top: 50%;
   right: 18px;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+}
+
+.section :global(.project-case-study-toggle > span) {
+  position: absolute;
+  top: 6px;
+  left: 1px;
   width: 12px;
   height: 2px;
   border-radius: 999px;
-  content: "";
   background: var(--lg-accent);
-  transform: translateY(-50%);
   transition:
     opacity 220ms var(--lg-ease-out),
     transform 420ms var(--lg-ease-out);
 }
 
-.section :global(.project-case-study-trigger::after) {
-  transform: translateY(-50%) rotate(90deg);
+.section :global(.project-case-study-toggle > span:last-child) {
+  transform: rotate(90deg);
 }
 
-.section :global(.project-case-study[data-open="true"] .project-case-study-trigger::after) {
+.section :global(.project-case-study[data-open="true"] .project-case-study-toggle > span:last-child) {
   opacity: 0;
-  transform: translateY(-50%) rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .section :global(.project-case-study-trigger:hover) {
@@ -870,7 +877,7 @@
 @media (prefers-reduced-motion: reduce) {
   .section :global(.work-project-index > a),
   .section :global(.project-image),
-  .section :global(.project-case-study-trigger::after),
+  .section :global(.project-case-study-toggle > span),
   .section :global(.project-case-study-reveal) {
     transition: none;
   }

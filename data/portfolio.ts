@@ -69,7 +69,7 @@ export const PORTFOLIO_PROFILE = {
 
 export const PORTFOLIO_STATS = [
   { value: "03", label: "Product case studies" },
-  { value: "02", label: "Active product builds" },
+  { value: "01", label: "Released product" },
   { value: "04", label: "Toolkit domains" },
 ] as const;
 
@@ -77,36 +77,36 @@ export const WORK_SECTION = {
   eyebrow: "Selected work",
   title: "Three products. Three different trust problems.",
   description:
-    "The portfolio and commerce platform are active builds. The skin-health product remains a deliberately later research track because safety, clinical review, privacy, and inclusive validation must come first.",
+    "The engineering portfolio is released, the commerce platform remains the active full-stack build, and the skin-health product stays a deliberately later research track until safety, clinical review, privacy, and inclusive validation come first.",
 } as const;
 
 export const PORTFOLIO_PROJECTS = [
   {
     slug: "shahadat-engineering-portfolio",
     title: "Shahadat — Engineering Portfolio",
-    eyebrow: "01 / Active build",
+    eyebrow: "01 / Released product",
     projectType: "Portfolio platform · Design system",
     summary:
-      "A recruiter-focused engineering portfolio that turns personal identity, product reasoning, and technical work into one responsive experience.",
+      "A responsive engineering portfolio that brings identity, product reasoning, implementation detail, and technical work into one coherent experience.",
     narrative:
-      "The project began as a visually ambitious landing page. It is evolving into a maintainable product system where every section has a job: establish trust, show evidence, explain decisions, and make the next action obvious.",
+      "What started as a single landing page became a production-ready portfolio system with reusable sections, typed content, responsive navigation, theme and pointer preferences, accessible disclosures, and a resilient interactive globe.",
     role: "Independent product engineer and designer",
-    period: "Current build",
-    status: "active-build",
-    statusLabel: "In active development",
+    period: "Released in 2026",
+    status: "released",
+    statusLabel: "Production release",
     image: {
       src: "/images/projects/shahadat-engineering-portfolio-v3.png",
-      alt: "High-resolution responsive views of the Shahadat engineering portfolio and its evidence-first case study across desktop and mobile devices",
+      alt: "High-resolution responsive views of the Shahadat engineering portfolio across desktop and mobile devices",
     },
     problem:
-      "A portfolio can look polished and still fail if a hiring team cannot quickly understand the engineer, the work, and the evidence behind the claims.",
+      "Visitors need to understand who I am, what I build, how I make technical decisions, and where to find the relevant work without searching through a dense page.",
     audience: [
       "Recruiters and hiring teams",
       "Engineering leaders",
       "Potential collaborators",
     ],
     scope: [
-      "Information architecture and recruiter-first content hierarchy",
+      "Information architecture and task-focused content hierarchy",
       "Responsive shell, navigation, and section system",
       "Theme-aware visual language and reusable glass surfaces",
       "Accessible interaction, reduced-motion behavior, and touch targets",
@@ -114,9 +114,9 @@ export const PORTFOLIO_PROJECTS = [
     ],
     decisions: [
       {
-        title: "Lead with evidence",
+        title: "Make the work easy to inspect",
         rationale:
-          "Projects, ownership, decisions, and honest status labels take priority over generic self-promotion.",
+          "Project scope, ownership, technical decisions, and build status stay close to each case study.",
       },
       {
         title: "Build one responsive system",
@@ -135,15 +135,15 @@ export const PORTFOLIO_PROJECTS = [
       },
     ],
     outcomes: [
-      "Created a reusable portfolio shell with dedicated layout and section components.",
-      "Implemented responsive navigation, appearance preferences, active-section tracking, and accessible interaction states.",
-      "Established a truthful content model for projects, experience, toolkit, principles, and contact actions.",
-      "Prepared the site for deeper case studies without claiming unverified business or hiring results.",
+      "Delivered a reusable portfolio shell with dedicated layout and section components.",
+      "Implemented responsive navigation, four visual themes, pointer preferences, active-section tracking, and accessible interaction states.",
+      "Separated project, experience, toolkit, profile, and contact content into a typed data model.",
+      "Completed lint, type, production-build, responsive, zoom, and interaction verification before release.",
     ],
     nextSteps: [
-      "Capture final production screenshots after the remaining section polish is complete.",
-      "Attach a verified public email address and final resume.",
-      "Run production performance, accessibility, and cross-device audits before launch.",
+      "Monitor real production performance and runtime behavior after deployment.",
+      "Add automated regression coverage for navigation, themes, disclosures, and responsive layout states.",
+      "Refresh the evidence and screenshots as the commerce case study becomes an implemented product.",
     ],
     stack: [
       "Next.js",
@@ -218,8 +218,8 @@ export const PORTFOLIO_PROJECTS = [
     outcomes: [
       "Defined a non-diagnostic product boundary and the language needed to communicate it.",
       "Mapped a core journey from private observation to a better-prepared professional-care conversation.",
-      "Created a validation backlog covering clinical review, inclusive research, privacy, safety, and accessibility.",
-      "No clinical accuracy, patient outcome, or adoption claim is made at this concept stage.",
+      "Documented the research required for clinical review, inclusion, privacy, safety, and accessibility.",
+      "Kept diagnosis, treatment, and clinical-accuracy claims outside the planned product boundary.",
     ],
     nextSteps: [
       "Review the problem and content model with qualified dermatology and safety professionals.",
@@ -297,12 +297,12 @@ export const PORTFOLIO_PROJECTS = [
       "Created the responsive desktop and mobile storefront direction shown in this case study.",
       "Defined brand, navigation, category, trust, membership, and merchandising surfaces.",
       "Mapped full-stack catalogue, account, cart, checkout, payment, order, and fulfilment responsibilities now being implemented.",
-      "No sales, conversion, inventory, or customer metric is claimed while the product remains under construction.",
+      "Specified catalogue, inventory, checkout, payment, order, fulfilment, and returns boundaries for implementation.",
     ],
     nextSteps: [
       "Finish catalogue, search, filtering, product-detail, wishlist, cart, and account flows.",
       "Implement secure checkout, payment, order, inventory, and fulfilment boundaries.",
-      "Seed a clearly fictional demonstration catalogue and connect editorial content management.",
+      "Prepare representative catalogue data and connect editorial content management.",
       "Run accessibility, performance, security, and cross-device validation before release.",
     ],
     stack: [
@@ -328,7 +328,7 @@ export const STORY_SECTION = {
     "I am drawn to teams where strong fundamentals, thoughtful feedback, and useful customer outcomes matter more than technology for its own sake.",
   ],
   currentFocus:
-    "Turning three product concepts into evidence-backed case studies, beginning with this portfolio platform.",
+    "Using this released portfolio as the evidence foundation while turning the commerce concept into the next implemented full-stack product.",
 } as const;
 
 export const EXPERIENCE_SECTION = {
@@ -342,18 +342,18 @@ export const EXPERIENCE_ITEMS = [
   {
     organization: "Independent portfolio product",
     role: "Product engineer and designer",
-    period: "Current build",
-    status: "current",
-    statusLabel: "Building now",
+    period: "Released in 2026",
+    status: "released",
+    statusLabel: "Released portfolio",
     summary:
-      "Evolving a visual portfolio prototype into a responsive, accessible, and maintainable engineering showcase.",
+      "Delivered a responsive and maintainable engineering portfolio that makes product reasoning, implementation evidence, and project boundaries easy to inspect.",
     responsibilities: [
-      "Define the information architecture and typed content model.",
-      "Build responsive layout, navigation, themes, motion, and interactive elements.",
-      "Review accessibility, cross-device behavior, and implementation quality before release.",
+      "Defined the information architecture, evidence hierarchy, and typed content model.",
+      "Built the responsive shell, navigation, themes, motion system, cursor preferences, and interactive globe.",
+      "Verified lint, types, production compilation, cross-device behavior, zoom resilience, and accessible interaction states.",
     ],
     evidenceNote:
-      "Evidence is available in this repository; recruiter and production validation are still in progress.",
+      "Implementation evidence is available through the live product and its structured case study; hiring outcomes are not claimed.",
     technologies: ["Next.js", "React", "TypeScript", "CSS Modules", "Three.js"],
   },
   {

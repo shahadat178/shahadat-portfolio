@@ -2,12 +2,14 @@
 
 import { useState, type MouseEvent, type ReactNode } from "react";
 
+import { PortfolioCursor } from "@/components/cursor/PortfolioCursor";
 import { PortfolioSidebar } from "@/components/layout/PortfolioSidebar";
 import { PortfolioInsightRail } from "@/components/layout/PortfolioInsightRail";
 import { PortfolioMobileHeader } from "@/components/layout/PortfolioMobileHeader";
 import { PortfolioTopBar } from "@/components/layout/PortfolioTopBar";
 import { useAppearancePreferences } from "@/hooks/useAppearancePreferences";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { usePointerPreference } from "@/hooks/usePointerPreference";
 import type { SectionId } from "@/types/portfolio";
 import styles from "@/components/portfolio/PortfolioPage.module.css";
 
@@ -26,6 +28,7 @@ export function PortfolioPage({ children }: PortfolioPageProps) {
     setGlassTheme,
     toggleAppearanceMode,
   } = useAppearancePreferences();
+  const { pointerMode, setPointerMode } = usePointerPreference();
 
   function handleNavigation(
     event: MouseEvent<HTMLAnchorElement>,
@@ -103,9 +106,13 @@ export function PortfolioPage({ children }: PortfolioPageProps) {
 
         <PortfolioInsightRail
           activeSection={activeSection}
+          pointerMode={pointerMode}
           onNavigate={handleNavigation}
+          onPointerModeChange={setPointerMode}
         />
       </div>
+
+      <PortfolioCursor mode={pointerMode} />
     </>
   );
 }

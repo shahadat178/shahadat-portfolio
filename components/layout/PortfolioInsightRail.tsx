@@ -1,13 +1,53 @@
 import {
   FiArrowDownRight,
   FiBookOpen,
+  FiClock,
+  FiDroplet,
+  FiMousePointer,
+  FiSmile,
   FiTool,
   FiZap,
 } from "react-icons/fi";
 import type { IconType } from "react-icons";
 
 import { PORTFOLIO_STATS, SIDEBAR_NAVIGATION } from "@/data/portfolio";
-import type { NavigationHandler, SectionId } from "@/types/portfolio";
+import type {
+  NavigationHandler,
+  PointerMode,
+  SectionId,
+} from "@/types/portfolio";
+
+const POINTER_MODES = [
+  {
+    id: "system",
+    label: "System",
+    detail: "Native",
+    icon: FiMousePointer,
+  },
+  {
+    id: "liquid",
+    label: "Liquid",
+    detail: "Fluid trail",
+    icon: FiDroplet,
+  },
+  {
+    id: "crystal",
+    label: "Emoji",
+    detail: "Falling trail",
+    icon: FiSmile,
+  },
+  {
+    id: "orbit",
+    label: "Clock",
+    detail: "Date + hands",
+    icon: FiClock,
+  },
+] as const satisfies readonly {
+  id: PointerMode;
+  label: string;
+  detail: string;
+  icon: IconType;
+}[];
 
 const EVIDENCE_SIGNALS = [
   {
@@ -19,10 +59,10 @@ const EVIDENCE_SIGNALS = [
   },
   {
     id: "work",
-    href: "#project-sardar-atelier",
+    href: "#project-shahadat-engineering-portfolio",
     icon: FiZap,
-    label: "Active builds",
-    detail: "Portfolio and commerce",
+    label: "Released product",
+    detail: "Live engineering portfolio",
   },
   {
     id: "toolkit",
@@ -71,12 +111,16 @@ const REVIEW_CONTEXT: Record<
 
 type PortfolioInsightRailProps = {
   activeSection: SectionId;
+  pointerMode: PointerMode;
   onNavigate: NavigationHandler;
+  onPointerModeChange: (mode: PointerMode) => void;
 };
 
 export function PortfolioInsightRail({
   activeSection,
+  pointerMode,
   onNavigate,
+  onPointerModeChange,
 }: PortfolioInsightRailProps) {
   const activeIndex = SIDEBAR_NAVIGATION.findIndex(
     (item) => item.id === activeSection
@@ -125,6 +169,42 @@ export function PortfolioInsightRail({
           );
         })}
       </div>
+
+      <section className="rail-pointer-control" aria-labelledby="pointer-mode-title">
+        <div className="rail-pointer-heading">
+          <div>
+            <p>Pointer mode</p>
+            <strong id="pointer-mode-title">Choose your cursor effect</strong>
+          </div>
+          <span>Desktop</span>
+        </div>
+
+        <div className="rail-pointer-grid" aria-label="Pointer mode">
+          {POINTER_MODES.map((mode) => {
+            const ModeIcon = mode.icon;
+            const isSelected = pointerMode === mode.id;
+
+            return (
+              <button
+                key={mode.id}
+                className="rail-pointer-option"
+                type="button"
+                aria-pressed={isSelected}
+                data-selected={isSelected ? "true" : "false"}
+                onClick={() => onPointerModeChange(mode.id)}
+              >
+                <span className="rail-pointer-icon" aria-hidden="true">
+                  <ModeIcon />
+                </span>
+                <span>
+                  <strong>{mode.label}</strong>
+                  <small>{mode.detail}</small>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
       <section
         className="rail-progress"

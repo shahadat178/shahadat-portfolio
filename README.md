@@ -1,6 +1,6 @@
 # Shahadat Sardar — Engineering Portfolio
 
-A responsive, evidence-first engineering portfolio built to present product thinking, implementation depth, and honest project status in one cohesive experience.
+A released, responsive, evidence-first engineering portfolio built to present product thinking, implementation depth, and honest project status in one cohesive experience.
 
 ## What this repository contains
 
@@ -53,7 +53,7 @@ public/                 Brand, project, profile, and resume assets
 
 ## Content and status policy
 
-The portfolio distinguishes implemented work, active builds, and future concepts. Proposed technologies and unverified outcomes are labelled explicitly. DermaAware is a product concept for general education and care-navigation support; it is not a medical diagnostic or treatment product.
+The portfolio distinguishes released work, active builds, and future concepts. Proposed technologies and unverified outcomes are labelled explicitly. DermaAware is a product concept for general education and care-navigation support; it is not a medical diagnostic or treatment product.
 
 Personal phone information is intentionally not published. Contact is available through the public email and professional profile links shown in the portfolio.
 

@@ -224,6 +224,10 @@
 }
 
 .section
+  :global(.experience-timeline-item article[data-status="released"] .experience-content),
+.section
+  :global(.experience-timeline-item article[data-status="released"] .experience-marker),
+.section
   :global(.experience-timeline-item article[data-status="current"] .experience-content),
 .section
   :global(.experience-timeline-item article[data-status="current"] .experience-marker) {

@@ -30,6 +30,10 @@ export function ProjectCaseStudyDisclosure({
           Engineering case study
         </span>
         <small>{isOpen ? "Collapse record" : "Expand record"}</small>
+        <span className="project-case-study-toggle" aria-hidden="true">
+          <span />
+          <span />
+        </span>
       </button>
 
       <div

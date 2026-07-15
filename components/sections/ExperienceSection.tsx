@@ -12,6 +12,7 @@ import { EXPERIENCE_ITEMS, EXPERIENCE_SECTION } from "@/data/portfolio";
 import styles from "@/components/sections/ExperienceSection.module.css";
 
 const EXPERIENCE_STATUS_META = {
+  released: { icon: FiCheckCircle, shortLabel: "Released product" },
   current: { icon: FiZap, shortLabel: "Active build" },
   concept: { icon: FiCompass, shortLabel: "Discovery" },
   learning: { icon: FiLayers, shortLabel: "Planned study" },
@@ -48,12 +49,12 @@ export function ExperienceSection() {
             <dd>{String(EXPERIENCE_ITEMS.length).padStart(2, "0")}</dd>
           </div>
           <div>
-            <dt>Active build</dt>
+            <dt>Released product</dt>
             <dd>01</dd>
           </div>
           <div>
-            <dt>Claim policy</dt>
-            <dd>Evidence first</dd>
+            <dt>Active build</dt>
+            <dd>01</dd>
           </div>
         </dl>
       </aside>
