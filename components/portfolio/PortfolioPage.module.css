@@ -579,7 +579,8 @@
   }
 }
 
-@media (min-width: 1081px) and (max-width: 1180px) {
+@media (min-width: 1081px) and (max-width: 1180px),
+  (min-width: 1641px) and (max-width: 1840px) {
   .shell :global(.top-dock) {
     grid-template-columns: 64px 64px 96px 72px 92px 76px;
     gap: 3px;
@@ -735,8 +736,13 @@
   }
 }
 
-/* 110% browser zoom on a 1080p display lands near this effective height. */
-@media (min-width: 1081px) and (max-height: 900px) {
+/*
+ * Browser chrome and 100-110% zoom can leave less than 1100 CSS pixels of
+ * vertical space on a 1080p display. Enter the first compact rail mode before
+ * utility content reaches the clipped edge; 90% zoom remains in the spacious
+ * desktop layout, while the shorter breakpoints below keep scaling down.
+ */
+@media (min-width: 1081px) and (max-height: 1100px) {
   .shell :global(.left-rail) {
     padding: 14px 14px max(14px, env(safe-area-inset-bottom));
   }
@@ -806,7 +812,7 @@
 
   .shell :global(.sidebar-bottom) {
     gap: 8px;
-    margin-top: 8px;
+    margin-top: auto;
     padding: 0 0 2px;
   }
 
