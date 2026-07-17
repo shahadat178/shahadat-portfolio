@@ -26,7 +26,7 @@
   }
 
   .shell :global(.sidebar-bottom) {
-    margin-top: 14px;
+    margin-top: auto;
     padding: 14px 0 4px;
   }
 
@@ -536,7 +536,7 @@
   }
 
   .shell :global(.sidebar-bottom) {
-    margin-top: 14px;
+    margin-top: auto;
     padding-bottom: 4px;
   }
 
@@ -545,10 +545,10 @@
     z-index: 100;
     top: 16px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: max-content max-content;
     align-items: center;
-    justify-content: stretch;
-    gap: 12px;
+    justify-content: end;
+    column-gap: clamp(14px, 1.45vw, 24px);
     width: calc(100% - 20px);
     min-height: var(--shell-topbar-height);
     margin-right: auto;
@@ -566,7 +566,7 @@
   }
 
   .shell :global(.top-dock) {
-    justify-self: center;
+    justify-self: end;
   }
 
   .shell :global(.top-actions) {
@@ -579,7 +579,7 @@
   }
 }
 
-@media (min-width: 1081px) and (max-width: 1180px),
+@media (min-width: 1081px) and (max-width: 1640px),
   (min-width: 1641px) and (max-width: 1840px) {
   .shell :global(.top-dock) {
     grid-template-columns: 64px 64px 96px 72px 92px 76px;
@@ -641,6 +641,63 @@
   .shell :global(.resume-button) {
     min-width: 105px;
     padding: 0 14px;
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1180px) {
+  .shell :global(.top-bar) {
+    column-gap: 10px;
+  }
+
+  .shell :global(.top-dock) {
+    grid-template-columns: 56px 58px 86px 64px 86px 68px;
+  }
+
+  .shell :global(.top-dock::before) {
+    width: 56px;
+  }
+
+  .shell :global(.top-nav-link) {
+    font-size: 10.5px;
+  }
+
+  .shell :global(.top-dock[data-active="work"]::before) {
+    width: 56px;
+    transform: translateX(0);
+  }
+
+  .shell :global(.top-dock[data-active="story"]::before) {
+    width: 58px;
+    transform: translateX(59px);
+  }
+
+  .shell :global(.top-dock[data-active="experience"]::before) {
+    width: 86px;
+    transform: translateX(120px);
+  }
+
+  .shell :global(.top-dock[data-active="toolkit"]::before) {
+    width: 64px;
+    transform: translateX(209px);
+  }
+
+  .shell :global(.top-dock[data-active="achievements"]::before) {
+    width: 86px;
+    transform: translateX(276px);
+  }
+
+  .shell :global(.top-dock[data-active="contact"]::before) {
+    width: 68px;
+    transform: translateX(365px);
+  }
+
+  .shell :global(.theme-picker-button) {
+    min-width: 100px;
+  }
+
+  .shell :global(.resume-button) {
+    min-width: 96px;
+    padding-inline: 12px;
   }
 }
 
@@ -812,7 +869,7 @@
 
   .shell :global(.sidebar-bottom) {
     gap: 8px;
-    margin-top: 10px;
+    margin-top: auto;
     padding: 0 0 2px;
   }
 
@@ -910,7 +967,7 @@
   }
 
   .shell :global(.side-nav) {
-    grid-template-rows: repeat(7, 30px);
+    grid-template-rows: repeat(7, 34px);
     gap: 3px;
     margin-top: 8px;
     padding: 4px;
@@ -920,42 +977,42 @@
     top: 4px;
     right: 4px;
     left: 4px;
-    height: 30px;
+    height: 34px;
   }
 
   .shell :global(.nav-item) {
-    min-height: 30px;
+    min-height: 34px;
     padding: 0 9px;
-    font-size: 11.5px;
+    font-size: 12px;
   }
 
   .shell :global(.side-nav[data-active="work"]::before) {
-    transform: translateY(33px);
+    transform: translateY(37px);
   }
 
   .shell :global(.side-nav[data-active="story"]::before) {
-    transform: translateY(66px);
+    transform: translateY(74px);
   }
 
   .shell :global(.side-nav[data-active="experience"]::before) {
-    transform: translateY(99px);
+    transform: translateY(111px);
   }
 
   .shell :global(.side-nav[data-active="toolkit"]::before) {
-    transform: translateY(132px);
+    transform: translateY(148px);
   }
 
   .shell :global(.side-nav[data-active="achievements"]::before) {
-    transform: translateY(165px);
+    transform: translateY(185px);
   }
 
   .shell :global(.side-nav[data-active="contact"]::before) {
-    transform: translateY(198px);
+    transform: translateY(222px);
   }
 
   .shell :global(.sidebar-bottom) {
     gap: 6px;
-    margin-top: 7px;
+    margin-top: auto;
     padding: 0 0 2px;
   }
 

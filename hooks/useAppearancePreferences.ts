@@ -109,8 +109,10 @@ export function useAppearancePreferences() {
 
   function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
-    const originX = rect.left + rect.width / 2;
-    const originY = rect.top + rect.height / 2;
+    const viewportOffsetX = window.visualViewport?.offsetLeft ?? 0;
+    const viewportOffsetY = window.visualViewport?.offsetTop ?? 0;
+    const originX = rect.left + rect.width / 2 + viewportOffsetX;
+    const originY = rect.top + rect.height / 2 + viewportOffsetY;
     const revealRadius = Math.hypot(
       Math.max(originX, window.innerWidth - originX),
       Math.max(originY, window.innerHeight - originY)
