@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { FiArrowUpRight, FiMail } from "react-icons/fi";
 
@@ -33,6 +33,41 @@ export function PortfolioSidebar({
 }: PortfolioSidebarProps) {
   const [socialIndicator, setSocialIndicator] =
     useState<SocialId>("linkedin");
+  const sideNavRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    const navigation = sideNavRef.current;
+
+    if (!navigation) {
+      return;
+    }
+
+    const syncIndicator = () => {
+      const activeLink = navigation.querySelector<HTMLAnchorElement>(
+        `a[href="#${indicator}"]`,
+      );
+
+      if (!activeLink) {
+        return;
+      }
+
+      navigation.style.setProperty(
+        "--side-nav-indicator-y",
+        `${activeLink.offsetTop}px`,
+      );
+      navigation.style.setProperty(
+        "--side-nav-indicator-height",
+        `${activeLink.offsetHeight}px`,
+      );
+    };
+
+    syncIndicator();
+
+    const resizeObserver = new ResizeObserver(syncIndicator);
+    resizeObserver.observe(navigation);
+
+    return () => resizeObserver.disconnect();
+  }, [indicator]);
 
   return (
     <aside className="left-rail lg-panel">
@@ -66,6 +101,7 @@ export function PortfolioSidebar({
       </div>
 
       <nav
+        ref={sideNavRef}
         className="side-nav"
         aria-label="Sidebar navigation"
         data-active={indicator}

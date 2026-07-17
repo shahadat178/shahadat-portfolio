@@ -1106,3 +1106,281 @@
     display: none;
   }
 }
+
+/*
+ * The desktop navigation owns the flexible middle of the rail. Each link keeps
+ * a predictable control height while the seven grid tracks share any spare
+ * room, so browser zoom cannot create one large, unexplained blank region.
+ * The moving selector follows the measured link position instead of a fixed
+ * pixel step because that step changes with the available viewport height.
+ */
+@media (min-width: 1081px) {
+  .shell :global(.side-nav) {
+    flex: 1 1 auto;
+    min-height: 0;
+    grid-template-rows: repeat(7, minmax(44px, 1fr));
+    gap: 0;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    padding: 4px;
+  }
+
+  .shell :global(.nav-item) {
+    align-self: center;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .shell :global(.side-nav::before) {
+    top: 0;
+    right: 4px;
+    left: 4px;
+    height: var(--side-nav-indicator-height, 44px);
+    transform: translateY(var(--side-nav-indicator-y, 4px)) !important;
+  }
+
+  .shell :global(.sidebar-bottom) {
+    margin-top: 0;
+  }
+
+  .shell :global(.appearance-control) {
+    display: flex;
+    align-items: center;
+  }
+
+  /*
+   * The palette expands inside the top bar, immediately before the theme
+   * picker. Because the action group stays in normal flow, the navigation
+   * moves left by exactly the space the palette needs and returns smoothly
+   * when it closes. Nothing is placed over the hero.
+   */
+  .shell :global(.theme-inline-rail) {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 0;
+    min-width: 0;
+    height: 44px;
+    margin-right: 0;
+    padding: 4px 0;
+    overflow: hidden;
+    border-width: 0;
+    opacity: 0;
+    transform: translateX(10px) scale(0.96);
+    transform-origin: right center;
+    transition:
+      width 460ms cubic-bezier(0.16, 1, 0.3, 1),
+      margin-right 460ms cubic-bezier(0.16, 1, 0.3, 1),
+      padding 460ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 180ms ease,
+      transform 460ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 280ms var(--lg-ease-out),
+      box-shadow 280ms var(--lg-ease-out);
+  }
+
+  .shell :global(.appearance-control[data-open="true"] .theme-inline-rail) {
+    width: 180px;
+    margin-right: 10px;
+    padding: 4px;
+    border-width: 1px;
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  .shell :global(.theme-picker-button) {
+    min-width: 126px;
+  }
+
+  .shell :global(.top-actions) {
+    flex: 0 0 auto;
+  }
+
+  .shell :global(.top-dock) {
+    flex: 0 0 auto;
+  }
+}
+
+/* On the wide three-rail shell, keep the dock and actions in one flow row. */
+@media (min-width: 1641px) {
+  .shell :global(.top-bar) {
+    justify-content: flex-end;
+    gap: clamp(14px, 1.45vw, 24px);
+  }
+
+  .shell :global(.top-actions) {
+    position: static;
+  }
+}
+
+@media (min-width: 1081px) and (max-height: 820px) {
+  .shell :global(.side-nav) {
+    grid-template-rows: repeat(7, minmax(42px, 1fr));
+    margin-top: 6px;
+    margin-bottom: 5px;
+  }
+
+  .shell :global(.nav-item) {
+    height: 42px;
+    min-height: 42px;
+  }
+
+  .shell :global(.side-nav::before) {
+    height: var(--side-nav-indicator-height, 42px);
+  }
+}
+
+/*
+ * Browser zoom between roughly 140% and 160% produces this effective width.
+ * The controls become denser, but every label and all four themes remain
+ * visible in the same row with a constant gap.
+ */
+@media (min-width: 1081px) and (max-width: 1360px) {
+  .shell :global(.top-bar) {
+    column-gap: 10px;
+  }
+
+  .shell :global(.top-dock) {
+    grid-template-columns: 50px 52px 78px 58px 82px 62px;
+    gap: 3px;
+    padding: 5px;
+  }
+
+  .shell :global(.top-dock::before) {
+    top: 5px;
+    left: 5px;
+    width: 50px;
+    height: calc(100% - 10px);
+  }
+
+  .shell :global(.top-nav-link) {
+    min-height: 38px;
+    font-size: 10.5px;
+  }
+
+  .shell :global(.top-dock[data-active="work"]::before) {
+    width: 50px;
+    transform: translateX(0);
+  }
+
+  .shell :global(.top-dock[data-active="story"]::before) {
+    width: 52px;
+    transform: translateX(53px);
+  }
+
+  .shell :global(.top-dock[data-active="experience"]::before) {
+    width: 78px;
+    transform: translateX(108px);
+  }
+
+  .shell :global(.top-dock[data-active="toolkit"]::before) {
+    width: 58px;
+    transform: translateX(189px);
+  }
+
+  .shell :global(.top-dock[data-active="achievements"]::before) {
+    width: 82px;
+    transform: translateX(250px);
+  }
+
+  .shell :global(.top-dock[data-active="contact"]::before) {
+    width: 62px;
+    transform: translateX(335px);
+  }
+
+  .shell :global(.theme-inline-rail) {
+    grid-template-columns: repeat(4, 26px);
+    gap: 2px;
+  }
+
+  .shell :global(.appearance-control[data-open="true"] .theme-inline-rail) {
+    width: 116px;
+    margin-right: 8px;
+  }
+
+  .shell :global(.theme-orb-choice),
+  .shell :global(.theme-inline-rail::before) {
+    width: 26px;
+  }
+
+  .shell :global(.theme-inline-rail[data-active-theme="frost"]::before) {
+    transform: translateX(28px);
+  }
+
+  .shell :global(.theme-inline-rail[data-active-theme="ash"]::before) {
+    transform: translateX(56px);
+  }
+
+  .shell :global(.theme-inline-rail[data-active-theme="emerald"]::before) {
+    transform: translateX(84px);
+  }
+}
+
+/* Last desktop step before the dedicated mobile/tablet navigation takes over. */
+@media (min-width: 1081px) and (max-width: 1120px) {
+  .shell :global(.top-bar) {
+    column-gap: 8px;
+    padding-inline: 10px;
+  }
+
+  .shell :global(.top-dock) {
+    grid-template-columns: 44px 44px 70px 50px 75px 55px;
+    gap: 2px;
+    padding: 4px;
+  }
+
+  .shell :global(.top-nav-link) {
+    min-height: 36px;
+    font-size: 9.5px;
+  }
+
+  .shell :global(.top-dock::before) {
+    top: 4px;
+    left: 4px;
+    width: 44px;
+    height: calc(100% - 8px);
+  }
+
+  .shell :global(.top-dock[data-active="work"]::before) {
+    width: 44px;
+    transform: translateX(0);
+  }
+
+  .shell :global(.top-dock[data-active="story"]::before) {
+    width: 44px;
+    transform: translateX(46px);
+  }
+
+  .shell :global(.top-dock[data-active="experience"]::before) {
+    width: 70px;
+    transform: translateX(92px);
+  }
+
+  .shell :global(.top-dock[data-active="toolkit"]::before) {
+    width: 50px;
+    transform: translateX(164px);
+  }
+
+  .shell :global(.top-dock[data-active="achievements"]::before) {
+    width: 75px;
+    transform: translateX(216px);
+  }
+
+  .shell :global(.top-dock[data-active="contact"]::before) {
+    width: 55px;
+    transform: translateX(293px);
+  }
+
+  .shell :global(.top-actions) {
+    gap: 4px;
+  }
+
+  .shell :global(.theme-toggle-button) {
+    width: 40px;
+    min-width: 40px;
+  }
+
+  .shell :global(.resume-button) {
+    min-width: 88px;
+    padding-inline: 10px;
+  }
+}
