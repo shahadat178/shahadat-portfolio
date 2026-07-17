@@ -37,7 +37,10 @@ type PortfolioMobileHeaderProps = {
   appearanceMode: AppearanceMode;
   glassTheme: GlassTheme;
   onNavigate: NavigationHandler;
-  onThemeChange: (theme: GlassTheme) => void;
+  onThemeChange: (
+    theme: GlassTheme,
+    event: MouseEvent<HTMLButtonElement>
+  ) => void;
   onToggleAppearance: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -300,7 +303,7 @@ export function PortfolioMobileHeader({
                     type="button"
                     data-selected={isSelected ? "true" : "false"}
                     aria-pressed={isSelected}
-                    onClick={() => onThemeChange(theme.id)}
+                    onClick={(event) => onThemeChange(theme.id, event)}
                   >
                     <span
                       className={styles.themeSwatch}

@@ -406,7 +406,7 @@ section[id] {
   transform: translateY(0);
 
   transition:
-    transform var(--lg-duration-slow) var(--lg-ease-out),
+    transform 260ms var(--lg-ease-out),
     box-shadow var(--lg-duration-normal) var(--lg-ease-out),
     filter var(--lg-duration-normal) var(--lg-ease-out);
 }
@@ -426,14 +426,11 @@ section[id] {
   font-weight: 720;
   text-decoration: none;
 
-  transition:
-    color var(--lg-duration-normal) var(--lg-ease-out),
-    transform var(--lg-duration-normal) var(--lg-ease-out);
+  transition: color 150ms ease-out;
 }
 
 .nav-item:hover {
   color: var(--lg-accent);
-  transform: translateX(2px);
 }
 
 .nav-item:focus-visible {
@@ -1101,8 +1098,8 @@ section[id] {
   transform: translateX(0);
 
   transition:
-    transform var(--lg-duration-slow) var(--lg-ease-out),
-    width var(--lg-duration-slow) var(--lg-ease-out),
+    transform 260ms var(--lg-ease-out),
+    width 260ms var(--lg-ease-out),
     opacity var(--lg-duration-fast) var(--lg-ease-out);
 }
 
@@ -1121,14 +1118,11 @@ section[id] {
   font-weight: 750;
   text-decoration: none;
 
-  transition:
-    color var(--lg-duration-normal) var(--lg-ease-out),
-    transform var(--lg-duration-normal) var(--lg-ease-out);
+  transition: color 150ms ease-out;
 }
 
 .top-nav-link:hover {
   color: var(--lg-accent);
-  transform: translateY(-1px);
 }
 
 .top-nav-link:focus-visible {
@@ -2979,37 +2973,27 @@ html[data-appearance-transition="light"]::view-transition-old(root) {
   }
 }
 
-/* Color themes crossfade without moving layout or interrupting interaction. */
+/* Color themes spread from the chosen palette control. */
 html[data-theme-transition="true"]::view-transition-old(root) {
   z-index: 1;
-  animation: glass-theme-fade-out 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: none;
 }
 
 html[data-theme-transition="true"]::view-transition-new(root) {
   z-index: 2;
-  animation: glass-theme-fade-in 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: glass-theme-expand 760ms cubic-bezier(0.22, 0.82, 0.2, 1) both;
 }
 
-@keyframes glass-theme-fade-out {
-  from {
-    opacity: 1;
-    filter: brightness(1) saturate(1);
+@keyframes glass-theme-expand {
+  0% {
+    clip-path: circle(0 at var(--theme-reveal-x) var(--theme-reveal-y));
+    filter: brightness(1.045) saturate(1.12);
   }
 
-  to {
-    opacity: 0;
-    filter: brightness(0.98) saturate(0.92);
-  }
-}
-
-@keyframes glass-theme-fade-in {
-  from {
-    opacity: 0;
-    filter: brightness(1.035) saturate(1.1);
-  }
-
-  to {
-    opacity: 1;
+  100% {
+    clip-path: circle(
+      var(--theme-reveal-radius) at var(--theme-reveal-x) var(--theme-reveal-y)
+    );
     filter: brightness(1) saturate(1);
   }
 }
