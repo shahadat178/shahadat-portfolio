@@ -2,7 +2,6 @@ import { FaBrain, FaNodeJs, FaReact } from "react-icons/fa6";
 import { FiArrowRight, FiArrowUpRight, FiCheck } from "react-icons/fi";
 
 import InteractiveBangladeshGlobe from "@/components/InteractiveBangladeshGlobe";
-import { AnimatedHeroTitle } from "@/components/sections/AnimatedHeroTitle";
 import { PORTFOLIO_PROFILE } from "@/data/portfolio";
 
 export function HeroSection() {
@@ -21,13 +20,17 @@ export function HeroSection() {
           </span>
           <span className="hero-title-visual" aria-hidden="true">
             <span className="hero-title-prefix">I build</span>
-            <AnimatedHeroTitle />
+            <span className="hero-phrase-window">
+              <span className="hero-phrase">
+                reliable web products from interface to cloud.
+              </span>
+            </span>
           </span>
         </h1>
 
         <p className="hero-text">
-          From thoughtful interfaces and resilient APIs to cloud delivery, I
-          turn product ideas into software people can trust.
+          Thoughtful interfaces, resilient systems, and clear delivery for
+          products people can trust.
         </p>
 
         <div className="hero-actions">
@@ -51,7 +54,9 @@ export function HeroSection() {
             }
           >
             <FiArrowUpRight aria-hidden="true" />
-            {PORTFOLIO_PROFILE.resumeConfigured ? "Resume" : "Resume soon"}
+            {PORTFOLIO_PROFILE.resumeConfigured
+              ? "View resume"
+              : "Resume soon"}
           </a>
         </div>
 

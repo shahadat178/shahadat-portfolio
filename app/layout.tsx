@@ -6,7 +6,7 @@ import "./globals.css";
 const SITE_URL = "https://shahadat-engineering-portfolio.vercel.app";
 const SITE_TITLE = "Shahadat Sardar — Full-Stack & Cloud Software Engineer";
 const SITE_DESCRIPTION =
-  "The engineering portfolio of Shahadat Sardar: released products, full-stack systems, cloud delivery, and evidence-led technical decisions.";
+  "Portfolio of Shahadat Sardar, a product-minded full-stack and cloud-focused software engineer building reliable web products, responsive interfaces, and system-aware user experiences.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     "Shahadat Sardar",
     "full-stack software engineer",
     "cloud software engineer",
+    "frontend engineer",
+    "React engineer",
     "Next.js portfolio",
     "TypeScript",
     "product engineering",

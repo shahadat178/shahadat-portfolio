@@ -2,7 +2,7 @@
 
 A released, responsive engineering portfolio that makes product reasoning, implementation depth, and project boundaries easy to inspect.
 
-> **Release status:** Production-ready portfolio · **Primary focus:** Full-stack and cloud software engineering · **Location:** Dhaka, Bangladesh
+> **Release status:** Released · **Primary focus:** Full-stack and cloud software engineering · **Location:** Dhaka, Bangladesh
 
 **Live product:** [shahadat-engineering-portfolio.vercel.app](https://shahadat-engineering-portfolio.vercel.app)
 
@@ -27,7 +27,7 @@ The released site combines:
 
 | Product | State | Evidence boundary |
 | --- | --- | --- |
-| Shahadat — Engineering Portfolio | **Released** | Working product, documented decisions, and production verification |
+| Shahadat Portfolio Platform | **Released** | Working product, documented decisions, and production verification |
 | Shahadat Zenith Commerce | **Active build** | Full-stack architecture and implementation plan; no commercial results claimed |
 | DermaAware | **Future research** | Non-diagnostic concept pending qualified clinical, privacy, safety, and inclusion review |
 

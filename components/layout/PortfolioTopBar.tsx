@@ -174,6 +174,7 @@ export function PortfolioTopBar({
               ? "Switch to night mode"
               : "Switch to light mode"
           }
+          aria-pressed={appearanceMode === "dark"}
           onClick={onToggleAppearance}
         >
           {appearanceMode === "light" ? (

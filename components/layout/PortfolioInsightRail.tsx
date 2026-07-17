@@ -54,8 +54,8 @@ const EVIDENCE_SIGNALS = [
     id: "work",
     href: "#work",
     icon: FiBookOpen,
-    label: "Case studies",
-    detail: "Evidence-led product stories",
+    label: "Project tracks",
+    detail: "Released, active, and future work",
   },
   {
     id: "work",

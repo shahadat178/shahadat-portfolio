@@ -55,10 +55,10 @@ export function ToolkitSection() {
 
       <div className="toolkit-confidence-legend">
         <div className="toolkit-confidence-copy">
-          <p>Confidence model</p>
-          <strong>Evidence before expertise claims.</strong>
+          <p>Evidence model</p>
+          <strong>How the labels work.</strong>
           <span>
-            Every tool is labelled by how it appears in the work today.
+            Current code, active practice, and exploration stay separate.
           </span>
         </div>
 

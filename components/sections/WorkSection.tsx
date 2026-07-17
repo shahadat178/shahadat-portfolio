@@ -30,7 +30,42 @@ const PROJECT_STATUS_META = {
   released: { icon: FiCheckCircle, label: "Released" },
   "active-build": { icon: FiZap, label: "Building" },
   concept: { icon: FiCompass, label: "Research" },
-  planned: { icon: FiClock, label: "Scheduled" },
+  planned: { icon: FiClock, label: "Concept only" },
+} as const;
+
+const PROJECT_DISCLOSURE_COPY = {
+  released: {
+    scopeLabel: "Delivered scope",
+    scopeTitle: "What I built",
+    outcomesLabel: "Release evidence",
+    outcomesTitle: "What shipped",
+    nextLabel: "Post-release roadmap",
+    nextTitle: "Future improvements",
+  },
+  "active-build": {
+    scopeLabel: "Built so far",
+    scopeTitle: "What is already defined",
+    outcomesLabel: "In progress",
+    outcomesTitle: "What is being implemented",
+    nextLabel: "Proposed later",
+    nextTitle: "What follows after the core build",
+  },
+  concept: {
+    scopeLabel: "Research scope",
+    scopeTitle: "What this concept would explore",
+    outcomesLabel: "Defined so far",
+    outcomesTitle: "Current concept boundaries",
+    nextLabel: "Validation required",
+    nextTitle: "Before any real-world use",
+  },
+  planned: {
+    scopeLabel: "Research scope",
+    scopeTitle: "What this concept would explore",
+    outcomesLabel: "Defined so far",
+    outcomesTitle: "Current concept boundaries",
+    nextLabel: "Validation required",
+    nextTitle: "Before any real-world use",
+  },
 } as const;
 
 function ProjectStory({
@@ -40,7 +75,7 @@ function ProjectStory({
   const projectNumber = String(index + 1).padStart(2, "0");
   const statusMeta = PROJECT_STATUS_META[project.status];
   const StatusIcon = statusMeta.icon;
-  const isReleased = project.status === "released";
+  const disclosureCopy = PROJECT_DISCLOSURE_COPY[project.status];
 
   return (
     <article
@@ -65,7 +100,7 @@ function ProjectStory({
             height={1024}
             sizes="(max-width: 700px) 94vw, (max-width: 1100px) 88vw, (max-width: 1640px) 68vw, 1120px"
             priority={index === 0}
-            unoptimized
+            quality={90}
             draggable={false}
           />
           <span className="project-preview-action" aria-hidden="true">
@@ -98,7 +133,6 @@ function ProjectStory({
 
             <h3 id={`project-${project.slug}-title`}>{project.title}</h3>
             <p className="project-summary">{project.summary}</p>
-            <p className="project-narrative">{project.narrative}</p>
           </header>
 
           <div className="project-story-evidence">
@@ -117,65 +151,57 @@ function ProjectStory({
               </div>
             </dl>
 
-            <dl
-              className="project-proof-summary"
-              aria-label="Engineering proof summary"
+            <section
+              className="project-evidence-preview"
+              aria-labelledby={`project-${project.slug}-evidence`}
             >
-              <div>
-                <dt>
-                  <FiGitBranch aria-hidden="true" />
-                  Decisions documented
-                </dt>
-                <dd>{String(project.decisions.length).padStart(2, "0")}</dd>
-              </div>
-              <div>
-                <dt>
-                  <FiCheckCircle aria-hidden="true" />
-                  Evidence points
-                </dt>
-                <dd>{String(project.outcomes.length).padStart(2, "0")}</dd>
-              </div>
-              <div>
-                <dt>
-                  <FiLayers aria-hidden="true" />
-                  Implementation surface
-                </dt>
-                <dd>{String(project.stack.length).padStart(2, "0")}</dd>
-              </div>
-            </dl>
+              <p className="project-detail-label">Evidence snapshot</p>
+              <h4 id={`project-${project.slug}-evidence`}>
+                What can be verified
+              </h4>
+              <ul>
+                {project.evidence.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
           </div>
         </div>
 
-        <div className="project-story-grid">
-          <section aria-labelledby={`project-${project.slug}-problem`}>
-            <p className="project-detail-label">The problem</p>
-            <h4 id={`project-${project.slug}-problem`}>
-              What this project needs to solve
-            </h4>
-            <p>{project.problem}</p>
+        <ul className="project-chips" aria-label={`${project.title} signals`}>
+          {project.chips.map((chip) => (
+            <li key={chip}>{chip}</li>
+          ))}
+        </ul>
+
+        <ProjectCaseStudyDisclosure>
+          <section aria-labelledby={`project-${project.slug}-overview`}>
+            <p className="project-detail-label">Project context</p>
+            <h4 id={`project-${project.slug}-overview`}>Why this work exists</h4>
+            <p>{project.narrative}</p>
+            <div className="project-context-grid">
+              <div>
+                <strong>The problem</strong>
+                <p>{project.problem}</p>
+              </div>
+              <div>
+                <strong>Designed for</strong>
+                <ul>
+                  {project.audience.map((audience) => (
+                    <li key={audience}>{audience}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </section>
 
-          <section aria-labelledby={`project-${project.slug}-audience`}>
-            <p className="project-detail-label">Designed for</p>
-            <h4 id={`project-${project.slug}-audience`}>
-              People and contexts
-            </h4>
-            <ul>
-              {project.audience.map((audience) => (
-                <li key={audience}>{audience}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        <ProjectCaseStudyDisclosure defaultOpen={index === 0}>
           <section aria-labelledby={`project-${project.slug}-scope`}>
             <p className="project-detail-label">
               <FiLayers aria-hidden="true" />
-              {isReleased ? "Delivered scope" : "Scope"}
+              {disclosureCopy.scopeLabel}
             </p>
             <h4 id={`project-${project.slug}-scope`}>
-              {isReleased ? "What I built" : "What I am building"}
+              {disclosureCopy.scopeTitle}
             </h4>
             <ul>
               {project.scope.map((item) => (
@@ -205,10 +231,10 @@ function ProjectStory({
           <section aria-labelledby={`project-${project.slug}-outcomes`}>
             <p className="project-detail-label">
               <FiCheckCircle aria-hidden="true" />
-              {isReleased ? "Release evidence" : "Implemented now"}
+              {disclosureCopy.outcomesLabel}
             </p>
             <h4 id={`project-${project.slug}-outcomes`}>
-              {isReleased ? "What shipped" : "Delivered so far"}
+              {disclosureCopy.outcomesTitle}
             </h4>
             <ul>
               {project.outcomes.map((outcome) => (
@@ -220,10 +246,10 @@ function ProjectStory({
           <section aria-labelledby={`project-${project.slug}-next`}>
             <p className="project-detail-label">
               <FiClock aria-hidden="true" />
-              {isReleased ? "Post-release roadmap" : "Engineering backlog"}
+              {disclosureCopy.nextLabel}
             </p>
             <h4 id={`project-${project.slug}-next`}>
-              {isReleased ? "Future improvements" : "Planned work"}
+              {disclosureCopy.nextTitle}
             </h4>
             <ul>
               {project.nextSteps.map((step) => (
@@ -231,24 +257,33 @@ function ProjectStory({
               ))}
             </ul>
           </section>
+
+          <section aria-labelledby={`project-${project.slug}-technology`}>
+            <p className="project-detail-label">
+              <FiLayers aria-hidden="true" />
+              Technical surface
+            </p>
+            <h4 id={`project-${project.slug}-technology`}>
+              Technologies used or explicitly proposed
+            </h4>
+            <ul
+              className="project-stack"
+              aria-label={`${project.title} technology stack`}
+            >
+              {project.stack.map((technology) => (
+                <li key={technology}>{technology}</li>
+              ))}
+            </ul>
+          </section>
         </ProjectCaseStudyDisclosure>
 
-        <div className={styles.stackBlock}>
-          <ul
-            className="project-stack"
-            aria-label={`${project.title} technology stack`}
-          >
-            {project.stack.map((technology) => (
-              <li key={technology}>{technology}</li>
-            ))}
-          </ul>
-
-          {project.disclaimer ? (
+        {project.disclaimer ? (
+          <div className={styles.stackBlock}>
             <p className="project-disclaimer">
               <strong>Project note:</strong> {project.disclaimer}
             </p>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
         {project.links.length > 0 ? (
           <nav className="project-links" aria-label={`${project.title} links`}>

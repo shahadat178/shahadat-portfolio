@@ -71,29 +71,29 @@ export const PORTFOLIO_PROFILE = {
 } as const;
 
 export const PORTFOLIO_STATS = [
-  { value: "03", label: "Product case studies" },
+  { value: "03", label: "Project tracks" },
   { value: "01", label: "Released product" },
   { value: "04", label: "Toolkit domains" },
 ] as const;
 
 export const WORK_SECTION = {
   eyebrow: "Selected work",
-  title: "Three products. Three different trust problems.",
+  title: "Three project tracks. Three different trust problems.",
   description:
-    "The engineering portfolio is released, the commerce platform remains the active full-stack build, and the skin-health product stays a deliberately later research track until safety, clinical review, privacy, and inclusive validation come first.",
+    "Released work, active builds, and future research are separated clearly so the scope, evidence, and limitations stay easy to review.",
 } as const;
 
 export const PORTFOLIO_PROJECTS = [
   {
     slug: "shahadat-engineering-portfolio",
-    title: "Shahadat — Engineering Portfolio",
+    title: "Shahadat Portfolio Platform",
     eyebrow: "01 / Released product",
     projectType: "Portfolio platform · Design system",
     summary:
-      "A responsive engineering portfolio that brings identity, product reasoning, implementation detail, and technical work into one coherent experience.",
+      "A responsive engineering portfolio that turns identity, product reasoning, implementation detail, and technical evidence into one coherent experience.",
     narrative:
       "What started as a single landing page became a production-ready portfolio system with reusable sections, typed content, responsive navigation, theme and pointer preferences, accessible disclosures, and a resilient interactive globe.",
-    role: "Independent product engineer and designer",
+    role: "Product-minded Frontend Engineer",
     period: "Released in 2026",
     status: "released",
     statusLabel: "Production release",
@@ -137,6 +137,11 @@ export const PORTFOLIO_PROJECTS = [
           "Typed project and profile data lets future case studies evolve without coupling copy to components.",
       },
     ],
+    evidence: [
+      "Built a reusable portfolio shell with theme-aware sections and responsive navigation.",
+      "Separated project, experience, toolkit, profile, and contact content into typed data.",
+      "Verified the release with lint, TypeScript, production build, responsive, zoom, and interaction checks.",
+    ],
     outcomes: [
       "Delivered a reusable portfolio shell with dedicated layout and section components.",
       "Implemented responsive navigation, four visual themes, pointer preferences, active-section tracking, and accessible interaction states.",
@@ -147,6 +152,14 @@ export const PORTFOLIO_PROJECTS = [
       "Monitor real production performance and runtime behavior after deployment.",
       "Add automated regression coverage for navigation, themes, disclosures, and responsive layout states.",
       "Refresh the evidence and screenshots as the commerce case study becomes an implemented product.",
+    ],
+    chips: [
+      "Released",
+      "Next.js",
+      "TypeScript",
+      "Responsive UI",
+      "Liquid Glass System",
+      "Production Build Verified",
     ],
     stack: [
       "Next.js",
@@ -172,7 +185,7 @@ export const PORTFOLIO_PROJECTS = [
     eyebrow: "03 / Future research track",
     projectType: "Skin-health education · Care navigation",
     summary:
-      "A privacy-conscious skin-health companion designed to help people document concerns, learn from reviewed information, and prepare for appropriate professional care.",
+      "A future research concept for safe skin-care education and care-navigation support, designed around medical caution, privacy, and responsible AI boundaries.",
     narrative:
       "People often search alarming image results or receive overconfident automated answers when they are worried about a skin concern. DermaAware explores a safer path: organize observations, communicate uncertainty, surface reviewed guidance, and make professional care easier to approach.",
     role: "Product discovery and full-stack systems planning",
@@ -219,6 +232,11 @@ export const PORTFOLIO_PROJECTS = [
           "Research and future validation must include different skin tones, languages, accessibility needs, and levels of health literacy.",
       },
     ],
+    evidence: [
+      "Defined a non-diagnostic product boundary and responsible language for uncertainty.",
+      "Mapped a private observation-to-care conversation journey without automated diagnosis.",
+      "Documented clinical review, inclusion, privacy, safety, and accessibility requirements.",
+    ],
     outcomes: [
       "Defined a non-diagnostic product boundary and the language needed to communicate it.",
       "Mapped a core journey from private observation to a better-prepared professional-care conversation.",
@@ -230,6 +248,14 @@ export const PORTFOLIO_PROJECTS = [
       "Conduct inclusive user research before deciding which features should exist.",
       "Complete privacy, security, and regulatory risk assessments before accepting health data.",
       "Prototype and usability-test the journal and care-preparation journey without diagnostic output.",
+    ],
+    chips: [
+      "Future Research",
+      "Not Launched",
+      "Concept Only",
+      "Responsible AI",
+      "Privacy-Aware",
+      "Non-Diagnostic",
     ],
     stack: [
       "Next.js (proposed)",
@@ -250,10 +276,10 @@ export const PORTFOLIO_PROJECTS = [
     eyebrow: "02 / Active full-stack build",
     projectType: "Premium lifestyle brand · Full-stack commerce",
     summary:
-      "A premium full-stack marketplace extending Shahadat's identity into a responsive shopping experience across fashion, gadgets, beauty, skincare, and everyday essentials.",
+      "A premium multi-category commerce product being built to connect storefront experience, catalogue structure, checkout planning, admin operations, and post-purchase workflows.",
     narrative:
       "Premium commerce depends on more than polished product cards. Shahadat Zenith is being built as one coherent brand and product system where discovery, catalogue data, accounts, cart, checkout, payments, fulfilment, and support reinforce the same customer promise.",
-    role: "Independent full-stack product engineer and brand designer",
+    role: "Founder-minded Full-Stack Builder",
     period: "Current build",
     status: "active-build",
     statusLabel: "Under active construction",
@@ -269,11 +295,9 @@ export const PORTFOLIO_PROJECTS = [
       "Merchandising and fulfilment teams",
     ],
     scope: [
-      "Logo-derived identity, typography, colour, photography, and motion direction",
-      "Women, men, new-arrival, collection, and accessories discovery journeys",
-      "Search, filtering, sizing, variants, wishlists, cart, and checkout",
-      "Customer accounts, order status, returns, and support touchpoints",
-      "Catalogue, inventory, promotion, editorial, and order-management foundations",
+      "Created the responsive desktop and mobile storefront direction shown in this case study.",
+      "Defined brand, navigation, category, trust, membership, and merchandising surfaces.",
+      "Mapped the core catalogue, account, cart, checkout, order, and fulfilment responsibilities.",
     ],
     decisions: [
       {
@@ -297,17 +321,29 @@ export const PORTFOLIO_PROJECTS = [
           "Inventory, content, fulfilment, returns, and support flows shape the customer promise and belong in the architecture from the beginning.",
       },
     ],
-    outcomes: [
+    evidence: [
       "Created the responsive desktop and mobile storefront direction shown in this case study.",
       "Defined brand, navigation, category, trust, membership, and merchandising surfaces.",
-      "Mapped full-stack catalogue, account, cart, checkout, payment, order, and fulfilment responsibilities now being implemented.",
-      "Specified catalogue, inventory, checkout, payment, order, fulfilment, and returns boundaries for implementation.",
+      "Mapped the core catalogue, account, cart, checkout, order, and fulfilment responsibilities.",
+    ],
+    outcomes: [
+      "Implementing catalogue, filtering, product-detail, wishlist, cart, and account flows.",
+      "Turning the proposed domain boundaries into typed application and data contracts.",
+      "Preparing representative product data and the operational admin workflow.",
     ],
     nextSteps: [
-      "Finish catalogue, search, filtering, product-detail, wishlist, cart, and account flows.",
       "Implement secure checkout, payment, order, inventory, and fulfilment boundaries.",
-      "Prepare representative catalogue data and connect editorial content management.",
+      "Connect editorial content management and post-purchase support workflows.",
       "Run accessibility, performance, security, and cross-device validation before release.",
+      "Add production observability and operational quality gates after the core product is stable.",
+    ],
+    chips: [
+      "Active Build",
+      "Storefront UX",
+      "Catalogue Planning",
+      "Admin Workflow",
+      "Checkout Planned",
+      "Full-Stack Roadmap",
     ],
     stack: [
       "Next.js (proposed)",
@@ -324,20 +360,20 @@ export const PORTFOLIO_PROJECTS = [
 
 export const STORY_SECTION = {
   eyebrow: "My story",
-  title: "I build to understand the whole system.",
+  title: "I like turning messy workflows into clear systems.",
   introduction:
-    "I am Shahadat Sardar, an early-career full-stack and cloud engineer using independent product work to connect thoughtful interfaces, resilient application logic, and reliable delivery.",
+    "My work starts with the user problem, then moves through interface structure, system boundaries, implementation, testing, and iteration.",
   paragraphs: [
-    "My path is being shaped through hands-on builds. Each project helps me understand how interface decisions, application logic, data, accessibility, delivery, and operations influence one another.",
-    "I am drawn to teams where strong fundamentals, thoughtful feedback, and useful customer outcomes matter more than technology for its own sake.",
+    "I learn through hands-on builds that connect interface decisions, application logic, data, accessibility, delivery, and operations.",
+    "I value strong fundamentals, useful feedback, and product outcomes more than technology for its own sake.",
   ],
   currentFocus:
-    "Using this released portfolio as the evidence foundation while turning the commerce concept into the next implemented full-stack product.",
+    "Using the released portfolio as evidence while turning the commerce track into the next complete full-stack product.",
 } as const;
 
 export const EXPERIENCE_SECTION = {
   eyebrow: "Experience and build log",
-  title: "Ownership described without inflated titles.",
+  title: "Independent work, clearly scoped.",
   description:
     "These entries represent independent project work and structured learning. They do not imply employment, launch success, or business results that have not been verified.",
 } as const;
@@ -361,11 +397,33 @@ export const EXPERIENCE_ITEMS = [
     technologies: ["Next.js", "React", "TypeScript", "CSS Modules", "Three.js"],
   },
   {
+    organization: "Independent commerce product",
+    role: "Founder-minded full-stack builder",
+    period: "Current build",
+    status: "current",
+    statusLabel: "Active build",
+    summary:
+      "Building a premium multi-category commerce track that connects storefront experience, catalogue structure, admin operations, and checkout planning.",
+    responsibilities: [
+      "Created the responsive storefront direction and core brand system.",
+      "Defined catalogue, navigation, merchandising, account, and admin workflows.",
+      "Mapped the checkout, order, inventory, fulfilment, and support boundaries for implementation.",
+    ],
+    evidenceNote:
+      "The interface direction and system plan exist; checkout, payment, order, and fulfilment implementation remain in progress.",
+    technologies: [
+      "Next.js",
+      "Commerce architecture",
+      "Catalogue planning",
+      "Cloud delivery planning",
+    ],
+  },
+  {
     organization: "Independent health-product discovery",
     role: "Responsible product and systems exploration",
-    period: "Concept phase",
+    period: "Future research",
     status: "concept",
-    statusLabel: "Research required",
+    statusLabel: "Concept only",
     summary:
       "Defining a non-diagnostic skin-health education and care-navigation concept with safety, inclusion, and privacy as constraints.",
     responsibilities: [
@@ -379,43 +437,21 @@ export const EXPERIENCE_ITEMS = [
       "Product discovery",
       "Privacy modelling",
       "Accessibility planning",
-      "Full-stack architecture",
-    ],
-  },
-  {
-    organization: "Independent commerce systems study",
-    role: "Brand, experience, and architecture planning",
-    period: "Planned build",
-    status: "learning",
-    statusLabel: "Learning roadmap",
-    summary:
-      "Using a proposed premium fashion brand to study how storefront experience, catalogue data, payments, and operations work as one system.",
-    responsibilities: [
-      "Translate an existing personal identity into a coherent proposed brand system.",
-      "Model discovery, product, cart, checkout, account, and post-purchase journeys.",
-      "Plan performance, accessibility, inventory, content, and fulfilment quality gates.",
-    ],
-    evidenceNote:
-      "Architecture and delivery choices remain proposals until requirements and prototypes are validated.",
-    technologies: [
-      "Next.js",
-      "Commerce architecture",
-      "Payments research",
-      "Cloud delivery planning",
+      "Responsible AI boundaries",
     ],
   },
 ] as const satisfies readonly ExperienceItem[];
 
 export const TOOLKIT_SECTION = {
   eyebrow: "Toolkit",
-  title: "Tools are useful when they support a decision.",
+  title: "Evidence before expertise claims.",
   description:
-    "Confidence labels distinguish technology visible in the current codebase from skills being practised or explored for future concepts.",
+    "Every tool is labelled by how it appears in the work today: visible in the released product, used in active practice, or still being explored.",
 } as const;
 
 export const TOOLKIT_GROUPS = [
   {
-    label: "Product interface",
+    label: "Frontend",
     description:
       "Responsive, accessible interfaces with reusable components and deliberate interaction states.",
     items: [
@@ -441,13 +477,13 @@ export const TOOLKIT_GROUPS = [
       },
       {
         name: "Accessibility",
-        confidence: "practicing",
+        confidence: "in-project",
         context: "Semantic structure, keyboard flow, touch targets, and reduced motion",
       },
     ],
   },
   {
-    label: "Application and data",
+    label: "Backend",
     description:
       "Clear contracts and dependable data flows behind the interface.",
     items: [
@@ -474,10 +510,15 @@ export const TOOLKIT_GROUPS = [
     ],
   },
   {
-    label: "Cloud and delivery",
+    label: "Cloud / deployment",
     description:
       "Learning how products remain deployable, observable, secure, and efficient after implementation.",
     items: [
+      {
+        name: "Vercel",
+        confidence: "in-project",
+        context: "Production deployment, preview workflow, and live release delivery",
+      },
       {
         name: "AWS",
         confidence: "exploring",
@@ -501,7 +542,7 @@ export const TOOLKIT_GROUPS = [
     ],
   },
   {
-    label: "Quality and collaboration",
+    label: "Quality / engineering practice",
     description:
       "Small feedback loops that make changes understandable and reversible.",
     items: [
@@ -514,6 +555,11 @@ export const TOOLKIT_GROUPS = [
         name: "ESLint and type checks",
         confidence: "in-project",
         context: "Automated static feedback before integration",
+      },
+      {
+        name: "Production build and responsive QA",
+        confidence: "in-project",
+        context: "Release verification across builds, breakpoints, zoom levels, and interaction states",
       },
       {
         name: "Testing strategy",
@@ -646,7 +692,7 @@ export const ENGINEERING_PRINCIPLES = [
 
 export const CONTACT_SECTION = {
   eyebrow: "Contact",
-  title: "Let’s start with the problem worth solving.",
+  title: "Let’s build something useful.",
   description:
     "For engineering roles, project feedback, or thoughtful collaboration, choose the channel that works best for you.",
   availability:

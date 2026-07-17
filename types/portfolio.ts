@@ -68,8 +68,10 @@ export type PortfolioProject = Readonly<{
   audience: readonly string[];
   scope: readonly string[];
   decisions: readonly ProjectDecision[];
+  evidence: readonly string[];
   outcomes: readonly string[];
   nextSteps: readonly string[];
+  chips: readonly string[];
   stack: readonly string[];
   links: readonly ProjectLink[];
   disclaimer?: string;
