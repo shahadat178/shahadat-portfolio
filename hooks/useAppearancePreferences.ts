@@ -21,6 +21,50 @@ type ViewTransitionDocument = Document & {
   };
 };
 
+type TransitionTrigger = MouseEvent<HTMLButtonElement>;
+
+function getTransitionGeometry(event: TransitionTrigger) {
+  const rect = event.currentTarget.getBoundingClientRect();
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = document.documentElement.clientHeight;
+  const hasPointerPosition =
+    event.detail > 0 &&
+    Number.isFinite(event.clientX) &&
+    Number.isFinite(event.clientY);
+  const originX = Math.min(
+    viewportWidth,
+    Math.max(0, hasPointerPosition ? event.clientX : rect.left + rect.width / 2)
+  );
+  const originY = Math.min(
+    viewportHeight,
+    Math.max(0, hasPointerPosition ? event.clientY : rect.top + rect.height / 2)
+  );
+
+  return {
+    originX,
+    originY,
+    revealRadius: Math.hypot(
+      Math.max(originX, viewportWidth - originX),
+      Math.max(originY, viewportHeight - originY)
+    ),
+  };
+}
+
+function setRevealGeometry(
+  root: HTMLElement,
+  prefix: "appearance" | "theme",
+  event: TransitionTrigger
+) {
+  const { originX, originY, revealRadius } = getTransitionGeometry(event);
+
+  root.style.setProperty(`--${prefix}-reveal-x`, `${originX}px`);
+  root.style.setProperty(`--${prefix}-reveal-y`, `${originY}px`);
+  root.style.setProperty(
+    `--${prefix}-reveal-radius`,
+    `${revealRadius}px`
+  );
+}
+
 function isGlassTheme(value: string | null): value is GlassTheme {
   return value !== null && VALID_THEMES.has(value as GlassTheme);
 }
@@ -67,7 +111,7 @@ export function useAppearancePreferences() {
     }
   }, [glassTheme, appearanceMode]);
 
-  function setGlassTheme(nextTheme: GlassTheme) {
+  function setGlassTheme(nextTheme: GlassTheme, event: TransitionTrigger) {
     if (nextTheme === glassTheme) {
       return;
     }
@@ -88,6 +132,7 @@ export function useAppearancePreferences() {
     const transitionDocument = document as ViewTransitionDocument;
     const transitionId = themeTransitionId.current + 1;
     themeTransitionId.current = transitionId;
+    setRevealGeometry(root, "theme", event);
     root.dataset.themeTransition = "true";
 
     const transition = transitionDocument.startViewTransition?.(applyTheme);
@@ -107,26 +152,12 @@ export function useAppearancePreferences() {
       });
   }
 
-  function toggleAppearanceMode(event: MouseEvent<HTMLButtonElement>) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const viewportOffsetX = window.visualViewport?.offsetLeft ?? 0;
-    const viewportOffsetY = window.visualViewport?.offsetTop ?? 0;
-    const originX = rect.left + rect.width / 2 + viewportOffsetX;
-    const originY = rect.top + rect.height / 2 + viewportOffsetY;
-    const revealRadius = Math.hypot(
-      Math.max(originX, window.innerWidth - originX),
-      Math.max(originY, window.innerHeight - originY)
-    );
+  function toggleAppearanceMode(event: TransitionTrigger) {
     const nextMode: AppearanceMode =
       appearanceMode === "light" ? "dark" : "light";
     const root = document.documentElement;
 
-    root.style.setProperty("--appearance-reveal-x", `${originX}px`);
-    root.style.setProperty("--appearance-reveal-y", `${originY}px`);
-    root.style.setProperty(
-      "--appearance-reveal-radius",
-      `${revealRadius}px`
-    );
+    setRevealGeometry(root, "appearance", event);
     root.dataset.appearanceTransition = nextMode;
 
     const applyAppearance = () => {
@@ -153,9 +184,11 @@ export function useAppearancePreferences() {
       return;
     }
 
-    transition.finished.finally(() => {
-      root.removeAttribute("data-appearance-transition");
-    });
+    transition.finished
+      .catch(() => undefined)
+      .finally(() => {
+        root.removeAttribute("data-appearance-transition");
+      });
   }
 
   return {

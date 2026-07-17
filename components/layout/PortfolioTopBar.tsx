@@ -27,7 +27,10 @@ type PortfolioTopBarProps = {
   indicator: SectionId;
   onIndicatorChange: (section: SectionId) => void;
   onNavigate: NavigationHandler;
-  onThemeChange: (theme: GlassTheme) => void;
+  onThemeChange: (
+    theme: GlassTheme,
+    event: MouseEvent<HTMLButtonElement>
+  ) => void;
   onToggleAppearance: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -72,8 +75,11 @@ export function PortfolioTopBar({
     };
   }, [isThemeMenuOpen]);
 
-  function selectTheme(theme: GlassTheme) {
-    onThemeChange(theme);
+  function selectTheme(
+    theme: GlassTheme,
+    event: MouseEvent<HTMLButtonElement>
+  ) {
+    onThemeChange(theme, event);
     window.setTimeout(() => setIsThemeMenuOpen(false), 460);
   }
 
@@ -129,7 +135,7 @@ export function PortfolioTopBar({
                   aria-pressed={isSelected}
                   title={theme.label}
                   tabIndex={isThemeMenuOpen ? 0 : -1}
-                  onClick={() => selectTheme(theme.id)}
+                  onClick={(event) => selectTheme(theme.id, event)}
                 >
                   <span
                     className={`theme-orb-swatch theme-orb-swatch-${theme.id}`}
